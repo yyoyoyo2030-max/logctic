@@ -1,15 +1,8 @@
 <?php
-$host = 'localhost';
-$user = 'root';
-$pass = '';
+require_once __DIR__ . '/config/config.php';
 
 try {
-    $pdo = new PDO("mysql:host=$host;charset=utf8", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Create DB if not exists
-    $pdo->exec("CREATE DATABASE IF NOT EXISTS logistic_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-    $pdo->exec("USE logistic_system");
+    // $pdo is already created in config.php
     
     // Check if tables exist
     $stmt = $pdo->query("SHOW TABLES LIKE 'users'");

@@ -36,6 +36,8 @@ if (getenv('DB_HOST')) {
     define('DB_USER', getenv('DB_USER'));
     define('DB_PASS', getenv('DB_PASS'));
     define('DB_NAME', getenv('DB_NAME'));
+    define('DB_PORT', getenv('DB_PORT') ?: '3306');
+    define('DB_SSL', getenv('DB_SSL') ?: false);
     
     // إذا لم يتم تمرير رابط، استخدم رابط السيرفر التلقائي
     $site_url = getenv('SITE_URL');
@@ -135,12 +137,20 @@ if (session_status() == PHP_SESSION_NONE) {
 // الاتصال بقاعدة البيانات
 // ========================================
 try {
-    $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS, [
+    $db_port = defined('DB_PORT') ? DB_PORT : '3306';
+    $dsn = "mysql:host=" . DB_HOST . ";port=" . $db_port . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+    $pdo_options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
         PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4, time_zone = '+03:00'"
-    ]);
+    ];
+    // دعم SSL للاتصالات السحابية (مثل Aiven)
+    if (defined('DB_SSL') && DB_SSL) {
+        $pdo_options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+        $pdo_options[PDO::MYSQL_ATTR_SSL_CA] = true;
+    }
+    $conn = new PDO($dsn, DB_USER, DB_PASS, $pdo_options);
 } catch(PDOException $e) {
     die("عذراً، حدث خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());
 }

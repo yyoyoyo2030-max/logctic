@@ -44,3 +44,5 @@ Stack trace:
 [23-Jun-2026 22:46:21 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
 [23-Jun-2026 22:56:58 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
 [23-Jun-2026 22:56:58 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
+[23-Jun-2026 23:21:55 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
+[23-Jun-2026 23:21:55 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطأ في الخادم - Logistic Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .error-container {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .error-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+        h1 {
+            color: #dc3545;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .error-code {
+            background: #f8f9fa;
+            color: #dc3545;
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" style="width: 80px; height: 80px; margin: 0 auto 20px; display: block;">
+            <defs>
+                <linearGradient id="errorTruckGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#dc2626;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <rect x="15" y="35" width="45" height="30" rx="3" fill="url(#errorTruckGradient)" stroke="#991b1b" stroke-width="2"/>
+            <rect x="20" y="40" width="15" height="15" rx="2" fill="#fecaca" opacity="0.7"/>
+            <rect x="40" y="40" width="15" height="15" rx="2" fill="#fecaca" opacity="0.7"/>
+            <path d="M 60 40 L 75 40 L 75 55 Q 75 60 70 60 L 60 60 Z" fill="url(#errorTruckGradient)" stroke="#991b1b" stroke-width="2"/>
+            <rect x="63" y="43" width="9" height="10" rx="1" fill="#fca5a5" opacity="0.8"/>
+            <line x1="35" y1="35" x2="35" y2="65" stroke="#991b1b" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="30" cy="70" r="8" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+            <circle cx="30" cy="70" r="4" fill="#64748b"/>
+            <circle cx="55" cy="70" r="8" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+            <circle cx="55" cy="70" r="4" fill="#64748b"/>
+            <text x="50" y="52" text-anchor="middle" font-size="20" font-weight="bold" fill="#ffffff">!</text>
+        </svg>
+        <div class="error-code">خطأ 500</div>
+        <h1>عذراً، حدث خطأ في الخادم</h1>
+        <p>
+            نعتذر عن هذا الخطأ. يرجى المحاولة مرة أخرى لاحقاً.<br>
+            إذا استمرت المشكلة، يرجى التواصل مع الدعم الفني.
+        </p>
+        <a href="/" class="btn">العودة للرئيسية</a>
+        <a href="javascript:history.back()" class="btn" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">الرجوع</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+[20-Jun-2026 17:51:28 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'd.user_id' in 'on clause' in C:\xampp\htdocs\logctic\views\drivers\drivers.php:111
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\drivers.php(111): PDO->query('\r\n    SELECT d....')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\drivers.php on line 111
+[20-Jun-2026 18:11:17 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'branch_id' in 'where clause' in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php:71
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php(71): PDO->prepare('SELECT id, name...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php on line 71
+[20-Jun-2026 18:24:40 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'branch_id' in 'where clause' in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php:71
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php(71): PDO->prepare('SELECT id, name...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php on line 71
+[21-Jun-2026 01:12:03 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'tda.notes' in 'field list' in C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php:49
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php(49): PDO->prepare('\r\n    SELECT t....')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php on line 49
+[21-Jun-2026 01:13:32 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't.assigned_to' in 'on clause' in C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php:49
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php(49): PDO->prepare('\r\n    SELECT t....')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php on line 49
+[21-Jun-2026 01:14:01 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 't.assigned_to' in 'on clause' in C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php:49
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php(49): PDO->prepare('\r\n    SELECT t....')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\driver_tasks.php on line 49
+[21-Jun-2026 01:51:30 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'branch_id' in 'where clause' in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php:71
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php(71): PDO->prepare('SELECT id, name...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php on line 71
+[21-Jun-2026 01:51:45 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'branch_id' in 'where clause' in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php:71
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php(71): PDO->prepare('SELECT id, name...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php on line 71
+[21-Jun-2026 01:59:28 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'branch_id' in 'where clause' in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php:65
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php(65): PDO->prepare('SELECT id, name...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php on line 65
+[21-Jun-2026 01:59:48 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'branch_id' in 'where clause' in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php:65
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php(65): PDO->prepare('SELECT id, name...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\drivers\all_driver_tasks.php on line 65

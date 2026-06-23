@@ -1,0 +1,20 @@
+[20-Jun-2026 17:47:50 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'logistic_system.tasks' doesn't exist in C:\xampp\htdocs\logctic\views\tasks\tasks.php:91
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\tasks\tasks.php(91): PDO->prepare('SELECT t.*, \r\n ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\tasks\tasks.php on line 91
+[20-Jun-2026 18:11:11 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'assigned_to' in 'where clause' in C:\xampp\htdocs\logctic\views\tasks\tasks.php:106
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\tasks\tasks.php(106): PDO->prepare('SELECT \r\n    CO...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\tasks\tasks.php on line 106
+[20-Jun-2026 18:22:05 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'assigned_to' in 'where clause' in C:\xampp\htdocs\logctic\views\tasks\tasks.php:106
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\tasks\tasks.php(106): PDO->prepare('SELECT \r\n    CO...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\tasks\tasks.php on line 106
+[21-Jun-2026 01:36:03 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'assigned_to' in 'where clause' in C:\xampp\htdocs\logctic\views\tasks\tasks.php:106
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\tasks\tasks.php(106): PDO->prepare('SELECT \r\n    CO...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\tasks\tasks.php on line 106

@@ -1,0 +1,4361 @@
+/* ================================================
+   نظام إدارة اللوجستيك - ملف الأنماط الرئيسي
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html></body>    </script>        }            }                document.body.style.overflow = 'auto';                event.target.classList.remove('active');            if (event.target.classList.contains('modal')) {        window.onclick = function(event) {        // إغلاق عند النقر خارج Modal                }            }                fileDisplay.classList.remove('active');            } else {                fileDisplay.classList.add('active');                fileNameText.textContent = input.files[0].name;            if (input.files && input.files[0]) {                        const fileNameText = document.getElementById('demo-file-name');            const fileDisplay = document.getElementById('demo-file-display');        function displayDemoFileName(input) {                }            document.body.style.overflow = 'auto';            modal.classList.remove('active');            const modal = document.getElementById(modalId);        function closeModal(modalId) {                }            document.body.style.overflow = 'hidden';            modal.classList.add('active');            const modal = document.getElementById(modalId);        function openModal(modalId) {    <script>        </div>        </div>            </div>                </button>                    <i class="fas fa-upload"></i> رفع الملف                <button class="btn btn-primary">                </button>                    <i class="fas fa-times"></i> إلغاء                <button class="btn btn-secondary" onclick="closeModal('modal4')">            <div class="modal-footer">            </div>                </div>                    <textarea class="form-control" rows="4" placeholder="أدخل أي ملاحظات إضافية"></textarea>                    <label>ملاحظات</label>                <div class="form-group">                                </div>                    </div>                        <span id="demo-file-name"></span>                        <i class="fas fa-check-circle"></i>                    <div class="file-name-display" id="demo-file-display">                    </div>                        </label>                            <span>اضغط لاختيار الملف أو اسحبه هنا</span>                            <i class="fas fa-cloud-upload-alt"></i>                        <label for="demo-file" class="file-input-label">                        <input type="file" id="demo-file" onchange="displayDemoFileName(this)">                    <div class="file-input-wrapper">                    <label>رفع الملف <span class="required">*</span></label>                <div class="form-group">                                </div>                    </div>                        </select>                            <option>أخرى</option>                            <option>تقرير</option>                            <option>عقد</option>                            <option>فاتورة</option>                        <select class="form-control">                        <label>نوع المستند</label>                    <div class="form-group">                                        </div>                        <input type="text" class="form-control" placeholder="أدخل عنوان المستند">                        <label>عنوان المستند <span class="required">*</span></label>                    <div class="form-group">                <div class="form-row">            <div class="modal-body">            </div>                <button class="modal-close" onclick="closeModal('modal4')">&times;</button>                <h3><i class="fas fa-file-upload"></i> نموذج رفع ملفات</h3>            <div class="modal-header">        <div class="modal-content">    <div id="modal4" class="modal">    <!-- Modal 4: رفع ملفات -->        </div>        </div>            </div>                </button>                    <i class="fas fa-save"></i> حفظ                <button class="btn btn-primary">                </button>                    <i class="fas fa-times"></i> إلغاء                <button class="btn btn-secondary" onclick="closeModal('modal3')">            <div class="modal-footer">            </div>                </div>                    </div>                        </div>                            <input type="text" class="form-control">                            <label>الشارع</label>                        <div class="form-group">                                                </div>                            <input type="text" class="form-control">                            <label>الحي</label>                        <div class="form-group">                                                </div>                            </select>                                <option>الدمام</option>                                <option>جدة</option>                                <option>الرياض</option>                            <select class="form-control">                            <label>المدينة</label>                        <div class="form-group">                    <div class="form-row-3">                                        </div>                        العنوان                        <i class="fas fa-map"></i>                    <div class="form-section-title">                <div class="form-section">                <!-- القسم الثالث -->                                </div>                    </div>                        </div>                            <input type="email" class="form-control">                            <label>البريد الإلكتروني <span class="required">*</span></label>                        <div class="form-group">                                                </div>                            <input type="tel" class="form-control">                            <label>رقم الجوال <span class="required">*</span></label>                        <div class="form-group">                    <div class="form-row">                                        </div>                        معلومات التواصل                        <i class="fas fa-phone"></i>                    <div class="form-section-title">                <div class="form-section">                <!-- القسم الثاني -->                                </div>                    </div>                        </div>                            <input type="text" class="form-control">                            <label>رقم الهوية <span class="required">*</span></label>                        <div class="form-group">                                                </div>                            <input type="text" class="form-control">                            <label>الاسم الكامل <span class="required">*</span></label>                        <div class="form-group">                    <div class="form-row">                                        </div>                        المعلومات الشخصية                        <i class="fas fa-user"></i>                    <div class="form-section-title">                <div class="form-section">                <!-- القسم الأول -->            <div class="modal-body">            </div>                <button class="modal-close" onclick="closeModal('modal3')">&times;</button>                <h3><i class="fas fa-layer-group"></i> نموذج بأقسام متعددة</h3>            <div class="modal-header">        <div class="modal-content">    <div id="modal3" class="modal">    <!-- Modal 3: أقسام متعددة -->        </div>        </div>            </div>                </button>                    <i class="fas fa-save"></i> حفظ                <button class="btn btn-primary">                </button>                    <i class="fas fa-times"></i> إلغاء                <button class="btn btn-secondary" onclick="closeModal('modal2')">            <div class="modal-footer">            </div>                </div>                    </div>                        <input type="text" class="form-control" placeholder="12345">                        <label>الرمز البريدي</label>                    <div class="form-group">                                        </div>                        <input type="text" class="form-control" placeholder="النرجس">                        <label>الحي</label>                    <div class="form-group">                                        </div>                        <input type="text" class="form-control" placeholder="الرياض">                        <label>المدينة</label>                    <div class="form-group">                <div class="form-row-3">                                </div>                    </div>                        </select>                            <option>2026</option>                            <option>2025</option>                            <option>2024</option>                        <select class="form-control">                        </label>                            السنة                            <i class="fas fa-calendar-alt"></i>                        <label>                    <div class="form-group">                                        </div>                        </select>                            <option>مارس</option>                            <option>فبراير</option>                            <option>يناير</option>                        <select class="form-control">                        </label>                            الشهر                            <i class="fas fa-calendar"></i>                        <label>                    <div class="form-group">                                        </div>                        </select>                            <option>3</option>                            <option>2</option>                            <option>1</option>                        <select class="form-control">                        </label>                            اليوم                            <i class="fas fa-calendar-day"></i>                        <label>                    <div class="form-group">                <div class="form-row-3">            <div class="modal-body">            </div>                <button class="modal-close" onclick="closeModal('modal2')">&times;</button>                <h3><i class="fas fa-th"></i> نموذج بثلاثة أعمدة</h3>            <div class="modal-header">        <div class="modal-content">    <div id="modal2" class="modal">    <!-- Modal 2: ثلاثة أعمدة -->        </div>        </div>            </div>                </button>                    <i class="fas fa-save"></i> حفظ                <button class="btn btn-primary">                </button>                    <i class="fas fa-times"></i> إلغاء                <button class="btn btn-secondary" onclick="closeModal('modal1')">            <div class="modal-footer">            </div>                </div>                    <textarea class="form-control" rows="3" placeholder="أدخل العنوان الكامل"></textarea>                    </label>                        العنوان                        <i class="fas fa-map-marker-alt"></i>                    <label>                <div class="form-group">                                </div>                    </div>                        <input type="tel" class="form-control" placeholder="05xxxxxxxx">                        </label>                            <span class="required">*</span>                            رقم الهاتف                            <i class="fas fa-phone"></i>                        <label>                    <div class="form-group">                                        </div>                        <input type="email" class="form-control" placeholder="example@email.com">                        </label>                            <span class="required">*</span>                            البريد الإلكتروني                            <i class="fas fa-envelope"></i>                        <label>                    <div class="form-group">                <div class="form-row">                                </div>                    </div>                        <input type="text" class="form-control" placeholder="أدخل الاسم الأخير">                        </label>                            <span class="required">*</span>                            الاسم الأخير                            <i class="fas fa-user"></i>                        <label>                    <div class="form-group">                                        </div>                        <input type="text" class="form-control" placeholder="أدخل الاسم الأول">                        </label>                            <span class="required">*</span>                            الاسم الأول                            <i class="fas fa-user"></i>                        <label>                    <div class="form-group">                <div class="form-row">            <div class="modal-body">            </div>                <button class="modal-close" onclick="closeModal('modal1')">&times;</button>                <h3><i class="fas fa-columns"></i> نموذج بعمودين متجاورين</h3>            <div class="modal-header">        <div class="modal-content">    <div id="modal1" class="modal">    <!-- Modal 1: عمودين -->        </div>        </div>&lt;/div&gt;</pre>    &lt;/div&gt;        &lt;!-- الحقول هنا --&gt;    &lt;div class="form-row"&gt;        &lt;/div&gt;        المعلومات الشخصية        &lt;i class="fas fa-user"&gt;&lt;/i&gt;    &lt;div class="form-section-title"&gt;            <pre>&lt;div class="form-section"&gt;            <h3><i class="fas fa-code"></i> كيفية الاستخدام - أقسام النماذج</h3>        <div class="code-section">                </div>&lt;/div&gt;</pre>    &lt;/div&gt;        &lt;select class="form-control"&gt;...&lt;/select&gt;        &lt;label&gt;السنة&lt;/label&gt;    &lt;div class="form-group"&gt;    &lt;/div&gt;        &lt;select class="form-control"&gt;...&lt;/select&gt;        &lt;label&gt;الشهر&lt;/label&gt;    &lt;div class="form-group"&gt;    &lt;/div&gt;        &lt;select class="form-control"&gt;...&lt;/select&gt;        &lt;label&gt;اليوم&lt;/label&gt;    &lt;div class="form-group"&gt;            <pre>&lt;div class="form-row-3"&gt;            <h3><i class="fas fa-code"></i> كيفية الاستخدام - Form Row 3 (ثلاثة أعمدة)</h3>        <div class="code-section">                </div>&lt;/div&gt;</pre>    &lt;/div&gt;        &lt;input type="text" class="form-control" placeholder="أدخل اللقب"&gt;        &lt;/label&gt;            &lt;span class="required"&gt;*&lt;/span&gt;            الاسم الأخير            &lt;i class="fas fa-user"&gt;&lt;/i&gt;        &lt;label&gt;    &lt;div class="form-group"&gt;        &lt;/div&gt;        &lt;input type="text" class="form-control" placeholder="أدخل الاسم"&gt;        &lt;/label&gt;            &lt;span class="required"&gt;*&lt;/span&gt;            الاسم الأول            &lt;i class="fas fa-user"&gt;&lt;/i&gt;        &lt;label&gt;    &lt;div class="form-group"&gt;            <pre>&lt;div class="form-row"&gt;            <h3><i class="fas fa-code"></i> كيفية الاستخدام - Form Row (عمودين)</h3>        <div class="code-section">        <!-- كود مثال -->                </div>            </div>                نموذج مع رفع ملفات                <i class="fas fa-file-upload"></i>            <div class="demo-btn" onclick="openModal('modal4')">            </div>                نموذج بأقسام متعددة                <i class="fas fa-layer-group"></i>            <div class="demo-btn" onclick="openModal('modal3')">            </div>                نموذج ثلاثة أعمدة                <i class="fas fa-th"></i>            <div class="demo-btn" onclick="openModal('modal2')">            </div>                نموذج عمودين                <i class="fas fa-columns"></i>            <div class="demo-btn" onclick="openModal('modal1')">        <div class="demo-buttons">                </div>            <p>نماذج متجاورة وتصاميم احترافية لنظام Logistic Pro</p>            <h1><i class="fas fa-drafting-compass"></i> أمثلة تخطيطات النماذج الاحترافية</h1>        <div class="demo-header">    <div class="demo-container"><body></head>    </style>        }            line-height: 1.6;            font-size: 13px;            font-family: 'Courier New', monospace;            margin: 0;        .code-section pre {                }            margin-bottom: 15px;            color: var(--primary-light);        .code-section h3 {                }            overflow-x: auto;            margin-top: 20px;            border-radius: 12px;            padding: 20px;            color: #e2e8f0;            background: #1e293b;        .code-section {                }            margin-bottom: 10px;            display: block;            font-size: 32px;        .demo-btn i {                }            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);            transform: translateY(-5px);        .demo-btn:hover {                }            color: var(--primary);            font-weight: 600;            text-align: center;            transition: all 0.3s ease;            cursor: pointer;            border-radius: 12px;            border: 2px solid var(--primary);            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);            padding: 20px;        .demo-btn {                }            margin-bottom: 40px;            gap: 20px;            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));            display: grid;        .demo-buttons {                }            font-size: 16px;            color: var(--gray-600);        .demo-header p {                }            margin-bottom: 10px;            font-size: 32px;            color: var(--primary);        .demo-header h1 {                }            border-bottom: 3px solid var(--primary);            padding-bottom: 30px;            margin-bottom: 40px;            text-align: center;        .demo-header {                }            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);            padding: 40px;            border-radius: 20px;            background: white;            margin: 0 auto;            max-width: 1200px;        .demo-container {                }            min-height: 100vh;            padding: 40px 20px;            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);        body {    <style>    <link rel="stylesheet" href="../assets/css/style.css">    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">    <title>أمثلة تخطيطات النماذج - Logistic Pro</title>    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta charset="UTF-8"><head>   تصميم احترافي متناسق بأحجام صغيرة
+   ================================================ */
+
+/* ================================================
+   1. الإعدادات الأساسية
+   ================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* الألوان الأساسية - Blue Corporate */
+    --primary: #0ea5e9;
+    --primary-dark: #0284c7;
+    --primary-light: #38bdf8;
+    --secondary: #64748b;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #0ea5e9;
+    
+    /* الألوان الرمادية */
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    
+    /* ألوان الخلفية */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-sidebar: #ffffff;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --border-color: #e5e7eb;
+    
+    /* المسافات */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+    
+    /* الخطوط */
+    --font-xs: 0.75rem;
+    --font-sm: 0.813rem;
+    --font-base: 0.875rem;
+    --font-md: 0.938rem;
+    --font-lg: 1rem;
+    --font-xl: 1.125rem;
+    --font-2xl: 1.25rem;
+    
+    /* الحواف */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    
+    /* الظلال */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Dark Mode Colors */
+[data-theme="dark"] {
+    --primary: #38bdf8;
+    --primary-dark: #0ea5e9;
+    --primary-light: #7dd3fc;
+    
+    --gray-50: #1e293b;
+    --gray-100: #334155;
+    --gray-200: #475569;
+    --gray-300: #64748b;
+    --gray-600: #cbd5e1;
+    --gray-700: #e2e8f0;
+    --gray-800: #f1f5f9;
+    --gray-900: #f8fafc;
+    
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-sidebar: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --border-color: #334155;
+}
+
+[data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--text-primary);
+}
+
+body {
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+    color: var(--gray-800);
+    font-size: var(--font-base);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* ================================================
+   2. صفحة تسجيل الدخول
+   ================================================ */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    padding: var(--spacing-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-page::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    top: -200px;
+    right: -200px;
+    animation: float 6s ease-in-out infinite;
+}
+
+.login-page::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    bottom: -150px;
+    left: -150px;
+    animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-30px); }
+}
+
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    z-index: 10;
+}
+
+.login-box {
+    background: white;
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.login-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* لوجو صفحة تسجيل الدخول */
+.login-logo {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 10px;
+    display: block;
+    animation: logoFadeIn 0.8s ease-out;
+}
+
+@keyframes logoFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.login-header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+    margin: 16px auto 0;
+    border-radius: 2px;
+}
+
+.login-header h1 {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+}
+
+.login-header p {
+    color: var(--gray-600);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--gray-800);
+}
+
+/* حقول الإدخال في صفحة الدخول */
+.login-page .form-group input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+.login-page .form-group input:focus {
+    outline: none;
+    border-color: #0ea5e9;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    transform: translateY(-2px);
+}
+
+.login-page .form-group input::placeholder {
+    color: var(--gray-400);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-size: var(--font-sm);
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+select.form-control {
+    cursor: pointer;
+    background: white;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%230ea5e9' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 14px;
+    padding-left: 36px;
+    appearance: none;
+}
+
+select.form-control option {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    padding: 10px;
+    background: white;
+}
+
+.form-help {
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-xs);
+    color: var(--gray-600);
+}
+
+/* زر تسجيل الدخول المميز */
+.login-page .btn-block {
+    width: 100%;
+    padding: 11px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    letter-spacing: 0.5px;
+    margin-top: 6px;
+}
+
+.login-page .btn-block:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+}
+
+.login-page .btn-block:active {
+    transform: translateY(0);
+}
+
+/* رسالة الخطأ */
+.login-page .alert-error {
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 2px solid #f87171;
+    color: #991b1b;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+/* ================================================
+   3. القائمة الجانبية
+   ================================================ */
+.sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 220px;
+    height: 100vh;
+    background: white;
+    padding: 0;
+    overflow-y: auto;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+    border-left: 1px solid var(--gray-200);
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 3px;
+}
+
+.sidebar-header {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    color: white;
+    border-bottom: 3px solid var(--primary-dark);
+    position: relative;
+}
+
+/* لوجو التطبيق */
+.app-logo {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 15px;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+.sidebar-header h2 {
+    color: white;
+    font-size: var(--font-xl);
+    font-weight: 800;
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.sidebar-header h2 i {
+    font-size: 24px;
+}
+
+.sidebar-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--font-xs);
+    font-weight: 500;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: var(--spacing-md) 0;
+}
+
+.sidebar-menu li {
+    margin: 0;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    color: var(--gray-700);
+    text-decoration: none;
+    font-size: var(--font-sm);
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border-right: 3px solid transparent;
+}
+
+.sidebar-menu a:hover {
+    background: var(--gray-50);
+    color: var(--primary);
+    border-right-color: var(--primary-light);
+    padding-right: calc(var(--spacing-lg) + 4px);
+}
+
+.sidebar-menu a.active {
+    background: linear-gradient(90deg, #e0f2fe 0%, #f0f9ff 100%);
+    color: var(--primary);
+    border-right-color: var(--primary);
+    font-weight: 700;
+}
+
+.sidebar-menu a span:first-child {
+    font-size: 1.2em;
+    width: 24px;
+    text-align: center;
+}
+
+/* ================================================
+   4. المحتوى الرئيسي
+   ================================================ */
+.main-content {
+    margin-right: 220px;
+    padding: var(--spacing-md);
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.page-header {
+    background: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-right: 3px solid var(--primary);
+}
+
+.page-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+}
+
+.page-header p {
+    color: var(--gray-600);
+    font-size: 13px;
+    margin: 0;
+}
+
+/* ================================================
+   5. البطاقات الإحصائية
+   ================================================ */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-card {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-100);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-light), var(--primary));
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-card.success::before {
+    background: linear-gradient(90deg, #34d399, var(--success));
+}
+
+.stat-card.warning::before {
+    background: linear-gradient(90deg, #fbbf24, var(--warning));
+}
+
+.stat-card.danger::before {
+    background: linear-gradient(90deg, #f87171, var(--danger));
+}
+
+.stat-card.info::before {
+    background: linear-gradient(90deg, #60a5fa, var(--info));
+}
+
+.stat-icon {
+    font-size: 2em;
+    opacity: 0.9;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-info h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1;
+}
+
+.stat-info p {
+    color: var(--gray-600);
+    font-size: var(--font-xs);
+    font-weight: 500;
+}
+
+/* بطاقات الإحصائيات للمهام */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: var(--spacing-sm) 0;
+    line-height: 1;
+}
+
+.stat-label {
+    color: var(--gray-600);
+    font-size: var(--font-xs);
+    font-weight: 500;
+}
+
+/* ================================================
+   6. الأقسام والمحتوى
+   ================================================ */
+.content-section {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--gray-100);
+}
+
+.content-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--gray-100);
+}
+
+.section-header h2 {
+    font-size: var(--font-lg);
+    font-weight: 700;
+    color: var(--gray-900);
+}
+
+/* ================================================
+   7. الجداول
+   ================================================ */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: var(--spacing-md);
+}
+
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: var(--gray-100);
+    border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    border-radius: 4px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: white;
+}
+
+.data-table thead {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    position: relative;
+}
+
+.data-table thead::after {
+    display: none;
+}
+
+.data-table thead th {
+    padding: 10px 16px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    color: white;
+    border: none;
+    white-space: nowrap;
+}
+
+.data-table thead th:first-child {
+    border-radius: 0;
+    text-align: right;
+    padding-right: var(--spacing-lg);
+}
+
+.data-table thead th:last-child {
+    border-radius: 0;
+}
+
+.data-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: var(--gray-700);
+    font-size: 13px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.data-table tbody td:first-child {
+    text-align: right;
+    padding-right: var(--spacing-xl);
+    font-weight: 500;
+    color: var(--gray-900);
+}
+
+.data-table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.data-table tbody tr:hover {
+    background: linear-gradient(90deg, var(--gray-50) 0%, #f8fafc 50%, var(--gray-50) 100%);
+    transform: translateX(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 var(--radius-lg);
+}
+
+.data-table tbody tr:last-child td:last-child {
+    border-radius: 0 0 var(--radius-lg) 0;
+}
+
+/* ================================================
+   عمود الإجراءات - تصميم محسّن
+   ================================================ */
+.data-table tbody td.actions {
+    padding: 12px 16px;
+    white-space: nowrap;
+    text-align: center;
+    min-width: 200px;
+}
+
+.data-table td.actions .btn,
+.data-table td.actions form {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    vertical-align: middle;
+    margin: 4px 3px;
+}
+
+.data-table td.actions .btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.data-table td.actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.data-table td.actions .btn i {
+    font-size: 14px;
+}
+
+/* أزرار محددة */
+.data-table td.actions .btn-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border: none;
+}
+
+.data-table td.actions .btn-warning:hover {
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+}
+
+.data-table td.actions .btn-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+}
+
+.data-table td.actions .btn-danger:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+}
+
+.data-table td.actions .btn-info {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+}
+
+.data-table td.actions .btn-info:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.data-table td.actions .btn-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+}
+
+.data-table td.actions .btn-success:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.data-table td.actions select.btn {
+    padding: 8px 12px 8px 32px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 10px center;
+    min-width: 100px;
+    font-weight: 600;
+}
+
+/* ================================================
+   8. الأزرار
+   ================================================ */
+.btn {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-sm);
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Cairo', sans-serif;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: var(--font-xs);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #94a3b8 0%, var(--secondary) 100%);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #34d399 0%, var(--success) 100%);
+    color: white;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #60a5fa 0%, var(--info) 100%);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #f87171 0%, var(--danger) 100%);
+    color: white;
+}
+
+/* أزرار الأيقونات الدائرية */
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-icon.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-icon.btn-primary:hover {
+    background: #2563eb;
+}
+
+.btn-icon.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-icon.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-icon.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-icon.btn-success:hover {
+    background: #059669;
+}
+
+/* ================================================
+   9. شارات الحالة
+   ================================================ */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.status-badge.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge.status-in_progress,
+.status-badge.status-assigned {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.status-badge.status-completed {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.status-cancelled {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ================================================
+   10. الأولويات
+   ================================================ */
+.priority-urgent {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.priority-high {
+    color: #ea580c;
+    font-weight: 700;
+}
+
+.priority-medium {
+    color: var(--warning);
+    font-weight: 600;
+}
+
+.priority-low {
+    color: var(--success);
+    font-weight: 600;
+}
+
+/* ================================================
+   11. الفلاتر
+   ================================================ */
+.filters-section {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-100);
+}
+
+.filters-form {
+    display: flex;
+    gap: var(--spacing-lg);
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filter-group {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.filter-group label {
+    font-weight: 600;
+    font-size: var(--font-sm);
+    color: var(--gray-700);
+}
+
+.filter-group select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-family: 'Cairo', sans-serif;
+    font-size: var(--font-sm);
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ================================================
+   12. التنبيهات
+   ================================================ */
+.alert {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid;
+    font-size: var(--font-sm);
+}
+
+.alert-success {
+    background: #d1fae5;
+    color: #065f46;
+    border-color: var(--success);
+}
+
+.alert-error {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: var(--danger);
+}
+
+.alert-info {
+    background: #dbeafe;
+    color: #1e40af;
+    border-color: var(--info);
+}
+
+.alert-warning {
+    background: #fef3c7;
+    color: #92400e;
+    border-color: var(--warning);
+}
+
+/* ================================================
+   13. النماذج المنبثقة (Modals)
+   ================================================ */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    overflow-y: auto;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal.active {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 580px;
+    width: 100%;
+    max-height: 85vh;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    animation: slideUp 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    position: relative;
+}
+
+.modal-header {
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: none;
+    flex-shrink: 0;
+    min-height: 60px;
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: calc(85vh - 140px);
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+    border-radius: 4px;
+}
+
+/* Form Grid System للحقول المتجاورة */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 0;
+}
+
+.form-row-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 0;
+}
+
+.form-col-full {
+    grid-column: 1 / -1;
+}
+
+.form-col-2 {
+    grid-column: span 2;
+}
+
+/* تحسين تصميم form-group */
+.modal-body .form-group {
+    margin-bottom: 14px;
+}
+
+.modal-body .form-group:last-child {
+    margin-bottom: 0;
+}
+
+.modal-body .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--gray-700);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.modal-body .form-group label .required {
+    color: #ef4444;
+    font-weight: 700;
+}
+
+.modal-body .form-group label i {
+    font-size: 11px;
+    color: var(--primary);
+    margin-left: 4px;
+}
+
+.modal-body .form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s ease;
+    background: #f9fafb;
+}
+
+.modal-body .form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.08);
+}
+
+.modal-body .form-control:hover {
+    border-color: #cbd5e1;
+}
+
+.modal-body textarea.form-control {
+    min-height: 65px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.modal-body select.form-control {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    background: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%230ea5e9' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 14px;
+    padding-left: 36px;
+    appearance: none;
+}
+
+.modal-body select.form-control option {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    padding: 10px;
+    background: white;
+}
+
+/* Form Sections داخل Modal */
+.form-section {
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 2px dashed #e5e7eb;
+}
+
+.form-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.form-section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--primary);
+}
+
+.form-section-title i {
+    color: var(--primary);
+    font-size: 14px;
+}
+
+/* Input Icons */
+.input-with-icon {
+    position: relative;
+}
+
+.input-with-icon .form-control {
+    padding-right: 40px;
+}
+
+.input-with-icon i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.input-with-icon .form-control:focus ~ i {
+    color: var(--primary);
+}
+
+/* File Input Custom Design */
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-input-wrapper input[type=file] {
+    position: absolute;
+    left: -9999px;
+}
+
+.file-input-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 20px 16px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px dashed var(--primary);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.file-input-label:hover {
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    border-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+.file-input-label i {
+    font-size: 20px;
+}
+
+.file-name-display {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--gray-700);
+    display: none;
+}
+
+.file-name-display.active {
+    display: block;
+}
+
+.file-name-display i {
+    color: var(--success);
+    margin-left: 6px;
+}
+
+/* Responsive للـ Forms */
+@media (max-width: 768px) {
+    .form-row,
+    .form-row-3 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .form-col-2,
+    .form-col-full {
+        grid-column: 1;
+    }
+}
+
+.modal-footer {
+    padding: 16px 24px;
+    background: #f8fafc;
+    border-top: 2px solid #e5e7eb;
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    min-height: 60px;
+    position: relative;
+    z-index: 10;
+}
+
+.modal-footer .btn {
+    min-width: 110px;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 8px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.modal-footer .btn i {
+    font-size: 13px;
+}
+
+.modal-footer .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.modal-footer .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+}
+
+.modal-footer .btn-secondary {
+    background: #e5e7eb;
+    color: #475569;
+}
+
+.modal-footer .btn-secondary:hover {
+    background: #d1d5db;
+    transform: translateY(-1px);
+}
+
+/* ================================================
+   تصميم Modal التعديل العصري
+   ================================================ */
+.modal-edit .modal-header-edit {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+    color: white;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    position: relative;
+}
+
+.modal-edit .modal-header-edit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+}
+
+.modal-edit .modal-header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 28px;
+    position: relative;
+    z-index: 1;
+}
+
+.modal-edit .modal-icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.modal-edit .modal-header-content h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-edit .modal-close {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.modal-edit .modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(90deg);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-edit .modal-body {
+    padding: 28px 28px 24px 28px;
+}
+
+.modal-edit .form-section {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-edit .form-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+}
+
+.modal-edit .form-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-edit .form-section-title i {
+    font-size: 18px;
+    color: #0ea5e9;
+}
+
+.modal-edit .form-control {
+    border: 2px solid #e2e8f0;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.modal-edit .form-control:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.1);
+    transform: translateY(-1px);
+}
+
+/* Dark Mode للتعديل */
+[data-theme="dark"] .modal-edit .modal-header-edit {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 50%, #075985 100%);
+}
+
+[data-theme="dark"] .modal-edit .form-section {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: #475569;
+}
+
+[data-theme="dark"] .modal-edit .form-section::before {
+    background: linear-gradient(180deg, #0ea5e9 0%, #0369a1 100%);
+}
+
+[data-theme="dark"] .modal-edit .form-section-title {
+    color: #38bdf8;
+    border-bottom-color: #475569;
+}
+
+[data-theme="dark"] .modal-edit .form-control {
+    background: white;
+    color: #000000;
+    border-color: #d1d5db;
+}
+
+[data-theme="dark"] .modal-edit .form-control:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+}
+
+/* ================================================
+   14. الرد السريع (Responsive)
+   ================================================ */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    
+    .main-content {
+        margin-right: 200px;
+        padding: var(--spacing-md);
+    }
+    
+    .dashboard-stats,
+    .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: var(--spacing-sm);
+    }
+    
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    
+    .data-table thead th,
+    .data-table tbody td {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: var(--font-xs);
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .main-content {
+        margin-right: 0;
+    }
+}
+
+/* ================================================
+   15. أدوات مساعدة
+   ================================================ */
+.text-muted {
+    color: var(--gray-600);
+    font-style: italic;
+    font-size: var(--font-sm);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.overdue {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: var(--spacing-xs) !important; }
+.mb-2 { margin-bottom: var(--spacing-sm) !important; }
+.mb-3 { margin-bottom: var(--spacing-md) !important; }
+.mb-4 { margin-bottom: var(--spacing-lg) !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: var(--spacing-xs) !important; }
+.mt-2 { margin-top: var(--spacing-sm) !important; }
+.mt-3 { margin-top: var(--spacing-md) !important; }
+.mt-4 { margin-top: var(--spacing-lg) !important; }
+
+/* ================================================
+   16. تحسينات إضافية
+   ================================================ */
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 2px solid var(--gray-100);
+}
+
+.required {
+    color: var(--danger);
+}
+
+/* خيارات الأولوية */
+.priority-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.priority-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.priority-option label {
+    display: block;
+    padding: var(--spacing-md);
+    border: 2px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: var(--font-sm);
+    font-weight: 600;
+}
+
+.priority-option input[type="radio"]:checked + label {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* ================================================
+   17. تذييل الصفحة (Footer)
+   ================================================ */
+.app-footer {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    padding: var(--spacing-lg) 0;
+    margin-top: var(--spacing-2xl);
+    border-top: 3px solid var(--primary);
+}
+
+.footer-content {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.footer-content p {
+    margin: var(--spacing-xs) 0;
+    font-size: var(--font-sm);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-content strong {
+    color: var(--primary-light);
+    font-weight: 700;
+}
+
+.footer-content a {
+    color: var(--primary-light);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.footer-content a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* ================================================
+   18. Toast Notifications
+   ================================================ */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.toast {
+    background: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 300px;
+    transform: translateY(-100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: all;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast i {
+    font-size: 20px;
+}
+
+.toast-success {
+    border-right: 4px solid var(--success);
+}
+
+.toast-success i {
+    color: var(--success);
+}
+
+.toast-error {
+    border-right: 4px solid var(--danger);
+}
+
+.toast-error i {
+    color: var(--danger);
+}
+
+.toast-warning {
+    border-right: 4px solid var(--warning);
+}
+
+.toast-warning i {
+    color: var(--warning);
+}
+
+.toast-info {
+    border-right: 4px solid var(--info);
+}
+
+.toast-info i {
+    color: var(--info);
+}
+
+/* ================================================
+   19. Loading Overlay
+   ================================================ */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ================================================
+   20. Theme Toggle Button
+   ================================================ */
+.theme-toggle {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle i {
+    transition: transform 0.5s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(360deg);
+}
+
+/* ================================================
+   21. Dark Mode Styles
+   ================================================ */
+[data-theme="dark"] .sidebar {
+    background: var(--bg-sidebar);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    border-left-color: var(--border-color);
+}
+
+[data-theme="dark"] .sidebar-menu a {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .sidebar-menu a:hover {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--primary);
+}
+
+[data-theme="dark"] .sidebar-menu a.active {
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--primary);
+}
+
+[data-theme="dark"] .main-content {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .content-section,
+[data-theme="dark"] .page-header,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .table-responsive,
+[data-theme="dark"] .data-table,
+[data-theme="dark"] .modal-content {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .data-table td,
+[data-theme="dark"] .data-table th {
+    border-color: var(--border-color);
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] .data-table input,
+[data-theme="dark"] .data-table select,
+[data-theme="dark"] .data-table textarea {
+    background: white !important;
+    border-color: #d1d5db !important;
+    color: #000000 !important;
+}
+
+[data-theme="dark"] .data-table td.actions .btn {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .data-table td.actions .btn:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .data-table input[readonly],
+[data-theme="dark"] .data-table input[disabled] {
+    background: #e5e7eb !important;
+    color: #6b7280 !important;
+    opacity: 0.9;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary) !important;
+}
+
+[data-theme="dark"] select.form-control,
+[data-theme="dark"] .form-group select {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary) !important;
+    background-color: var(--bg-secondary);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12'%3E%3Cpath fill='%230ea5e9' d='M6 9L1 4h10z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: left 10px center !important;
+}
+
+[data-theme="dark"] select.form-control option,
+[data-theme="dark"] .form-group select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: var(--text-secondary) !important;
+    opacity: 0.6;
+}
+
+[data-theme="dark"] .modal-body .form-control {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-body .form-control:focus {
+    background: var(--bg-primary);
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] .form-section {
+    border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .form-section-title {
+    color: var(--text-primary);
+    border-bottom-color: var(--primary);
+}
+
+[data-theme="dark"] .file-input-label {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(14, 165, 233, 0.15) 100%);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+[data-theme="dark"] .file-input-label:hover {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(14, 165, 233, 0.2) 100%);
+}
+
+[data-theme="dark"] .file-name-display {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-footer {
+    background: var(--bg-secondary);
+    border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .toast {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .mobile-home-btn {
+    background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+}
+
+[data-theme="dark"] .mobile-home-btn:hover {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    box-shadow: 0 8px 25px rgba(56, 189, 248, 0.6);
+}
+
+/* ================================================
+   22. Mobile Responsive Enhancements
+   ================================================ */
+
+/* Mobile Menu Toggle Button */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 10001;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle span {
+    width: 24px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile Home Button */
+.mobile-home-btn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5);
+    z-index: 10000;
+    transition: all 0.3s ease;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.mobile-home-btn i {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+.mobile-home-btn span {
+    font-size: 10px;
+    line-height: 1;
+}
+
+.mobile-home-btn:hover {
+    transform: scale(1.1) translateY(-3px);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.6);
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+}
+
+.mobile-home-btn:active {
+    transform: scale(0.95);
+}
+
+/* Sidebar Overlay */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 9998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+    
+    .mobile-home-btn {
+        display: flex;
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        height: 100vh;
+        width: 280px;
+        z-index: 9999;
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sidebar.mobile-open {
+        right: 0;
+    }
+    
+    .main-content {
+        margin-right: 0 !important;
+        padding: 80px 15px 20px;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
+    /* Hide notification bell on mobile to avoid overlap */
+    .notification-bell-container {
+        top: 15px;
+        left: 75px;
+    }
+    
+    .notification-bell {
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Mobile Table Improvements */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+        min-width: 600px;
+        font-size: 13px;
+    }
+    
+    table th,
+    table td {
+        padding: 10px 8px;
+        white-space: nowrap;
+    }
+    
+    .actions {
+        min-width: 120px;
+    }
+    
+    .btn-sm {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    /* Cards on Mobile */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 20px 15px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    /* Page Header */
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .page-header h1 {
+        font-size: 22px;
+    }
+    
+    .page-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Filters on Mobile */
+    .filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    /* Modal on Mobile */
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 10px;
+        max-height: 95vh;
+    }
+    
+    .modal-header {
+        padding: 18px 20px;
+    }
+    
+    .modal-header h3 {
+        font-size: 17px;
+    }
+    
+    .modal-body {
+        padding: 20px;
+    }
+    
+    .modal-footer {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+    }
+    
+    .modal-footer .btn {
+        min-width: auto;
+        flex: 1;
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+    
+    .form-section-title {
+        font-size: 14px;
+    }
+    
+    .file-input-label {
+        padding: 24px 16px;
+        font-size: 13px;
+    }
+    
+    #toast-container {
+        left: 10px;
+        right: 10px;
+        transform: none;
+    }
+    
+    .toast {
+        min-width: auto;
+        width: 100%;
+    }
+}
+
+/* ================================================
+   23. Search Bar Styles
+   ================================================ */
+.table-search {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 16px 10px 40px;
+    border: 2px solid var(--gray-200);
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%236b7280" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>') no-repeat 12px center;
+}
+
+.table-search:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+[data-theme="dark"] .table-search {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* ================================================
+   24. Icon Improvements
+   ================================================ */
+.sidebar-menu a i {
+    width: 24px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.btn i {
+    margin-left: 6px;
+}
+
+.stat-card i {
+    font-size: 2rem;
+}
+
+/* ================================================
+   25. Real-time Notifications
+   ================================================ */
+
+/* Notification Bell Container */
+.notification-bell-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.notification-bell {
+    position: relative;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    transition: all 0.3s ease;
+}
+
+.notification-bell:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(14, 165, 233, 0.4);
+}
+
+.notification-bell.has-notifications {
+    animation: bellShake 0.5s ease-in-out;
+}
+
+@keyframes bellShake {
+    0%, 100% { transform: rotate(0deg); }
+    10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
+    20%, 40%, 60%, 80% { transform: rotate(10deg); }
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ef4444;
+    color: white;
+    border-radius: 12px;
+    padding: 2px 6px;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+/* Notification Dropdown */
+.notification-dropdown {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    width: 380px;
+    max-height: 500px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1001;
+}
+
+.notification-dropdown.show {
+    display: flex;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Notification Header */
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: linear-gradient(135deg, var(--primary) 0%, #0284c7 100%);
+    color: white;
+}
+
+.notification-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mark-all-read {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.mark-all-read:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Notification List */
+.notification-list {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.notification-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+/* Notification Item */
+.notification-item {
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    gap: 12px;
+    align-items: start;
+    background: white;
+}
+
+.notification-item:hover {
+    background: var(--bg-secondary);
+}
+
+.notification-item.unread {
+    background: rgba(14, 165, 233, 0.05);
+    border-right: 3px solid var(--primary);
+}
+
+.notification-item.unread:hover {
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.notification-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.notification-icon.success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+.notification-icon.warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.notification-icon.error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.notification-icon.info {
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--primary);
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-content .message {
+    font-size: 14px;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+    line-height: 1.5;
+}
+
+.notification-content .time {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.notification-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.notification-empty i {
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+}
+
+.notification-empty p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] .notification-dropdown {
+    background: var(--bg-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .notification-item {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .notification-item:hover {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .notification-item.unread {
+    background: rgba(14, 165, 233, 0.1);
+}
+
+[data-theme="dark"] .notification-item.unread:hover {
+    background: rgba(14, 165, 233, 0.15);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .notification-bell-container {
+        top: 15px;
+        left: 75px;
+    }
+    
+    .notification-bell {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+    
+    .notification-dropdown {
+        width: calc(100vw - 40px);
+        max-width: 380px;
+        right: 10px;
+        left: auto;
+    }
+    
+    .notification-header h3 {
+        font-size: 16px;
+    }
+    
+    .mark-all-read {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+    
+    /* Mobile Table Improvements */
+    .table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+        min-width: 600px;
+        font-size: 13px;
+    }
+    
+    table th,
+    table td {
+        padding: 10px 8px;
+        white-space: nowrap;
+    }
+    
+    .actions {
+        min-width: 120px;
+    }
+    
+    .btn-sm {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    /* Cards on Mobile */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 20px 15px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    /* Page Header */
+    .page-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .page-header h1 {
+        font-size: 22px;
+    }
+    
+    .page-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    /* Filters on Mobile */
+    .filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    /* Modal on Mobile */
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        margin: 20px auto;
+    }
+    
+    .modal-edit {
+        max-width: 95%;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Login Page Mobile Optimizations */
+    .login-page {
+        padding: 10px;
+        min-height: 100vh;
+    }
+    
+    .login-page::before,
+    .login-page::after {
+        display: none;
+    }
+    
+    .login-container {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .login-box {
+        padding: 20px 16px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .login-box:hover {
+        transform: none;
+    }
+    
+    .login-logo {
+        width: 45px;
+        height: 45px;
+        margin: 0 auto 8px;
+    }
+    
+    .login-header {
+        margin-bottom: 16px;
+    }
+    
+    .login-header::after {
+        width: 50px;
+        height: 3px;
+        margin: 12px auto 0;
+    }
+    
+    .login-header h1 {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+    
+    .login-header p {
+        font-size: 12px;
+    }
+    
+    .form-group {
+        margin-bottom: 14px;
+    }
+    
+    .form-group label {
+        font-size: 13px;
+        margin-bottom: 6px;
+    }
+    
+    .login-page .form-group input {
+        padding: 12px 14px;
+        font-size: 15px;
+        border-radius: 10px;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+    
+    .login-page .form-group input:focus {
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        transform: none;
+    }
+    
+    .login-page .btn-block {
+        padding: 13px;
+        font-size: 16px;
+        border-radius: 10px;
+        margin-top: 8px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    .login-page .btn-block:hover {
+        transform: none;
+    }
+    
+    .login-page .btn-block:active {
+        transform: scale(0.98);
+    }
+    
+    .login-page .alert-error {
+        padding: 10px 14px;
+        font-size: 13px;
+        margin-bottom: 16px;
+        border-radius: 10px;
+    }
+}
+
+/* Connection Status Indicator */
+.connection-status {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.connection-status.online {
+    background: #22c55e;
+    color: white;
+}
+
+.connection-status.offline {
+    background: #ef4444;
+    color: white;
+}
+
+.connection-status.show {
+    display: flex;
+}
+
+/* ================================================
+   شاشة تفاصيل التحويل
+   ================================================ */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.info-card .card-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
+    padding: 18px 24px;
+    border-bottom: 3px solid #0284c7;
+}
+
+.info-card .card-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-card .card-header h3 i {
+    font-size: 20px;
+}
+
+.info-card .card-body {
+    padding: 24px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e7eb;
+    gap: 16px;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-row .label {
+    font-weight: 600;
+    color: #374151;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.info-row .label i {
+    color: #0ea5e9;
+    font-size: 16px;
+    width: 18px;
+    text-align: center;
+}
+
+.info-row .value {
+    flex: 1;
+    text-align: left;
+    color: #6b7280;
+}
+
+.info-row .value strong {
+    color: #111827;
+    font-size: 15px;
+}
+
+.text-muted {
+    color: #9ca3af;
+    font-size: 14px;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Dark Mode لشاشة التفاصيل */
+[data-theme="dark"] .info-card {
+    background: #1e293b;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .info-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .info-card .card-header {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+}
+
+[data-theme="dark"] .info-row {
+    border-bottom-color: #334155;
+}
+
+[data-theme="dark"] .info-row .label {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .info-row .value {
+    color: #cbd5e1;
+}
+
+[data-theme="dark"] .info-row .value strong {
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .text-muted {
+    color: #64748b;
+}
+
+/* Responsive للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .info-row .label {
+        min-width: auto;
+        font-size: 14px;
+    }
+    
+    .info-row .value {
+        text-align: right;
+        width: 100%;
+    }
+}
+
+/* ================================================
+   نظام Pagination (ترقيم الصفحات)
+   ================================================ */
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 30px 0 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.03) 0%, rgba(2, 132, 199, 0.03) 100%);
+    border-radius: 16px;
+}
+
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 14px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font-weight: 600;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.page-link span {
+    position: relative;
+    z-index: 1;
+}
+
+.page-link:hover {
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+.page-link:active {
+    transform: translateY(0);
+}
+
+.page-link.active {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    border-color: #0ea5e9;
+    color: white;
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.4);
+    cursor: default;
+    pointer-events: none;
+}
+
+.page-link.active::before {
+    opacity: 1;
+}
+
+.page-info {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    margin: 0 8px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.page-info::before {
+    content: '📄';
+    font-size: 14px;
+}
+
+/* تأثيرات للأزرار الأولى والأخيرة */
+.page-link:first-child,
+.page-link:last-child {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    font-weight: 700;
+}
+
+.page-link:first-child:hover,
+.page-link:last-child:hover {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    color: white;
+}
+
+/* Dark mode لـ Pagination */
+[data-theme="dark"] .pagination {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(2, 132, 199, 0.05) 100%);
+}
+
+[data-theme="dark"] .page-link {
+    background: #1e293b;
+    border-color: #334155;
+    color: #94a3b8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .page-link:hover {
+    border-color: #0ea5e9;
+    color: #0ea5e9;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+[data-theme="dark"] .page-link.active {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    border-color: #0ea5e9;
+    color: white;
+}
+
+[data-theme="dark"] .page-info {
+    background: #1e293b;
+    border-color: #334155;
+    color: #94a3b8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .page-link:first-child,
+[data-theme="dark"] .page-link:last-child {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+/* أنيميشن للتحميل */
+@keyframes pageFade {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pagination {
+    animation: pageFade 0.3s ease;
+}
+
+/* Responsive للموبايل */
+@media (max-width: 768px) {
+    .pagination {
+        gap: 4px;
+        margin: 20px 0 15px;
+        padding: 15px 10px;
+    }
+    
+    .page-link {
+        min-width: 34px;
+        height: 34px;
+        padding: 0 10px;
+        font-size: 12px;
+        border-radius: 6px;
+    }
+    
+    .page-info {
+        width: 100%;
+        justify-content: center;
+        margin: 8px 0 0;
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .page-info::before {
+        font-size: 12px;
+    }
+}
+
+/* ================================================
+   AJAX Polling - التأثيرات البصرية للتحديث اللحظي
+   ================================================ */
+
+/* تأثير تحديث الإحصائيات */
+@keyframes stat-update-flash {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+}
+
+
+
+/* ================================================
+   تنسيقات مخصصة لصفحة التقارير
+   ================================================ */
+.badge-vehicle {
+    background: #f7fafc;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    color: #1a202c;
+}
+
+.top-driver-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 8px;
+    border: 1px dashed #cbd5e1;
+}
+
+.info-alert {
+    background: linear-gradient(135deg, #e0f2ff 0%, #f0f9ff 100%);
+    border: 1px solid #bae6fd;
+}
+.text-primary-dark {
+    color: #1e40af;
+}
+
+/* ================================================
+   نهاية الملف
+   ================================================ */
+
+/* ================================================
+   الوضع الداكن الشامل - جميع الواجهات
+   ================================================ */
+
+/* الخلفية العامة */
+[data-theme="dark"] html,
+[data-theme="dark"] body {
+    background: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+/* الشريط الجانبي */
+[data-theme="dark"] .sidebar {
+    background: #1e293b !important;
+    border-left: 1px solid #334155;
+}
+
+[data-theme="dark"] .sidebar-header {
+    background: #0f172a !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .sidebar-menu a {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .sidebar-menu a:hover,
+[data-theme="dark"] .sidebar-menu a.active {
+    background: rgba(56,189,248,0.15) !important;
+    color: #38bdf8 !important;
+}
+
+/* المحتوى الرئيسي */
+[data-theme="dark"] .main-content {
+    background: #0f172a !important;
+}
+
+/* بطاقات الإحصائيات */
+[data-theme="dark"] .stat-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .stat-card[style] {
+    background: #1e293b !important; /* Overriding inline gradients in dark mode */
+}
+
+[data-theme="dark"] .stat-card .stat-number,
+[data-theme="dark"] .stat-card .stat-label,
+[data-theme="dark"] .stat-card h3,
+[data-theme="dark"] .stat-card p {
+    color: #f1f5f9 !important;
+}
+
+/* قسم المحتوى وفلاتر البحث */
+[data-theme="dark"] .content-section,
+[data-theme="dark"] .filter-card,
+[data-theme="dark"] .filters-section {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* رأس الصفحة */
+[data-theme="dark"] .page-header {
+    background: #1e293b !important;
+    border-bottom: 2px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .page-header h1 {
+    color: #f8fafc !important;
+}
+
+/* الجداول */
+[data-theme="dark"] .table-responsive {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .data-table {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .data-table thead {
+    background: #0f172a !important;
+}
+
+[data-theme="dark"] .data-table thead th {
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+    font-weight: 600 !important;
+}
+
+[data-theme="dark"] .data-table tbody tr {
+    background: #1e293b !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .data-table tbody tr:nth-child(even) {
+    background: #263048 !important;
+}
+
+[data-theme="dark"] .data-table tbody tr:hover {
+    background: #2d3f5c !important;
+}
+
+[data-theme="dark"] .data-table td {
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+
+/* النوافذ المنبثقة (Modals) */
+[data-theme="dark"] .modal {
+    background: rgba(0,0,0,0.7) !important;
+}
+
+[data-theme="dark"] .modal-content {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .modal-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .modal-header h2,
+[data-theme="dark"] .modal-header h3,
+[data-theme="dark"] .modal-header h4 {
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .modal-body {
+    background: #1e293b !important;
+}
+
+[data-theme="dark"] .modal-footer {
+    background: #0f172a !important;
+    border-top: 1px solid #334155 !important;
+}
+
+/* أقسام النموذج */
+[data-theme="dark"] .form-section {
+    background: transparent !important;
+    border-bottom: 1px dashed #334155 !important;
+}
+
+[data-theme="dark"] .form-section-title {
+    color: #38bdf8 !important;
+    border-bottom: 2px solid #0ea5e9 !important;
+}
+
+/* حقول الإدخال */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select,
+[data-theme="dark"] .form-control {
+    background: #0f172a !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] .form-control:focus {
+    background: #0f172a !important;
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56,189,248,0.15) !important;
+    outline: none !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: #64748b !important;
+}
+
+[data-theme="dark"] select option {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+
+/* العلامات (Labels) */
+[data-theme="dark"] label {
+    color: #cbd5e1 !important;
+}
+
+/* الشارات والحالات */
+[data-theme="dark"] .status-badge {
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* فلاتر البحث */
+[data-theme="dark"] .filters-bar,
+[data-theme="dark"] .filter-section,
+[data-theme="dark"] .search-bar,
+[data-theme="dark"] .table-search,
+[data-theme="dark"] .filter-form,
+[data-theme="dark"] .filters-form {
+    background: transparent !important;
+}
+
+[data-theme="dark"] .filters-bar input,
+[data-theme="dark"] .filters-bar select,
+[data-theme="dark"] .filter-section input,
+[data-theme="dark"] .filter-section select,
+[data-theme="dark"] .filter-card input,
+[data-theme="dark"] .filter-card select,
+[data-theme="dark"] .filters-section input,
+[data-theme="dark"] .filters-section select {
+    background: #0f172a !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+/* بطاقات التفاصيل */
+[data-theme="dark"] .info-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .info-card .card-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .info-row {
+    border-bottom: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .info-row .label {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .info-row .value {
+    color: #f1f5f9 !important;
+}
+
+/* التنبيهات */
+[data-theme="dark"] .alert-success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: #059669 !important;
+    color: #6ee7b7 !important;
+}
+
+[data-theme="dark"] .alert-error,
+[data-theme="dark"] .alert-danger {
+    background: rgba(239, 68, 68, 0.15) !important;
+    border-color: #dc2626 !important;
+    color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .alert-warning {
+    background: rgba(245, 158, 11, 0.15) !important;
+    border-color: #d97706 !important;
+    color: #fcd34d !important;
+}
+
+[data-theme="dark"] .alert-info {
+    background: rgba(14, 165, 233, 0.15) !important;
+    border-color: #0284c7 !important;
+    color: #7dd3fc !important;
+}
+
+/* نص عام */
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] label {
+    color: #f1f5f9;
+}
+
+/* روابط عامة */
+[data-theme="dark"] a:not(.btn):not(.sidebar-menu a) {
+    color: #38bdf8;
+}
+
+/* بطاقات خاصة بالتقارير */
+[data-theme="dark"] .report-card,
+[data-theme="dark"] .chart-card,
+[data-theme="dark"] .summary-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* صفحة تسجيل الدخول - تُبقى كما هي (ملونة) */
+[data-theme="dark"] .login-page {
+    background: linear-gradient(135deg, #0c4a6e 0%, #0f172a 100%) !important;
+}
+
+[data-theme="dark"] .login-card {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+/* لوحة التحكم - أحدث التحويلات */
+[data-theme="dark"] .recent-section,
+[data-theme="dark"] .dashboard-section {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+}
+
+/* شريط الحالة الجانبي */
+[data-theme="dark"] .sidebar-header p,
+[data-theme="dark"] .sidebar-header small {
+    color: rgba(255,255,255,0.85) !important;
+}
+
+/* عرض الملف */
+[data-theme="dark"] .file-name-display {
+    background: #0f172a !important;
+    color: #94a3b8 !important;
+    border-color: #475569 !important;
+}
+
+/* الشارات (Badges) */
+[data-theme="dark"] .status-badge {
+    background: #334155 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #475569 !important;
+}
+
+[data-theme="dark"] .status-assigned,
+[data-theme="dark"] .status-in_transit,
+[data-theme="dark"] .status-delivered,
+[data-theme="dark"] .status-pending {
+    background: rgba(14, 165, 233, 0.15) !important;
+    color: #38bdf8 !important;
+    border-color: #0ea5e9 !important;
+}
+
+[data-theme="dark"] .status-delivered {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+    border-color: #10b981 !important;
+}
+
+[data-theme="dark"] .status-pending {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    border-color: #f59e0b !important;
+}
+
+/* الأزرار داخل الجداول (عرض، تعديل) */
+[data-theme="dark"] .actions .btn {
+    background: #334155 !important;
+    border-color: #475569 !important;
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .actions .btn:hover {
+    background: #475569 !important;
+}
+
+/* حقل المطلوب * */
+[data-theme="dark"] .required {
+    color: #f87171 !important;
+}
+
+/* رسائل خضراء/حمراء في الجدول */
+[data-theme="dark"] strong {
+    color: #f8fafc;
+}
+
+/* زر إغلاق المودال */
+[data-theme="dark"] .modal-close {
+    background: rgba(255,255,255,0.15) !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .modal-close:hover {
+    background: rgba(255,255,255,0.25) !important;
+}
+
+/* Dropdown إشعارات */
+[data-theme="dark"] .notification-dropdown {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+}
+
+[data-theme="dark"] .notification-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .notification-item {
+    border-bottom: 1px solid #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .notification-item:hover {
+    background: #263048 !important;
+}
+
+[data-theme="dark"] .notification-item.unread {
+    background: rgba(56,189,248,0.08) !important;
+}
+
+/* نص ملاحظات إضافية في الصفحات */
+[data-theme="dark"] .text-muted {
+    color: #64748b !important;
+}
+
+[data-theme="dark"] .text-secondary {
+    color: #94a3b8 !important;
+}
+
+/* حاوية الفلاتر */
+[data-theme="dark"] .filter-container,
+[data-theme="dark"] .filter-bar {
+    background: #1e293b !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+/* تنسيقات صفحة التقارير */
+[data-theme="dark"] .badge-vehicle {
+    background: #334155 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #475569 !important;
+}
+
+[data-theme="dark"] .top-driver-card {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .top-driver-card h3 {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .empty-state {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .info-alert {
+    background: rgba(14, 165, 233, 0.1) !important;
+    border-color: #0ea5e9 !important;
+}
+
+[data-theme="dark"] .text-primary-dark {
+    color: #7dd3fc !important;
+}
+
+/* ================================================
+   النماذج وإضافة المهام - الوضع الداكن
+   ================================================ */
+[data-theme="dark"] .form-container {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .form-container label {
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .form-container .form-control {
+    background: #0f172a !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .form-container .form-control:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+}
+
+[data-theme="dark"] .form-help {
+    color: #94a3b8 !important;
+}
+
+/* خيارات الأولوية */
+[data-theme="dark"] .priority-option label {
+    border-color: #475569 !important;
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .priority-option.urgent input[type="radio"]:checked + label {
+    background: rgba(220, 53, 69, 0.2) !important;
+    border-color: #ef4444 !important;
+    color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .priority-option.high input[type="radio"]:checked + label {
+    background: rgba(253, 126, 20, 0.2) !important;
+    border-color: #f97316 !important;
+    color: #fdba74 !important;
+}
+
+[data-theme="dark"] .priority-option.medium input[type="radio"]:checked + label {
+    background: rgba(255, 193, 7, 0.2) !important;
+    border-color: #eab308 !important;
+    color: #fde047 !important;
+}
+
+[data-theme="dark"] .priority-option.low input[type="radio"]:checked + label {
+    background: rgba(40, 167, 69, 0.2) !important;
+    border-color: #22c55e !important;
+    color: #86efac !important;
+}
+

@@ -1,0 +1,130 @@
+# ================================================
+# Logistic Pro - Apache Configuration
+# تحسين الأداء والأمان
+# ================================================
+
+# تفعيل compression لتقليل حجم الملفات
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# تفعيل Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # الصور
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS و JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    
+    # HTML
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# تفعيل Cache-Control Headers
+<IfModule mod_headers.c>
+    # CSS و JavaScript
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    
+    # الصور
+    <FilesMatch "\.(jpg|jpeg|png|gif|svg|webp|ico)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+    
+    # Fonts
+    <FilesMatch "\.(woff|woff2|ttf|otf)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+    
+    # منع XSS
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # منع Clickjacking
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # منع Content-Type Sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# حماية الملفات الحساسة
+<FilesMatch "^(config\.php|\.env|\.htaccess)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# منع عرض محتويات المجلدات
+Options -Indexes
+
+# تفعيل KeepAlive للأداء
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# Redirect HTTP to HTTPS (عند رفع الموقع للإنتاج)
+# <IfModule mod_rewrite.c>
+#     RewriteEngine On
+#     RewriteCond %{HTTPS} off
+#     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>
+
+# UTF-8 Encoding
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .xml .json .rss .atom
+
+# حماية من SQL Injection في URLs
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=http:// [OR]
+    RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=(\.\.//?)+ [OR]
+    RewriteCond %{QUERY_STRING} [a-zA-Z0-9_]=/([a-z0-9_.]//?)+ [NC]
+    RewriteRule .* - [F]
+</IfModule>
+
+# تحسين الأداء - تقليل Server Signature
+ServerSignature Off
+
+# PHP Settings (إذا كان مسموح)
+<IfModule mod_php.c>
+    php_value max_execution_time 30
+    php_value max_input_time 60
+    php_value memory_limit 128M
+    php_value upload_max_filesize 10M
+    php_value post_max_size 12M
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log error_log.txt
+</IfModule>
+
+# إخفاء أخطاء PHP في الإنتاج (طريقة بديلة)
+php_flag display_errors Off
+php_flag display_startup_errors Off
+php_value error_reporting 0
+
+# تفعيل تسجيل الأخطاء
+php_flag log_errors On
+php_value error_log error_log.txt
+
+# صفحات الأخطاء المخصصة
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html

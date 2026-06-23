@@ -1,0 +1,46 @@
+[20-Jun-2026 18:10:55 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:127
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(127): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 127
+[20-Jun-2026 18:11:00 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:127
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(127): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 127
+[20-Jun-2026 18:11:25 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:127
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(127): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 127
+[20-Jun-2026 18:19:34 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:131
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(131): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 131
+[20-Jun-2026 18:21:32 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:131
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(131): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 131
+[20-Jun-2026 18:24:19 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:131
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(131): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 131
+[20-Jun-2026 18:24:54 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:131
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(131): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 131
+[20-Jun-2026 18:27:32 Asia/Riyadh] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in C:\xampp\htdocs\logctic\views\transfers\transfers.php:131
+Stack trace:
+#0 C:\xampp\htdocs\logctic\views\transfers\transfers.php(131): PDO->query('SELECT COUNT(*)...')
+#1 {main}
+  thrown in C:\xampp\htdocs\logctic\views\transfers\transfers.php on line 131
+[22-Jun-2026 18:46:45 Asia/Riyadh] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\view_transfer.php on line 69
+[22-Jun-2026 19:09:46 Asia/Riyadh] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 174
+[23-Jun-2026 22:46:21 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
+[23-Jun-2026 22:46:21 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
+[23-Jun-2026 22:56:58 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383
+[23-Jun-2026 22:56:58 Asia/Riyadh] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\logctic\views\transfers\assign_driver.php on line 383

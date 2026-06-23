@@ -1,0 +1,142 @@
+/* مؤشر حالة الاتصال للتحديث اللحظي */
+#realtime-status {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+#realtime-status::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-success {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.status-success::before {
+    background: white;
+}
+
+.status-error {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.status-error::before {
+    background: white;
+    animation: none;
+}
+
+.status-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.status-warning::before {
+    background: white;
+    animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* تأثير التحديث على الإحصائيات */
+.stat-value.updating {
+    animation: statUpdate 0.5s ease;
+}
+
+@keyframes statUpdate {
+    0% {
+        transform: scale(1);
+        color: inherit;
+    }
+    50% {
+        transform: scale(1.1);
+        color: #0ea5e9;
+    }
+    100% {
+        transform: scale(1);
+        color: inherit;
+    }
+}
+
+/* مؤشر بصري للتحديثات الجديدة */
+.new-update {
+    position: relative;
+}
+
+.new-update::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: newUpdatePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes newUpdatePulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    #realtime-status {
+        top: 60px;
+        left: 10px;
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+    
+    #realtime-status::before {
+        width: 6px;
+        height: 6px;
+    }
+}

@@ -1,0 +1,35 @@
+<!-- Logo SVG للتطبيق - شاحنة لوجستية -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="app-logo">
+  <defs>
+    <linearGradient id="truckGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- الجزء الخلفي من الشاحنة (الحاوية) -->
+  <rect x="15" y="35" width="45" height="30" rx="3" fill="url(#truckGradient)" stroke="#0369a1" stroke-width="2"/>
+  <rect x="20" y="40" width="15" height="15" rx="2" fill="#e0f2fe" opacity="0.7"/>
+  <rect x="40" y="40" width="15" height="15" rx="2" fill="#e0f2fe" opacity="0.7"/>
+  
+  <!-- مقدمة الشاحنة -->
+  <path d="M 60 40 L 75 40 L 75 55 Q 75 60 70 60 L 60 60 Z" fill="url(#truckGradient)" stroke="#0369a1" stroke-width="2"/>
+  
+  <!-- زجاج القيادة -->
+  <rect x="63" y="43" width="9" height="10" rx="1" fill="#bae6fd" opacity="0.8"/>
+  
+  <!-- خطوط على الحاوية -->
+  <line x1="35" y1="35" x2="35" y2="65" stroke="#0369a1" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- العجلات -->
+  <circle cx="30" cy="70" r="8" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="30" cy="70" r="4" fill="#64748b"/>
+  
+  <circle cx="55" cy="70" r="8" fill="#334155" stroke="#0f172a" stroke-width="2"/>
+  <circle cx="55" cy="70" r="4" fill="#64748b"/>
+  
+  <!-- حركة (خطوط السرعة) -->
+  <line x1="5" y1="45" x2="12" y2="45" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="7" y1="52" x2="14" y2="52" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <line x1="3" y1="38" x2="10" y2="38" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+</svg>

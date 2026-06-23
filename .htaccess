@@ -117,13 +117,13 @@ ServerSignature Off
 </IfModule>
 
 # إخفاء أخطاء PHP في الإنتاج (طريقة بديلة)
-php_flag display_errors Off
-php_flag display_startup_errors Off
-php_value error_reporting 0
-
-# تفعيل تسجيل الأخطاء
-php_flag log_errors On
-php_value error_log error_log.txt
+<IfModule mod_php.c>
+    php_flag display_errors Off
+    php_flag display_startup_errors Off
+    php_value error_reporting 0
+    php_flag log_errors On
+    php_value error_log error_log.txt
+</IfModule>
 
 # صفحات الأخطاء المخصصة
 ErrorDocument 404 /404.html

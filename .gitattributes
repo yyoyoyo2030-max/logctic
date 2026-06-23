@@ -1,0 +1,3 @@
+# Ensure correct line endings for Docker/Linux files
+*.sh text eol=lf
+Dockerfile text eol=lf

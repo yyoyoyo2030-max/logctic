@@ -14,8 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
-// Auto-cleanup
-$conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+// Auto-cleanup - ONLY 5% probability to avoid locking the DB on every request
+if (rand(1, 100) <= 5) {
+    $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+}
 
 // Relative time helper
 function timeAgo($datetime) {
@@ -33,22 +35,32 @@ $filter_type = $_GET['type'] ?? 'all';
 $filter_user = $_GET['user_id'] ?? '';
 $filter_date = $_GET['date'] ?? '';
 
-// Statistics (always today)
-$stats = [];
-$stmt = $conn->query("SELECT COUNT(*) as c FROM system_logs WHERE log_type='activity' AND DATE(created_at) = CURDATE()");
-$stats['today_activities'] = $stmt->fetch()['c'];
+// Statistics (optimized single query to prevent 502s)
+$stats = [
+    'today_activities' => 0,
+    'today_errors' => 0,
+    'today_views' => 0,
+    'active_users' => 0,
+    'total_logs' => 0
+];
 
-$stmt = $conn->query("SELECT COUNT(*) as c FROM system_logs WHERE log_type='error' AND DATE(created_at) = CURDATE()");
-$stats['today_errors'] = $stmt->fetch()['c'];
-
-$stmt = $conn->query("SELECT COUNT(*) as c FROM system_logs WHERE log_type='page_view' AND DATE(created_at) = CURDATE()");
-$stats['today_views'] = $stmt->fetch()['c'];
-
-$stmt = $conn->query("SELECT COUNT(DISTINCT user_id) as c FROM system_logs WHERE DATE(created_at) = CURDATE() AND user_id IS NOT NULL");
-$stats['active_users'] = $stmt->fetch()['c'];
-
-$stmt = $conn->query("SELECT COUNT(*) as c FROM system_logs");
-$stats['total_logs'] = $stmt->fetch()['c'];
+$stmt = $conn->query("
+    SELECT 
+        SUM(CASE WHEN log_type = 'activity' AND created_at >= CURDATE() THEN 1 ELSE 0 END) as today_act,
+        SUM(CASE WHEN log_type = 'error' AND created_at >= CURDATE() THEN 1 ELSE 0 END) as today_err,
+        SUM(CASE WHEN log_type = 'page_view' AND created_at >= CURDATE() THEN 1 ELSE 0 END) as today_view,
+        COUNT(DISTINCT CASE WHEN created_at >= CURDATE() THEN user_id ELSE NULL END) as act_users,
+        COUNT(*) as total
+    FROM system_logs
+");
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($row) {
+    $stats['today_activities'] = (int)$row['today_act'];
+    $stats['today_errors'] = (int)$row['today_err'];
+    $stats['today_views'] = (int)$row['today_view'];
+    $stats['active_users'] = (int)$row['act_users'];
+    $stats['total_logs'] = (int)$row['total'];
+}
 
 // Build query for logs
 $where = ['1=1'];
@@ -62,7 +74,8 @@ if ($filter_user) {
     $params[] = $filter_user;
 }
 if ($filter_date) {
-    $where[] = 'DATE(sl.created_at) = ?';
+    $where[] = 'sl.created_at >= ? AND sl.created_at < DATE_ADD(?, INTERVAL 1 DAY)';
+    $params[] = $filter_date;
     $params[] = $filter_date;
 }
 $whereStr = implode(' AND ', $where);
@@ -75,7 +88,7 @@ $logs = $stmt->fetchAll();
 $users = $conn->query("SELECT id, full_name, username FROM users ORDER BY full_name")->fetchAll();
 
 // Most active users today
-$stmt = $conn->query("SELECT u.full_name, u.username, COUNT(*) as cnt FROM system_logs sl JOIN users u ON sl.user_id = u.id WHERE DATE(sl.created_at) = CURDATE() GROUP BY sl.user_id ORDER BY cnt DESC LIMIT 5");
+$stmt = $conn->query("SELECT u.full_name, u.username, COUNT(*) as cnt FROM system_logs sl JOIN users u ON sl.user_id = u.id WHERE sl.created_at >= CURDATE() GROUP BY sl.user_id ORDER BY cnt DESC LIMIT 5");
 $active_users_list = $stmt->fetchAll();
 
 // Recent errors

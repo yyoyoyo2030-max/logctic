@@ -28,9 +28,12 @@ define('PRODUCTION_MODE', true);
 EOFVARS
 
     cat >> /var/www/html/config/config.php << 'EOFREST'
-// Site URL auto-detection
-$protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-$site_url = getenv('SITE_URL') ?: ($protocol . "://" . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
+// Site URL auto-detection (with proxy support)
+$is_https = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || 
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+$protocol = $is_https ? "https" : "http";
+$host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? $_SERVER['HTTP_HOST'] ?? 'localhost';
+$site_url = getenv('SITE_URL') ?: ($protocol . "://" . $host);
 define('SITE_URL', $site_url);
 
 // إعدادات عامة

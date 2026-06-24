@@ -67,10 +67,10 @@
         setTimeout(logPageView, 1500);
     })();
     </script>
-    <!-- تحديث الجداول فقط كل 10 ثواني بدون إعادة تحميل الصفحة -->
+    <!-- تحديث الجداول لتحديث البيانات الحية -->
     <script>
     (function() {
-        const REFRESH_INTERVAL = 10000; // 10 ثواني
+        const REFRESH_INTERVAL = 45000; // 45 ثانية لتخفيف الضغط على السيرفر
         
         function isModalOpen() {
             const modals = document.querySelectorAll('.modal.show, .modal[style*="display: block"], .swal2-popup, .swal2-container, [role="dialog"]:not([aria-hidden="true"])');

@@ -848,35 +848,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // ---- Auto-Refresh every 30s ----
-    var tbody = document.getElementById('mon-tbody');
-    setInterval(function() {
-        if (document.activeElement && ['INPUT','SELECT','TEXTAREA'].indexOf(document.activeElement.tagName) !== -1) return;
-
-        fetch(window.location.href)
-            .then(function(r) { return r.text(); })
-            .then(function(html) {
-                var parser = new DOMParser();
-                var doc = parser.parseFromString(html, 'text/html');
-                var newTbody = doc.getElementById('mon-tbody');
-                if (newTbody && tbody && tbody.innerHTML !== newTbody.innerHTML) {
-                    tbody.innerHTML = newTbody.innerHTML;
-                    tbody.style.opacity = '0.5';
-                    setTimeout(function() { tbody.style.opacity = '1'; }, 250);
-                }
-                doc.querySelectorAll('[data-stat]').forEach(function(newEl) {
-                    var key = newEl.dataset.stat;
-                    var cur = document.querySelector('[data-stat="' + key + '"]');
-                    if (cur && cur.textContent !== newEl.textContent) {
-                        cur.textContent = newEl.textContent;
-                        cur.style.transform = 'scale(1.15)';
-                        setTimeout(function() { cur.style.transform = ''; }, 300);
-                    }
-                });
-            })
-            .catch(function() {});
-    }, 30000);
 });
 </script>
 

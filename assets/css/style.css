@@ -1322,27 +1322,50 @@ select.form-control option {
    8. الأزرار
    ================================================ */
 .btn {
-    display: inline-block;
-    padding: var(--spacing-md) var(--spacing-lg);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
     font-size: var(--font-sm);
     font-weight: 600;
     text-align: center;
     text-decoration: none;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
     font-family: 'Cairo', sans-serif;
-    box-shadow: var(--shadow-sm);
+    background-image: linear-gradient(to bottom, #ffffff, rgba(231, 229, 228, 0.4));
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    color: #334155;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    z-index: 1;
 }
 
-.btn:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+.btn::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    background-image: linear-gradient(to bottom, rgba(214, 211, 209, 0.4), transparent);
+    z-index: -2;
+    pointer-events: none;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border-radius: 8px;
+    background-image: linear-gradient(to bottom, rgba(231, 229, 228, 0.4), rgba(255, 255, 255, 0.8));
+    z-index: -1;
+    pointer-events: none;
 }
 
 .btn:active {
-    transform: translateY(0);
+    transform: scale(0.995);
+    box-shadow: 0 0px 1px rgba(0,0,0,0.5);
 }
 
 .btn-sm {
@@ -1351,27 +1374,47 @@ select.form-control option {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+    background-image: linear-gradient(to bottom, var(--primary-light), var(--primary));
     color: white;
 }
-
-.btn-primary:hover {
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+.btn-primary::before {
+    background-image: linear-gradient(to bottom, rgba(99, 102, 241, 0.4), transparent);
+}
+.btn-primary::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
 .btn-secondary {
-    background: linear-gradient(135deg, #94a3b8 0%, var(--secondary) 100%);
+    background-image: linear-gradient(to bottom, #94a3b8, var(--secondary));
     color: white;
+}
+.btn-secondary::before {
+    background-image: linear-gradient(to bottom, rgba(148, 163, 184, 0.4), transparent);
+}
+.btn-secondary::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
 .btn-success {
-    background: linear-gradient(135deg, #34d399 0%, var(--success) 100%);
+    background-image: linear-gradient(to bottom, #34d399, var(--success));
     color: white;
+}
+.btn-success::before {
+    background-image: linear-gradient(to bottom, rgba(52, 211, 153, 0.4), transparent);
+}
+.btn-success::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
 .btn-info {
-    background: linear-gradient(135deg, #60a5fa 0%, var(--info) 100%);
+    background-image: linear-gradient(to bottom, #60a5fa, var(--info));
     color: white;
+}
+.btn-info::before {
+    background-image: linear-gradient(to bottom, rgba(96, 165, 250, 0.4), transparent);
+}
+.btn-info::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
 .btn-danger {

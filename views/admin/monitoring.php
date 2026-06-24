@@ -80,7 +80,8 @@ if ($filter_date) {
 }
 $whereStr = implode(' AND ', $where);
 
-$stmt = $conn->prepare("SELECT sl.*, u.full_name, u.username FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE $whereStr ORDER BY sl.created_at DESC LIMIT 200");
+// إعطاء الأولوية للأخطاء للظهور في أعلى الجدول، ثم ترتيب الباقي حسب الأحدث
+$stmt = $conn->prepare("SELECT sl.*, u.full_name, u.username FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE $whereStr ORDER BY CASE WHEN sl.log_type = 'error' THEN 1 ELSE 2 END ASC, sl.created_at DESC LIMIT 200");
 $stmt->execute($params);
 $logs = $stmt->fetchAll();
 

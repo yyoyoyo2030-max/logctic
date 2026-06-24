@@ -124,7 +124,7 @@ include '../../includes/header.php';
                 <th>رقم الرخصة</th>
                 <th>نوع المركبة</th>
                 <th>رقم المركبة</th>
-                <th>حساب الدخول</th>
+
                 <th>الحالة</th>
                 <th>إجراءات</th>
             </tr>
@@ -137,13 +137,7 @@ include '../../includes/header.php';
                 <td><?php echo htmlspecialchars($driver['license_number']); ?></td>
                 <td><?php echo htmlspecialchars($driver['vehicle_type']); ?></td>
                 <td><?php echo htmlspecialchars($driver['vehicle_number']); ?></td>
-                <td>
-                    <?php if ($driver['user_id']): ?>
-                        <span class="status-badge status-delivered">✓ <?php echo htmlspecialchars($driver['username']); ?></span>
-                    <?php else: ?>
-                        <span class="status-badge status-cancelled">✗ لا يوجد</span>
-                    <?php endif; ?>
-                </td>
+
                 <td>
                     <?php if ($driver['is_available']): ?>
                         <span class="status-badge status-delivered">✓ متاح</span>

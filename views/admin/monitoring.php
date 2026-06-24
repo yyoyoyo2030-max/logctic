@@ -377,42 +377,8 @@ require_once '../../includes/header.php';
     color: var(--primary);
 }
 
-/* Tabs */
-.mon-tabs {
-    display: flex;
-    border-bottom: 2px solid var(--border-color);
-    background: var(--bg-secondary);
-}
-.mon-tabs .t-btn {
-    padding: 11px 24px;
-    background: transparent;
-    border: none;
-    border-bottom: 3px solid transparent;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    margin-bottom: -2px;
-}
-.mon-tabs .t-btn:hover { color: #0ea5e9; }
-.mon-tabs .t-btn.active {
-    color: #0ea5e9;
-    border-bottom-color: #0ea5e9;
-    background: var(--bg-primary);
-}
-
-/* Tab Content */
-.t-content { display: none; }
-.t-content.active { display: block; animation: tabFade 0.3s ease; }
-@keyframes tabFade {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+<!-- Filter + Content Wrapper -->
+<div class="mon-controls">
 
 /* ---- Logs Table ---- */
 .mon-table-wrap { overflow-x: auto; }
@@ -527,49 +493,24 @@ require_once '../../includes/header.php';
 }
 .mon-empty i { font-size: 40px; opacity: 0.2; display: block; margin-bottom: 12px; }
 
-/* PostHog */
-.ph-section { padding: 18px; }
-.ph-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-}
-.ph-bar h3 {
-    margin: 0;
-    font-size: 0.95rem;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.ph-bar h3 i { color: #f59e0b; }
-.ph-link {
-    padding: 7px 16px;
-    background: linear-gradient(135deg, #f59e0b, #f97316);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
+/* Video link */
+.btn-video {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    transition: transform 0.2s;
+    gap: 4px;
+    padding: 4px 10px;
+    background: rgba(245,158,11,0.1);
+    color: #f59e0b;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
 }
-.ph-link:hover { transform: translateY(-1px); color: #fff; }
-.ph-frame {
-    width: 100%;
-    height: 75vh;
-    min-height: 450px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    overflow: hidden;
+.btn-video:hover {
+    background: #f59e0b;
+    color: #fff;
 }
-.ph-frame iframe { width: 100%; height: 100%; border: none; }
 
 /* Footer */
 .mon-footer {
@@ -640,8 +581,6 @@ require_once '../../includes/header.php';
     .mon-stats { grid-template-columns: 1fr; }
     .mon-filter { flex-direction: column; align-items: stretch; }
     .mon-filter select, .mon-filter input[type="date"] { min-width: 100%; }
-    .mon-tabs .t-btn { padding: 9px 14px; font-size: 0.78rem; }
-    .ph-frame { height: 50vh; }
     .mon-footer { flex-direction: column; text-align: center; }
 }
 </style>
@@ -766,14 +705,8 @@ require_once '../../includes/header.php';
         <div class="f-count"><i class="fas fa-list"></i> النتائج: <strong><?php echo count($logs); ?></strong></div>
     </form>
 
-    <!-- Tabs -->
-    <div class="mon-tabs">
-        <button class="t-btn active" data-tab="tab-logs"><i class="fas fa-list-alt"></i> سجل النشاطات والأخطاء</button>
-        <button class="t-btn" data-tab="tab-posthog"><i class="fas fa-video"></i> تسجيلات الجلسات (PostHog)</button>
-    </div>
-
-    <!-- Tab 1: Logs -->
-    <div class="t-content active" id="tab-logs">
+    <!-- Logs Table -->
+    <div style="padding: 10px 0;">
         <div class="mon-table-wrap">
             <?php if (count($logs) > 0): ?>
             <table class="mon-table" id="mon-table">
@@ -785,7 +718,7 @@ require_once '../../includes/header.php';
                         <th>الإجراء</th>
                         <th>التفاصيل</th>
                         <th>الصفحة</th>
-                        <th>IP</th>
+                        <th>التسجيل</th>
                     </tr>
                 </thead>
                 <tbody id="mon-tbody">
@@ -808,7 +741,15 @@ require_once '../../includes/header.php';
                         <td class="t-action" title="<?php echo htmlspecialchars($log['action']); ?>"><?php echo htmlspecialchars($log['action']); ?></td>
                         <td class="t-detail" title="<?php echo htmlspecialchars($log['details'] ?? ''); ?>"><?php echo htmlspecialchars($log['details'] ?? '—'); ?></td>
                         <td class="t-page" title="<?php echo htmlspecialchars($log['page_url'] ?? ''); ?>"><?php echo htmlspecialchars($log['page_url'] ?? '—'); ?></td>
-                        <td class="t-ip"><?php echo htmlspecialchars($log['ip_address'] ?? '—'); ?></td>
+                        <td>
+                            <?php if ($log['user_id']): ?>
+                                <a href="https://us.posthog.com/project/484728/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة">
+                                    <i class="fas fa-video"></i> فيديو
+                                </a>
+                            <?php else: ?>
+                                <span style="color:var(--text-secondary);font-size:0.7rem;">—</span>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -819,54 +760,6 @@ require_once '../../includes/header.php';
                 <p>لا توجد سجلات مطابقة للتصفية المحددة</p>
             </div>
             <?php endif; ?>
-        </div>
-    </div>
-
-    <!-- Tab 2: PostHog -->
-    <div class="t-content" id="tab-posthog">
-        <div style="padding: 30px 20px;">
-            <!-- Main Card -->
-            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 16px; padding: 40px; text-align: center; color: #fff; margin-bottom: 20px; position: relative; overflow: hidden;">
-                <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.03);"></div>
-                <div style="position:absolute;bottom:-80px;left:-80px;width:250px;height:250px;border-radius:50%;background:rgba(245,158,11,0.05);"></div>
-                <div style="position:relative;z-index:1;">
-                    <div style="width:70px;height:70px;background:linear-gradient(135deg,#f59e0b,#f97316);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:18px;box-shadow:0 8px 32px rgba(245,158,11,0.3);">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h2 style="font-size:1.4rem;margin:0 0 8px;font-weight:700;">تسجيلات جلسات المستخدمين</h2>
-                    <p style="opacity:0.7;font-size:0.9rem;margin:0 0 24px;max-width:500px;display:inline-block;">شاهد فيديوهات حقيقية لتحركات المستخدمين داخل النظام — كل نقرة، كل تمرير، كل صفحة.</p>
-                    <div>
-                        <a href="https://us.posthog.com/project/484728/replay/home" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 6px 20px rgba(245,158,11,0.35);">
-                            <i class="fas fa-play-circle"></i> مشاهدة التسجيلات
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Feature Cards -->
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-                <a href="https://us.posthog.com/project/484728/replay/home" target="_blank" style="background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                    <div style="width:44px;height:44px;background:rgba(14,165,233,0.1);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                        <i class="fas fa-desktop" style="color:#0ea5e9;font-size:18px;"></i>
-                    </div>
-                    <h4 style="margin:0 0 4px;font-size:0.85rem;color:var(--text-primary);">تسجيلات الشاشة</h4>
-                    <p style="margin:0;font-size:0.72rem;color:var(--text-secondary);">شاهد ما يراه المستخدم بالضبط</p>
-                </a>
-                <a href="https://us.posthog.com/project/484728/events" target="_blank" style="background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                    <div style="width:44px;height:44px;background:rgba(16,185,129,0.1);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                        <i class="fas fa-bolt" style="color:#10b981;font-size:18px;"></i>
-                    </div>
-                    <h4 style="margin:0 0 4px;font-size:0.85rem;color:var(--text-primary);">الأحداث المباشرة</h4>
-                    <p style="margin:0;font-size:0.72rem;color:var(--text-secondary);">تتبع كل حدث في الوقت الحقيقي</p>
-                </a>
-                <a href="https://us.posthog.com/project/484728/error_tracking" target="_blank" style="background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                    <div style="width:44px;height:44px;background:rgba(239,68,68,0.1);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
-                        <i class="fas fa-bug" style="color:#ef4444;font-size:18px;"></i>
-                    </div>
-                    <h4 style="margin:0 0 4px;font-size:0.85rem;color:var(--text-primary);">تتبع الأخطاء</h4>
-                    <p style="margin:0;font-size:0.72rem;color:var(--text-secondary);">اكتشف الأخطاء قبل المستخدمين</p>
-                </a>
-            </div>
         </div>
     </div>
 </div>
@@ -887,17 +780,6 @@ require_once '../../includes/header.php';
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-
-    // ---- Tab Switching ----
-    document.querySelectorAll('.t-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.t-btn').forEach(function(b) { b.classList.remove('active'); });
-            document.querySelectorAll('.t-content').forEach(function(c) { c.classList.remove('active'); });
-            this.classList.add('active');
-            document.getElementById(this.dataset.tab).classList.add('active');
-        });
-    });
-
     // ---- Instant filter on select change ----
     ['f-type', 'f-user'].forEach(function(id) {
         var el = document.getElementById(id);
@@ -943,8 +825,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ---- Auto-Refresh every 30s ----
     var tbody = document.getElementById('mon-tbody');
     setInterval(function() {
-        var activeTab = document.querySelector('.t-btn.active');
-        if (activeTab && activeTab.dataset.tab !== 'tab-logs') return;
         if (document.activeElement && ['INPUT','SELECT','TEXTAREA'].indexOf(document.activeElement.tagName) !== -1) return;
 
         fetch(window.location.href)

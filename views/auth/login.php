@@ -25,6 +25,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = $user['role'];
             $_SESSION['branch_id'] = $user['branch_id'];
             
+            // إضافة خاصية تذكرني
+            if (isset($_POST['remember_me'])) {
+                $token = bin2hex(random_bytes(32));
+                // تحديث الرمز في قاعدة البيانات
+                $upd_stmt = $conn->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
+                $upd_stmt->execute([$token, $user['id']]);
+                
+                // إنشاء كعكة (Cookie) صالحة لمدة 30 يوم
+                $cookieValue = $user['id'] . ':' . $token;
+                setcookie('remember_token', $cookieValue, time() + (86400 * 30), "/", "", PRODUCTION_MODE, true);
+            }
+            
             // إعادة توجيه حسب الدور
             if ($user['role'] == 'driver') {
                 redirect('views/drivers/driver_transfers.php');
@@ -92,6 +104,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="form-group">
                     <label><i class="fas fa-lock"></i> كلمة المرور</label>
                     <input type="password" name="password" required placeholder="أدخل كلمة المرور">
+                </div>
+                
+                <div class="form-group" style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
+                    <input type="checkbox" name="remember_me" id="remember_me" style="width:18px;height:18px;cursor:pointer;">
+                    <label for="remember_me" style="margin:0;cursor:pointer;font-weight:500;">تذكرني لتسجيل الدخول التلقائي</label>
                 </div>
                 
                 <button type="submit" class="btn btn-primary btn-block">

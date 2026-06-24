@@ -687,6 +687,19 @@ require_once '../../includes/header.php';
 
 <!-- Controls: Filter + Tabs + Content -->
 <div class="mon-controls">
+    <!-- Cleanup Bar -->
+    <div class="mon-footer" style="margin-bottom:0;border-radius:12px 12px 0 0;">
+        <div class="f-info">
+            <i class="fas fa-info-circle"></i>
+            <span>يتم حذف السجلات الأقدم من 7 أيام تلقائياً. يمكنك الحذف يدوياً أيضاً.</span>
+        </div>
+        <form method="POST" id="cleanup-form" style="margin:0;">
+            <input type="hidden" name="action" value="cleanup">
+            <button type="button" class="f-clean" id="cleanup-btn">
+                <i class="fas fa-broom"></i> تنظيف السجلات القديمة
+            </button>
+        </form>
+    </div>
     <!-- Filter -->
     <form class="mon-filter" method="GET" action="monitoring.php" id="filter-form">
         <div class="f-group">
@@ -791,19 +804,7 @@ require_once '../../includes/header.php';
     </div>
 </div>
 
-<!-- Footer -->
-<div class="mon-footer">
-    <div class="f-info">
-        <i class="fas fa-info-circle"></i>
-        <span>يتم حذف السجلات الأقدم من 7 أيام تلقائياً. يمكنك الحذف يدوياً أيضاً.</span>
-    </div>
-    <form method="POST" id="cleanup-form" style="margin:0;">
-        <input type="hidden" name="action" value="cleanup">
-        <button type="button" class="f-clean" id="cleanup-btn">
-            <i class="fas fa-broom"></i> تنظيف السجلات القديمة
-        </button>
-    </form>
-</div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

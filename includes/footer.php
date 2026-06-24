@@ -16,6 +16,11 @@
     (function() {
         var SITE_URL = '<?php echo SITE_URL; ?>';
         
+        // دالة مساعدة لجلب رقم جلسة الفيديو
+        function getPhSessionId() {
+            try { return typeof posthog !== 'undefined' ? posthog.get_session_id() : null; } catch(e) { return null; }
+        }
+
         // تسجيل مشاهدة الصفحة
         function logPageView() {
             fetch(SITE_URL + '/api/log_event.php', {
@@ -24,7 +29,8 @@
                 body: JSON.stringify({
                     type: 'page_view',
                     action: document.title || 'صفحة',
-                    page_url: window.location.pathname
+                    page_url: window.location.pathname,
+                    details: JSON.stringify({ ph_session_id: getPhSessionId() })
                 })
             }).catch(function(){});
         }
@@ -37,7 +43,7 @@
                 body: JSON.stringify({
                     type: 'error',
                     action: 'JS Error: ' + message,
-                    details: JSON.stringify({source: source, line: lineno, col: colno, stack: error ? error.stack : ''}),
+                    details: JSON.stringify({source: source, line: lineno, col: colno, stack: error ? error.stack : '', ph_session_id: getPhSessionId()}),
                     page_url: window.location.pathname
                 })
             }).catch(function(){});
@@ -51,13 +57,14 @@
                 body: JSON.stringify({
                     type: 'error',
                     action: 'Promise Error: ' + (event.reason ? event.reason.message || String(event.reason) : 'Unknown'),
+                    details: JSON.stringify({ ph_session_id: getPhSessionId() }),
                     page_url: window.location.pathname
                 })
             }).catch(function(){});
         });
         
-        // تأخير تسجيل المشاهدة لضمان تحميل الصفحة
-        setTimeout(logPageView, 1000);
+        // تأخير تسجيل المشاهدة لضمان تحميل الصفحة وتحميل PostHog
+        setTimeout(logPageView, 1500);
     })();
     </script>
     <!-- تحديث الجداول فقط كل 10 ثواني بدون إعادة تحميل الصفحة -->

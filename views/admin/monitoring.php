@@ -756,9 +756,22 @@ require_once '../../includes/header.php';
                         <td class="t-detail" title="<?php echo htmlspecialchars($log['details'] ?? ''); ?>"><?php echo htmlspecialchars($log['details'] ?? '—'); ?></td>
                         <td class="t-page" title="<?php echo htmlspecialchars($log['page_url'] ?? ''); ?>"><?php echo htmlspecialchars($log['page_url'] ?? '—'); ?></td>
                         <td>
-                            <?php if ($log['user_id']): ?>
-                                <a href="https://us.posthog.com/project/484728/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة">
-                                    <i class="fas fa-video"></i> فيديو
+                            <?php 
+                            $ph_session_id = null;
+                            if (!empty($log['details'])) {
+                                $parsed = json_decode($log['details'], true);
+                                if (is_array($parsed) && !empty($parsed['ph_session_id'])) {
+                                    $ph_session_id = $parsed['ph_session_id'];
+                                }
+                            }
+                            
+                            if ($ph_session_id): ?>
+                                <a href="https://us.posthog.com/project/484728/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
+                                    <i class="fas fa-play"></i> تشغيل
+                                </a>
+                            <?php elseif ($log['user_id']): ?>
+                                <a href="https://us.posthog.com/project/484728/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
+                                    <i class="fas fa-video"></i> مستخدم
                                 </a>
                             <?php else: ?>
                                 <span style="color:var(--text-secondary);font-size:0.7rem;">—</span>

@@ -175,6 +175,10 @@
                     <li><a href="<?php echo SITE_URL; ?>/views/admin/whatsapp_settings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'whatsapp_settings.php' ? 'active' : ''; ?>">
                         <i class="fab fa-whatsapp"></i> <span>إعدادات الواتساب</span>
                     </a></li>
+                    
+                    <li><a href="<?php echo SITE_URL; ?>/views/admin/monitoring.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'monitoring.php' ? 'active' : ''; ?>">
+                        <i class="fas fa-shield-halved"></i> <span>مراقبة النظام</span>
+                    </a></li>
                     <?php endif; ?>
                 <?php endif; ?>
                 

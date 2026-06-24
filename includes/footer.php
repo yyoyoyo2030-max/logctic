@@ -11,6 +11,55 @@
     
     <script src="<?php echo SITE_URL; ?>/assets/js/main.js" defer></script>
     
+    <!-- نظام المراقبة: تسجيل الأخطاء ومشاهدات الصفحات -->
+    <script>
+    (function() {
+        var SITE_URL = '<?php echo SITE_URL; ?>';
+        
+        // تسجيل مشاهدة الصفحة
+        function logPageView() {
+            fetch(SITE_URL + '/api/log_event.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    type: 'page_view',
+                    action: document.title || 'صفحة',
+                    page_url: window.location.pathname
+                })
+            }).catch(function(){});
+        }
+        
+        // تسجيل أخطاء JavaScript
+        window.onerror = function(message, source, lineno, colno, error) {
+            fetch(SITE_URL + '/api/log_event.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    type: 'error',
+                    action: 'JS Error: ' + message,
+                    details: JSON.stringify({source: source, line: lineno, col: colno, stack: error ? error.stack : ''}),
+                    page_url: window.location.pathname
+                })
+            }).catch(function(){});
+        };
+        
+        // تسجيل أخطاء Promise غير المعالجة
+        window.addEventListener('unhandledrejection', function(event) {
+            fetch(SITE_URL + '/api/log_event.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    type: 'error',
+                    action: 'Promise Error: ' + (event.reason ? event.reason.message || String(event.reason) : 'Unknown'),
+                    page_url: window.location.pathname
+                })
+            }).catch(function(){});
+        });
+        
+        // تأخير تسجيل المشاهدة لضمان تحميل الصفحة
+        setTimeout(logPageView, 1000);
+    })();
+    </script>
     <!-- تحديث الجداول فقط كل 10 ثواني بدون إعادة تحميل الصفحة -->
     <script>
     (function() {

@@ -824,18 +824,48 @@ require_once '../../includes/header.php';
 
     <!-- Tab 2: PostHog -->
     <div class="t-content" id="tab-posthog">
-        <div class="ph-section">
-            <div class="ph-bar">
-                <h3><i class="fas fa-play-circle"></i> تسجيلات جلسات المستخدمين</h3>
-                <a href="https://us.posthog.com/project/484728/replay/home" target="_blank" class="ph-link">
-                    <i class="fas fa-external-link-alt"></i> فتح PostHog
-                </a>
+        <div style="padding: 30px 20px;">
+            <!-- Main Card -->
+            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); border-radius: 16px; padding: 40px; text-align: center; color: #fff; margin-bottom: 20px; position: relative; overflow: hidden;">
+                <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.03);"></div>
+                <div style="position:absolute;bottom:-80px;left:-80px;width:250px;height:250px;border-radius:50%;background:rgba(245,158,11,0.05);"></div>
+                <div style="position:relative;z-index:1;">
+                    <div style="width:70px;height:70px;background:linear-gradient(135deg,#f59e0b,#f97316);border-radius:16px;display:inline-flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:18px;box-shadow:0 8px 32px rgba(245,158,11,0.3);">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h2 style="font-size:1.4rem;margin:0 0 8px;font-weight:700;">تسجيلات جلسات المستخدمين</h2>
+                    <p style="opacity:0.7;font-size:0.9rem;margin:0 0 24px;max-width:500px;display:inline-block;">شاهد فيديوهات حقيقية لتحركات المستخدمين داخل النظام — كل نقرة، كل تمرير، كل صفحة.</p>
+                    <div>
+                        <a href="https://us.posthog.com/project/484728/replay/home" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.95rem;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 6px 20px rgba(245,158,11,0.35);">
+                            <i class="fas fa-play-circle"></i> مشاهدة التسجيلات
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="ph-frame">
-                <iframe src="https://us.posthog.com/project/484728/replay/home" 
-                        allow="fullscreen" 
-                        loading="lazy"
-                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
+            
+            <!-- Feature Cards -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+                <a href="https://us.posthog.com/project/484728/replay/home" target="_blank" style="background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    <div style="width:44px;height:44px;background:rgba(14,165,233,0.1);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                        <i class="fas fa-desktop" style="color:#0ea5e9;font-size:18px;"></i>
+                    </div>
+                    <h4 style="margin:0 0 4px;font-size:0.85rem;color:var(--text-primary);">تسجيلات الشاشة</h4>
+                    <p style="margin:0;font-size:0.72rem;color:var(--text-secondary);">شاهد ما يراه المستخدم بالضبط</p>
+                </a>
+                <a href="https://us.posthog.com/project/484728/events" target="_blank" style="background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    <div style="width:44px;height:44px;background:rgba(16,185,129,0.1);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                        <i class="fas fa-bolt" style="color:#10b981;font-size:18px;"></i>
+                    </div>
+                    <h4 style="margin:0 0 4px;font-size:0.85rem;color:var(--text-primary);">الأحداث المباشرة</h4>
+                    <p style="margin:0;font-size:0.72rem;color:var(--text-secondary);">تتبع كل حدث في الوقت الحقيقي</p>
+                </a>
+                <a href="https://us.posthog.com/project/484728/error_tracking" target="_blank" style="background:var(--bg-primary);border:1px solid var(--border-color);border-radius:12px;padding:20px;text-align:center;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    <div style="width:44px;height:44px;background:rgba(239,68,68,0.1);border-radius:10px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:10px;">
+                        <i class="fas fa-bug" style="color:#ef4444;font-size:18px;"></i>
+                    </div>
+                    <h4 style="margin:0 0 4px;font-size:0.85rem;color:var(--text-primary);">تتبع الأخطاء</h4>
+                    <p style="margin:0;font-size:0.72rem;color:var(--text-secondary);">اكتشف الأخطاء قبل المستخدمين</p>
+                </a>
             </div>
         </div>
     </div>

@@ -25,16 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = $user['role'];
             $_SESSION['branch_id'] = $user['branch_id'];
             
-            // إضافة خاصية تذكرني
+            // إضافة خاصية تذكرني (معزولة حتى لا تؤثر على الدخول)
             if (isset($_POST['remember_me'])) {
-                $token = bin2hex(random_bytes(32));
-                // تحديث الرمز في قاعدة البيانات
-                $upd_stmt = $conn->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
-                $upd_stmt->execute([$token, $user['id']]);
-                
-                // إنشاء كعكة (Cookie) صالحة لمدة 30 يوم
-                $cookieValue = $user['id'] . ':' . $token;
-                setcookie('remember_token', $cookieValue, time() + (86400 * 30), "/", "", PRODUCTION_MODE, true);
+                try {
+                    $token = bin2hex(random_bytes(32));
+                    $upd_stmt = $conn->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
+                    $upd_stmt->execute([$token, $user['id']]);
+                    
+                    $cookieValue = $user['id'] . ':' . $token;
+                    $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+                    setcookie('remember_token', $cookieValue, time() + (86400 * 30), "/", "", $secure, true);
+                } catch(Exception $e) {
+                    error_log("Remember Me Error: " . $e->getMessage());
+                }
             }
             
             // إعادة توجيه حسب الدور

@@ -103,6 +103,19 @@ include '../../includes/header.php';
 <?php endif; ?>
 
 <div class="table-responsive">
+    <?php if (empty($branches)): ?>
+    <!-- حالة فارغة: لا توجد فروع -->
+    <div style="text-align: center; padding: 60px 20px; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0;">
+        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #e0e7ff, #c7d2fe); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-building" style="font-size: 32px; color: #6366f1;"></i>
+        </div>
+        <h3 style="margin: 0 0 8px; color: #1e293b; font-size: 1.15rem;">لا توجد فروع بعد</h3>
+        <p style="color: #94a3b8; font-size: 0.9rem; margin: 0 0 20px;">ابدأ بإضافة أول فرع لنظامك لتتمكن من إدارة التحويلات والمهام.</p>
+        <button class="btn btn-primary" onclick="openModal('addBranchModal')" style="border-radius: 10px; padding: 10px 28px;">
+            <i class="fas fa-plus"></i> إضافة أول فرع
+        </button>
+    </div>
+    <?php else: ?>
     <table class="data-table">
         <thead>
             <tr>
@@ -120,8 +133,20 @@ include '../../includes/header.php';
             <?php foreach ($branches as $branch): ?>
             <tr>
                 <td><strong><?php echo htmlspecialchars($branch['name']); ?></strong></td>
-                <td><?php echo htmlspecialchars($branch['location'] ?? ''); ?></td>
-                <td><?php echo htmlspecialchars($branch['phone'] ?? ''); ?></td>
+                <td>
+                    <?php if (!empty($branch['location'])): ?>
+                        <?php echo htmlspecialchars($branch['location']); ?>
+                    <?php else: ?>
+                        <span style="color: #cbd5e1; font-size: 0.85rem;">لم يُحدد</span>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if (!empty($branch['phone'])): ?>
+                        <?php echo htmlspecialchars($branch['phone']); ?>
+                    <?php else: ?>
+                        <span style="color: #cbd5e1; font-size: 0.85rem;">لم يُحدد</span>
+                    <?php endif; ?>
+                </td>
                 <td>
                     <?php if (!empty($branch['whatsapp_group_id'])): ?>
                         <span class="status-badge status-delivered"><i class="fab fa-whatsapp"></i> مخصص</span>
@@ -129,8 +154,20 @@ include '../../includes/header.php';
                         <span class="status-badge status-pending">عام</span>
                     <?php endif; ?>
                 </td>
-                <td><span class="status-badge status-assigned"><?php echo $branch['users_count']; ?></span></td>
-                <td><span class="status-badge status-in_transit"><?php echo $branch['transfers_count']; ?></span></td>
+                <td>
+                    <?php if ($branch['users_count'] > 0): ?>
+                        <span class="status-badge status-assigned"><?php echo $branch['users_count']; ?></span>
+                    <?php else: ?>
+                        <span style="color: #cbd5e1; font-size: 0.82rem;">لا يوجد</span>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php if ($branch['transfers_count'] > 0): ?>
+                        <span class="status-badge status-in_transit"><?php echo $branch['transfers_count']; ?></span>
+                    <?php else: ?>
+                        <span style="color: #cbd5e1; font-size: 0.82rem;">لا يوجد</span>
+                    <?php endif; ?>
+                </td>
                 <td><?php echo date('Y-m-d', strtotime($branch['created_at'])); ?></td>
                 <td class="actions">
                     <a href="branches.php?edit=<?php echo $branch['id']; ?>" class="btn btn-sm btn-warning">
@@ -144,6 +181,7 @@ include '../../includes/header.php';
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
 </div>
 
 <!-- مودال إضافة فرع -->

@@ -139,19 +139,24 @@ include '../../includes/header.php';
                 <small class="text-muted">هذا الجروب يستقبل نسخة من جميع إشعارات تأكيد الاستلام لكافة الفروع. إذا لم يكن لفرع معين جروب مخصص، سيتم الإرسال هنا فقط.</small>
             </div>
             
-            <hr style="border: 0; border-top: 1px solid #ddd; margin: 25px 0;">
+            <div style="margin: 30px 0; border-top: 2px solid #e2e8f0; position: relative;">
+                <span style="position: absolute; top: -12px; right: 20px; background: #fff; padding: 0 12px; font-size: 0.85rem; color: #64748b; font-weight: 600;">
+                    <i class="fas fa-code-branch" style="color: #6366f1;"></i> الجروبات المخصصة للفروع
+                </span>
+            </div>
             
-            <h4 style="margin-bottom: 15px; color: #2c3e50;"><i class="fas fa-code-branch"></i> الجروبات المخصصة للفروع</h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <p style="font-size: 0.82rem; color: #94a3b8; margin-bottom: 20px;">إذا لم يتم تحديد جروب لفرع معين، سيتم إرسال إشعاراته تلقائياً إلى الجروب الرئيسي (العام).</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px;">
                 <?php foreach ($branches as $branch): ?>
-                <div style="flex: 1 1 calc(33.333% - 15px); min-width: 220px; background: #fdfdfd; border: 1px solid #e1e4e8; border-radius: 10px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: all 0.2s ease;">
-                    <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                        <div style="width: 32px; height: 32px; background: #e3f2fd; color: #007bff; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-left: 10px;">
+                <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.04);" onmouseover="this.style.borderColor='#6366f1'; this.style.boxShadow='0 4px 12px rgba(99,102,241,0.12)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.04)'">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
+                        <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">
                             <i class="fas fa-store"></i>
                         </div>
-                        <strong style="font-size: 1.05em; color: #34495e;"><?php echo htmlspecialchars($branch['name']); ?></strong>
+                        <strong style="font-size: 0.95rem; color: #1e293b;"><?php echo htmlspecialchars($branch['name']); ?></strong>
                     </div>
-                    <select name="branch_groups[<?php echo $branch['id']; ?>]" class="form-control branch-group-select" data-current="<?php echo htmlspecialchars($branch['whatsapp_group_id'] ?? ''); ?>" style="border-radius: 6px; border: 1px solid #ced4da; font-size: 0.9em; padding: 6px 12px; height: auto;">
+                    <select name="branch_groups[<?php echo $branch['id']; ?>]" class="form-control branch-group-select" data-current="<?php echo htmlspecialchars($branch['whatsapp_group_id'] ?? ''); ?>" style="border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; padding: 8px 12px; height: auto; background: #fff; width: 100%;">
                         <option value="">-- الجروب العام --</option>
                         <?php if(!empty($branch['whatsapp_group_id'])): ?>
                             <option value="<?php echo htmlspecialchars($branch['whatsapp_group_id']); ?>" selected>المجموعة الحالية: <?php echo htmlspecialchars($branch['whatsapp_group_id']); ?></option>

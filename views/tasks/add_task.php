@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 foreach ($managers as $manager) {
                     sendWhatsAppMessage($manager['phone'], $msg);
                 }
+                notifyCustomRoutes('task_created', $msg);
             }
 
             $success_msg = "تم إضافة المهمة بنجاح. يمكنك الآن تعيين سائقين لها.";

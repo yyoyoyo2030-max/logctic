@@ -122,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_transfer'])) {
                 foreach ($managers as $manager) {
                     sendWhatsAppMessage($manager['phone'], $msg);
                 }
+                notifyCustomRoutes('transfer_created', $msg);
             }
         } catch(PDOException $e) {
             if ($e->getCode() == 23000) {

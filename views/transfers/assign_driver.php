@@ -114,6 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             // تجاهل النتيجة لأن الغرض إعلامي
             sendWhatsAppMessage($assignment['driver_phone'], $msg);
+            notifyCustomRoutes('driver_assigned_transfer', $msg);
         }
     } catch(PDOException $e) {
         $error = 'حدث خطأ أثناء التعيين';

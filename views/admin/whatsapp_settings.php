@@ -14,6 +14,17 @@ if (!isLoggedIn() || !isAdmin()) {
 $success = '';
 $error = '';
 
+// Create custom routes table if it doesn't exist
+$conn->exec("CREATE TABLE IF NOT EXISTS whatsapp_custom_routes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    event_type VARCHAR(50) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL,
+    description VARCHAR(255),
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)");
+
+
 // تحديث الإعدادات
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_settings'])) {
     try {
@@ -59,6 +70,9 @@ $settings = $stmt->fetch() ?: [
 
 // جلب الفروع
 $branches = $conn->query("SELECT id, name, whatsapp_group_id FROM branches ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+
+// جلب التوجيهات المخصصة
+$custom_routes = $conn->query("SELECT * FROM whatsapp_custom_routes ORDER BY created_at DESC")->fetchAll(PDO::FETCH_ASSOC);
 
 include '../../includes/header.php';
 ?>
@@ -178,6 +192,91 @@ include '../../includes/header.php';
             <button type="submit" name="save_settings" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> حفظ الإعدادات</button>
         </div>
     </form>
+</div>
+
+<div class="content-section" style="max-width: 800px; margin: 30px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+    <div class="form-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <i class="fas fa-route"></i>
+            توجيه الإشعارات المخصصة (لغير المستخدمين)
+        </div>
+    </div>
+    <p class="text-muted" style="margin-bottom: 20px;">يمكنك هنا تخصيص إرسال عمليات معينة داخل النظام إلى أرقام هواتف محددة مباشرة، حتى وإن لم يكن لديهم حساب في النظام.</p>
+
+    <form id="addRouteForm" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
+        <div style="flex: 1; min-width: 200px;">
+            <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">العملية المستهدفة *</label>
+            <select name="event_type" id="route_event_type" class="form-control" required>
+                <option value="">-- اختر العملية --</option>
+                <option value="all">كل العمليات الشاملة</option>
+                <option value="transfer_created">إنشاء طلب جديد</option>
+                <option value="transfer_updated">تحديث حالة طلب (من السائق)</option>
+                <option value="driver_assigned_transfer">إسناد طلب لسائق</option>
+                <option value="task_created">إضافة مهمة جديدة</option>
+                <option value="driver_assigned_task">إسناد مهمة لسائق</option>
+            </select>
+        </div>
+        <div style="flex: 1; min-width: 150px;">
+            <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">رقم الهاتف (بدون أصفار) *</label>
+            <input type="text" id="route_phone" class="form-control" placeholder="مثال: 5xxxxxxx" required>
+        </div>
+        <div style="flex: 1; min-width: 150px;">
+            <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">اسم الشخص / الوصف</label>
+            <input type="text" id="route_desc" class="form-control" placeholder="مثال: المدير العام">
+        </div>
+        <div>
+            <button type="button" id="btnAddRoute" class="btn btn-primary" style="height: 42px;"><i class="fas fa-plus"></i> إضافة التوجيه</button>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>العملية</th>
+                    <th>الرقم</th>
+                    <th>الوصف</th>
+                    <th>الحالة</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($custom_routes)): ?>
+                <tr>
+                    <td colspan="5" class="text-center text-muted">لا توجد توجيهات مخصصة مضافة حالياً.</td>
+                </tr>
+                <?php else: ?>
+                    <?php 
+                    $eventNames = [
+                        'all' => 'كل العمليات',
+                        'transfer_created' => 'إنشاء طلب',
+                        'transfer_updated' => 'تحديث طلب',
+                        'driver_assigned_transfer' => 'إسناد طلب',
+                        'task_created' => 'إضافة مهمة',
+                        'driver_assigned_task' => 'إسناد مهمة'
+                    ];
+                    foreach ($custom_routes as $route): 
+                    ?>
+                    <tr id="route-row-<?php echo $route['id']; ?>">
+                        <td><span class="status-badge" style="background: #e3f2fd; color: #0d47a1;"><?php echo $eventNames[$route['event_type']] ?? $route['event_type']; ?></span></td>
+                        <td dir="ltr" style="text-align: right; font-weight: bold;"><?php echo htmlspecialchars($route['phone_number']); ?></td>
+                        <td><?php echo htmlspecialchars($route['description']); ?></td>
+                        <td>
+                            <label class="switch" style="position: relative; display: inline-block; width: 40px; height: 20px;">
+                                <input type="checkbox" class="toggle-route" data-id="<?php echo $route['id']; ?>" <?php echo $route['is_active'] ? 'checked' : ''; ?> style="opacity: 0; width: 0; height: 0;">
+                                <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: <?php echo $route['is_active'] ? '#2196F3' : '#ccc'; ?>; transition: .4s; border-radius: 20px;"></span>
+                                <span class="knob" style="position: absolute; content: ''; height: 16px; width: 16px; left: <?php echo $route['is_active'] ? '22px' : '2px'; ?>; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                            </label>
+                        </td>
+                        <td class="actions">
+                            <button type="button" class="btn btn-sm btn-danger delete-route" data-id="<?php echo $route['id']; ?>"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
@@ -354,6 +453,87 @@ btnGenerateQR.addEventListener('click', function() {
 // فحص الحالة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
     checkConnectionStatus();
+});
+
+// Custom Routes Logic
+document.getElementById('btnAddRoute').addEventListener('click', function() {
+    const eventType = document.getElementById('route_event_type').value;
+    const phone = document.getElementById('route_phone').value;
+    const desc = document.getElementById('route_desc').value;
+    
+    if (!eventType || !phone) {
+        alert('يرجى تحديد نوع العملية ورقم الهاتف');
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('event_type', eventType);
+    formData.append('phone_number', phone);
+    formData.append('description', desc);
+    
+    fetch('../../api/whatsapp_custom_routes.php?action=add', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            window.location.reload();
+        } else {
+            alert(data.message);
+        }
+    });
+});
+
+document.querySelectorAll('.delete-route').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if (!confirm('هل أنت متأكد من حذف هذا التوجيه؟')) return;
+        
+        const id = this.getAttribute('data-id');
+        const formData = new FormData();
+        formData.append('id', id);
+        
+        fetch('../../api/whatsapp_custom_routes.php?action=delete', {
+            method: 'POST',
+            body: formData
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('route-row-' + id).remove();
+            } else {
+                alert(data.message);
+            }
+        });
+    });
+});
+
+document.querySelectorAll('.toggle-route').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const id = this.getAttribute('data-id');
+        const isActive = this.checked ? 1 : 0;
+        const slider = this.nextElementSibling;
+        const knob = slider.nextElementSibling;
+        
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('is_active', isActive);
+        
+        fetch('../../api/whatsapp_custom_routes.php?action=toggle', {
+            method: 'POST',
+            body: formData
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                slider.style.backgroundColor = isActive ? '#2196F3' : '#ccc';
+                knob.style.left = isActive ? '22px' : '2px';
+            } else {
+                alert(data.message);
+                this.checked = !isActive; // revert
+            }
+        });
+    });
 });
 </script>
 <?php include '../../includes/footer.php'; ?>

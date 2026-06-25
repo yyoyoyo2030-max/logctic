@@ -73,6 +73,37 @@ function sendWhatsAppMessage($recipient_id, $message) {
         }
         
     } catch(Exception $e) {
-        return ['success' => false, 'message' => 'حدث خطأ غير متوقع: ' . $e->getMessage()];
+        return ['success' => false, 'message' => 'حدث خطأ: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * إرسال إشعار للجهات المخصصة حسب نوع العملية
+ * @param string $event_type نوع العملية (مثل: transfer_created, task_assigned)
+ * @param string $message نص الرسالة
+ */
+function notifyCustomRoutes($event_type, $message) {
+    global $conn;
+    try {
+        $stmt = $conn->prepare("
+            SELECT phone_number 
+            FROM whatsapp_custom_routes 
+            WHERE (event_type = ? OR event_type = 'all') 
+            AND is_active = 1
+        ");
+        $stmt->execute([$event_type]);
+        $routes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($routes as $route) {
+            $phone = preg_replace('/[^0-9]/', '', $route['phone_number']);
+            if (strlen($phone) > 8) {
+                // Remove leading zero and add country code if needed (default to 966)
+                $phone = preg_replace('/^0/', '966', $phone);
+                sendWhatsAppMessage($phone . '@s.whatsapp.net', $message);
+            }
+        }
+    } catch(Exception $e) {
+        // Silent fail for routing to not disrupt the main system
+        error_log("WhatsApp Custom Route Error: " . $e->getMessage());
     }
 }

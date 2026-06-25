@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
                     if (!empty($main_group_id) && $main_group_id !== $branch_group_id) {
                         sendWhatsAppMessage($main_group_id, $msg);
                     }
+                    notifyCustomRoutes('transfer_updated', $msg);
                 }
             } catch(PDOException $e) {
                 // تجاهل أخطاء الإرسال

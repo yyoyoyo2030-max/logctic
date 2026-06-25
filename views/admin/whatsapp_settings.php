@@ -198,8 +198,8 @@ include '../../includes/header.php';
 .wa-save-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+    justify-content: flex-start;
+    gap: 20px;
     padding: 20px 24px;
     background: #f8fafc;
     border: 1px solid #e2e8f0;

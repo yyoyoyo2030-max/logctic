@@ -308,35 +308,35 @@ require_once '../../includes/header.php';
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 .mon-filter {
-    padding: 14px 18px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    align-items: flex-end;
+    gap: 16px;
     border-bottom: 1px solid var(--border-color);
 }
 .mon-filter .f-group {
     display: flex;
-    align-items: center;
-    gap: 6px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
 }
 .mon-filter .f-group label {
-    font-size: 0.78rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--text-secondary);
-    white-space: nowrap;
 }
 .mon-filter select,
 .mon-filter input[type="date"] {
-    padding: 7px 12px;
+    width: 100%;
+    padding: 9px 12px;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background: var(--bg-secondary);
     color: var(--text-primary);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-family: 'Cairo', sans-serif;
-    min-width: 140px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 .mon-filter select:focus,
 .mon-filter input[type="date"]:focus {
@@ -726,10 +726,11 @@ require_once '../../includes/header.php';
             <label><i class="fas fa-calendar"></i> التاريخ:</label>
             <input type="date" name="date" id="f-date" value="<?php echo htmlspecialchars($filter_date); ?>">
         </div>
-        <button type="submit" class="f-btn"><i class="fas fa-search"></i> بحث</button>
-        <a href="monitoring.php" class="f-reset"><i class="fas fa-undo"></i> إعادة تعيين</a>
-        <div class="f-spacer"></div>
-        <div class="f-count"><i class="fas fa-list"></i> النتائج: <strong><?php echo count($logs); ?></strong></div>
+        <div class="f-actions" style="display: flex; gap: 10px; align-items: flex-end; justify-content: flex-end; width: 100%; height: 100%;">
+            <button type="submit" class="f-btn" style="height: 38px;"><i class="fas fa-search"></i> بحث</button>
+            <a href="monitoring.php" class="f-reset" style="height: 38px;"><i class="fas fa-undo"></i> تفريغ</a>
+            <div class="f-count" style="margin-right: auto; padding: 7px 15px; background: rgba(14,165,233,0.1); color: #0ea5e9; border-radius: 8px; font-weight: bold; align-self: flex-end; height: 38px; display: flex; align-items: center;"><i class="fas fa-list"></i> النتائج: <strong><?php echo count($logs); ?></strong></div>
+        </div>
     </form>
 
     <!-- Logs Table -->
@@ -766,7 +767,15 @@ require_once '../../includes/header.php';
                             </span>
                         </td>
                         <td class="t-action" title="<?php echo htmlspecialchars($log['action']); ?>"><?php echo htmlspecialchars($log['action']); ?></td>
-                        <td class="t-detail" title="<?php echo htmlspecialchars($log['details'] ?? ''); ?>"><?php echo htmlspecialchars($log['details'] ?? '—'); ?></td>
+                        <td class="t-detail">
+                            <?php if (!empty($log['details'])): ?>
+                                <button type="button" class="btn-view-details" style="background: none; border: none; color: #0ea5e9; text-decoration: underline; cursor: pointer; padding: 0; font-family: inherit; font-size: 0.85rem;" data-details="<?php echo htmlspecialchars($log['details'], ENT_QUOTES, 'UTF-8'); ?>">
+                                    <?php echo htmlspecialchars(mb_substr($log['details'], 0, 40)) . (mb_strlen($log['details']) > 40 ? '...' : ''); ?>
+                                </button>
+                            <?php else: ?>
+                                —
+                            <?php endif; ?>
+                        </td>
                         <td class="t-page" title="<?php echo htmlspecialchars($log['page_url'] ?? ''); ?>"><?php echo htmlspecialchars($log['page_url'] ?? '—'); ?></td>
                         <td>
                             <?php 
@@ -849,7 +858,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    // ---- Details Modal ----
+    var modal = document.getElementById('detailsModal');
+    var closeBtn = document.querySelector('.close-modal-btn');
+    var modalContent = document.getElementById('detailsModalContent');
+
+    document.querySelectorAll('.btn-view-details').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var details = this.getAttribute('data-details');
+            try {
+                // Try to parse as JSON and pretty print
+                var parsed = JSON.parse(details);
+                modalContent.textContent = JSON.stringify(parsed, null, 4);
+            } catch (e) {
+                // Not JSON, just show raw text
+                modalContent.textContent = details;
+            }
+            modal.style.display = 'flex';
+        });
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    }
+
+    window.addEventListener('click', function(e) {
+        if (e.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
 });
 </script>
+
+<!-- Details Modal -->
+<div id="detailsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: #fff; border-radius: 12px; width: 90%; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; max-height: 80vh;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
+            <h3 style="margin: 0; font-size: 1.1rem; color: #111827;"><i class="fas fa-file-code" style="color: #6366f1; margin-left: 8px;"></i> التفاصيل الكاملة</h3>
+            <button type="button" class="close-modal-btn" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>
+        </div>
+        <div style="padding: 20px; overflow-y: auto;">
+            <pre id="detailsModalContent" style="background: #1f2937; color: #e5e7eb; padding: 15px; border-radius: 8px; font-size: 0.85rem; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; direction: ltr; text-align: left; margin: 0;"></pre>
+        </div>
+    </div>
+</div>
 
 <?php require_once '../../includes/footer.php'; ?>

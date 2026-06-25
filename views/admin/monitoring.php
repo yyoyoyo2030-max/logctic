@@ -743,7 +743,6 @@ require_once '../../includes/header.php';
                         <th>الوقت</th>
                         <th>المستخدم</th>
                         <th>النوع</th>
-                        <th>الإجراء</th>
                         <th>التفاصيل</th>
                         <th>الصفحة</th>
                         <th>التسجيل</th>
@@ -766,7 +765,7 @@ require_once '../../includes/header.php';
                                 <?php echo $typeLabels[$log['log_type']] ?? $log['log_type']; ?>
                             </span>
                         </td>
-                        <td class="t-action" title="<?php echo htmlspecialchars($log['action']); ?>"><?php echo htmlspecialchars($log['action']); ?></td>
+
                         <td class="t-detail">
                             <?php if (!empty($log['details'])): ?>
                                 <button type="button" class="btn-view-details" style="background: none; border: none; color: #0ea5e9; text-decoration: underline; cursor: pointer; padding: 0; font-family: inherit; font-size: 0.85rem;" data-details="<?php echo htmlspecialchars($log['details'], ENT_QUOTES, 'UTF-8'); ?>">

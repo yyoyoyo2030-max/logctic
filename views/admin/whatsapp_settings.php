@@ -210,10 +210,9 @@ include '../../includes/header.php';
                 <option value="">-- اختر العملية --</option>
                 <option value="all">جميع العمليات</option>
                 <option value="transfer_created">رفع تحويل</option>
-                <option value="transfer_updated">استلام وتسليم (تحديث الحالة)</option>
-                <option value="driver_assigned_transfer">تعيين السائق (لتحويل)</option>
+                <option value="transfer_updated">استلام المشيك</option>
+                <option value="driver_assigned">تعيين السائق</option>
                 <option value="task_created">رفع مهمة</option>
-                <option value="driver_assigned_task">تعيين السائق (لمهمة)</option>
             </select>
         </div>
         <div style="flex: 1; min-width: 150px;">
@@ -250,10 +249,9 @@ include '../../includes/header.php';
                     $eventNames = [
                         'all' => 'جميع العمليات',
                         'transfer_created' => 'رفع تحويل',
-                        'transfer_updated' => 'استلام وتسليم (تحديث الحالة)',
-                        'driver_assigned_transfer' => 'تعيين السائق (لتحويل)',
-                        'task_created' => 'رفع مهمة',
-                        'driver_assigned_task' => 'تعيين السائق (لمهمة)'
+                        'transfer_updated' => 'استلام المشيك',
+                        'driver_assigned' => 'تعيين السائق',
+                        'task_created' => 'رفع مهمة'
                     ];
                     foreach ($custom_routes as $route): 
                     ?>

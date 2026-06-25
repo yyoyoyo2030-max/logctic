@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_driver'])) {
                 
                 // تجاهل النتيجة لأن الغرض إعلامي
                 sendWhatsAppMessage($d_info['phone'], $msg);
-                notifyCustomRoutes('driver_assigned_task', $msg);
+                notifyCustomRoutes('driver_assigned', $msg);
             }
             
             $success_msg = "تم تعيين السائق للمهمة بنجاح";

@@ -208,12 +208,12 @@ include '../../includes/header.php';
             <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">العملية المستهدفة *</label>
             <select name="event_type" id="route_event_type" class="form-control" required>
                 <option value="">-- اختر العملية --</option>
-                <option value="all">كل العمليات الشاملة</option>
-                <option value="transfer_created">إنشاء طلب جديد</option>
-                <option value="transfer_updated">تحديث حالة طلب (من السائق)</option>
-                <option value="driver_assigned_transfer">إسناد طلب لسائق</option>
+                <option value="all">جميع عمليات النظام</option>
+                <option value="transfer_created">إضافة تحويل شحنة جديد</option>
+                <option value="transfer_updated">تحديث حالة التحويل (استلام/تسليم من السائق)</option>
+                <option value="driver_assigned_transfer">إسناد تحويل إلى سائق</option>
                 <option value="task_created">إضافة مهمة جديدة</option>
-                <option value="driver_assigned_task">إسناد مهمة لسائق</option>
+                <option value="driver_assigned_task">إسناد مهمة إلى سائق</option>
             </select>
         </div>
         <div style="flex: 1; min-width: 150px;">
@@ -248,10 +248,10 @@ include '../../includes/header.php';
                 <?php else: ?>
                     <?php 
                     $eventNames = [
-                        'all' => 'كل العمليات',
-                        'transfer_created' => 'إنشاء طلب',
-                        'transfer_updated' => 'تحديث طلب',
-                        'driver_assigned_transfer' => 'إسناد طلب',
+                        'all' => 'جميع العمليات',
+                        'transfer_created' => 'إضافة تحويل',
+                        'transfer_updated' => 'تحديث حالة تحويل',
+                        'driver_assigned_transfer' => 'إسناد تحويل',
                         'task_created' => 'إضافة مهمة',
                         'driver_assigned_task' => 'إسناد مهمة'
                     ];

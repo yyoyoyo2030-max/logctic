@@ -1,7 +1,7 @@
 <?php
 /**
  * نظام إدارة اللوجستيك
- * لوحة التحكم الررئيسية
+ * لوحة التحكم الرئيسية
  * عرض الإحصائيات وآخر التحويلات
  */
 
@@ -17,28 +17,57 @@ if ($_SESSION['role'] == 'driver') {
     redirect('views/drivers/driver_transfers.php');
 }
 
+// فلتر الفترة الزمنية
+$period = $_GET['period'] ?? 'all';
+$date_condition = '';
+$date_params = [];
+
+switch ($period) {
+    case 'today':
+        $date_condition = ' AND t.created_at >= CURDATE()';
+        break;
+    case 'week':
+        $date_condition = ' AND t.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)';
+        break;
+    case 'month':
+        $date_condition = ' AND t.created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)';
+        break;
+    default:
+        $date_condition = '';
+        $period = 'all';
+        break;
+}
+
 // إحصائيات لوحة التحكم
 $stats = [];
+$branch_cond = '';
+$branch_params = [];
 
-// عدد التحويلات
-if (canManageAllBranches()) {
-    $stmt = $conn->query("SELECT COUNT(*) as total FROM transfers");
-} else {
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM transfers WHERE branch_id = ?");
-    $stmt->execute([$_SESSION['branch_id']]);
+if (!canManageAllBranches()) {
+    $branch_cond = ' AND t.branch_id = ?';
+    $branch_params = [$_SESSION['branch_id']];
 }
-$stats['total_transfers'] = $stmt->fetch()['total'];
 
-// عدد التحويلات جاري التوصيل
-if (canManageAllBranches()) {
-    $stmt = $conn->query("SELECT COUNT(*) as total FROM transfers WHERE status = 'in_transit'");
-} else {
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM transfers WHERE branch_id = ? AND status = 'in_transit'");
-    $stmt->execute([$_SESSION['branch_id']]);
-}
-$stats['in_transit_transfers'] = $stmt->fetch()['total'];
+// استعلام واحد مُحسَّن لكل الإحصائيات
+$sql = "SELECT 
+    COUNT(*) as total_transfers,
+    SUM(CASE WHEN t.status = 'in_transit' THEN 1 ELSE 0 END) as in_transit,
+    SUM(CASE WHEN t.status IN ('assigned', 'in_transit') THEN 1 ELSE 0 END) as active,
+    SUM(CASE WHEN t.status = 'delivered' THEN 1 ELSE 0 END) as delivered,
+    SUM(CASE WHEN NOT EXISTS (SELECT 1 FROM driver_assignments da WHERE da.transfer_id = t.id) THEN 1 ELSE 0 END) as no_driver
+    FROM transfers t WHERE 1=1 $date_condition $branch_cond";
 
-// عدد السائقين المتاحين (الذين ليس لديهم تحويلات نشطة)
+$stmt = $conn->prepare($sql);
+$stmt->execute($branch_params);
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$stats['total_transfers'] = (int)($row['total_transfers'] ?? 0);
+$stats['in_transit_transfers'] = (int)($row['in_transit'] ?? 0);
+$stats['active_transfers'] = (int)($row['active'] ?? 0);
+$stats['delivered_transfers'] = (int)($row['delivered'] ?? 0);
+$stats['no_driver_transfers'] = (int)($row['no_driver'] ?? 0);
+
+// عدد السائقين المتاحين (لا يتأثر بالفلتر الزمني)
 $stmt = $conn->query("
     SELECT COUNT(*) as total FROM drivers d
     WHERE NOT EXISTS (
@@ -50,49 +79,24 @@ $stmt = $conn->query("
 ");
 $stats['available_drivers'] = $stmt->fetch()['total'];
 
-// عدد التحويلات قيد التنفيذ
-if (canManageAllBranches()) {
-    $stmt = $conn->query("SELECT COUNT(*) as total FROM transfers WHERE status IN ('assigned', 'in_transit')");
-} else {
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM transfers WHERE branch_id = ? AND status IN ('assigned', 'in_transit')");
-    $stmt->execute([$_SESSION['branch_id']]);
-}
-$stats['active_transfers'] = $stmt->fetch()['total'];
-
-// عدد التحويلات المكتملة (تم التوصيل)
-if (canManageAllBranches()) {
-    $stmt = $conn->query("SELECT COUNT(*) as total FROM transfers WHERE status = 'delivered'");
-} else {
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM transfers WHERE branch_id = ? AND status = 'delivered'");
-    $stmt->execute([$_SESSION['branch_id']]);
-}
-$stats['delivered_transfers'] = $stmt->fetch()['total'];
-
-// عدد التحويلات بدون سائق (لم يتم تعيين سائق)
-if (canManageAllBranches()) {
-    $stmt = $conn->query("SELECT COUNT(*) as total FROM transfers t WHERE NOT EXISTS (SELECT 1 FROM driver_assignments da WHERE da.transfer_id = t.id)");
-} else {
-    $stmt = $conn->prepare("SELECT COUNT(*) as total FROM transfers t WHERE t.branch_id = ? AND NOT EXISTS (SELECT 1 FROM driver_assignments da WHERE da.transfer_id = t.id)");
-    $stmt->execute([$_SESSION['branch_id']]);
-}
-$stats['no_driver_transfers'] = $stmt->fetch()['total'];
-
 // أحدث التحويلات
 if (canManageAllBranches()) {
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         SELECT t.*, b.name as branch_name, u.full_name as uploader_name 
         FROM transfers t 
         LEFT JOIN branches b ON t.branch_id = b.id 
         LEFT JOIN users u ON t.uploaded_by = u.id 
+        WHERE 1=1 $date_condition
         ORDER BY t.created_at DESC LIMIT 8
     ");
+    $stmt->execute();
 } else {
     $stmt = $conn->prepare("
         SELECT t.*, b.name as branch_name, u.full_name as uploader_name 
         FROM transfers t 
         LEFT JOIN branches b ON t.branch_id = b.id 
         LEFT JOIN users u ON t.uploaded_by = u.id 
-        WHERE t.branch_id = ?
+        WHERE t.branch_id = ? $date_condition
         ORDER BY t.created_at DESC LIMIT 8
     ");
     $stmt->execute([$_SESSION['branch_id']]);
@@ -102,9 +106,78 @@ $recent_transfers = $stmt->fetchAll();
 include '../../includes/header.php';
 ?>
 
+<style>
+.dash-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.dash-filter-bar h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.dash-period-tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 4px;
+}
+.dash-period-tabs a {
+    padding: 7px 18px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+    font-family: 'Cairo', sans-serif;
+}
+.dash-period-tabs a:hover {
+    color: var(--text-primary);
+    background: rgba(99,102,241,0.08);
+}
+.dash-period-tabs a.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
+.dashboard-stats .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.dashboard-stats .stat-card { padding: 20px; }
+.dashboard-stats .stat-card .stat-icon { background: rgba(99,102,241,0.12); color: #6366f1; }
+.dashboard-stats .stat-card.info .stat-icon { background: rgba(14,165,233,0.12); color: #0ea5e9; }
+.dashboard-stats .stat-card.success .stat-icon { background: rgba(16,185,129,0.12); color: #10b981; }
+.dashboard-stats .stat-card.warning .stat-icon { background: rgba(245,158,11,0.12); color: #f59e0b; }
+</style>
+
+<!-- فلتر الفترة الزمنية -->
+<div class="dash-filter-bar">
+    <h2><i class="fas fa-chart-line" style="color: #6366f1; margin-left: 8px;"></i> لوحة القيادة</h2>
+    <div class="dash-period-tabs">
+        <a href="dashboard.php?period=today" class="<?php echo $period === 'today' ? 'active' : ''; ?>">اليوم</a>
+        <a href="dashboard.php?period=week" class="<?php echo $period === 'week' ? 'active' : ''; ?>">الأسبوع</a>
+        <a href="dashboard.php?period=month" class="<?php echo $period === 'month' ? 'active' : ''; ?>">الشهر</a>
+        <a href="dashboard.php?period=all" class="<?php echo $period === 'all' ? 'active' : ''; ?>">الكل</a>
+    </div>
+</div>
+
 <div class="dashboard-stats" data-page="dashboard">
     <div class="stat-card">
-        <div class="stat-icon">📦</div>
+        <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
         <div class="stat-info">
             <h3 class="stat-value" data-stat="transfers"><?php echo $stats['total_transfers']; ?></h3>
             <p>إجمالي التحويلات</p>
@@ -112,7 +185,7 @@ include '../../includes/header.php';
     </div>
     
     <div class="stat-card info">
-        <div class="stat-icon">🚚</div>
+        <div class="stat-icon"><i class="fas fa-truck-fast"></i></div>
         <div class="stat-info">
             <h3 class="stat-value" data-stat="inprogress-transfers"><?php echo $stats['in_transit_transfers']; ?></h3>
             <p>جاري التوصيل</p>
@@ -120,7 +193,7 @@ include '../../includes/header.php';
     </div>
     
     <div class="stat-card success">
-        <div class="stat-icon">🚗</div>
+        <div class="stat-icon"><i class="fas fa-id-badge"></i></div>
         <div class="stat-info">
             <h3 class="stat-value" data-stat="drivers"><?php echo $stats['available_drivers']; ?></h3>
             <p>سائقين متاحين</p>
@@ -128,7 +201,7 @@ include '../../includes/header.php';
     </div>
     
     <div class="stat-card info">
-        <div class="stat-icon">🚚</div>
+        <div class="stat-icon"><i class="fas fa-spinner"></i></div>
         <div class="stat-info">
             <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['active_transfers']; ?></h3>
             <p>قيد التنفيذ</p>
@@ -136,7 +209,7 @@ include '../../includes/header.php';
     </div>
     
     <div class="stat-card success">
-        <div class="stat-icon">✅</div>
+        <div class="stat-icon"><i class="fas fa-circle-check"></i></div>
         <div class="stat-info">
             <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['delivered_transfers']; ?></h3>
             <p>تم التوصيل</p>
@@ -144,7 +217,7 @@ include '../../includes/header.php';
     </div>
     
     <div class="stat-card warning">
-        <div class="stat-icon">👤</div>
+        <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
         <div class="stat-info">
             <h3 class="stat-value" data-stat="pending-transfers"><?php echo $stats['no_driver_transfers']; ?></h3>
             <p>بدون سائق</p>

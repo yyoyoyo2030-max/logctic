@@ -636,6 +636,10 @@ document.getElementById('btnAddRoute').addEventListener('click', function() {
         } else {
             alert(data.message);
         }
+    })
+    .catch(err => {
+        alert('حدث خطأ غير متوقع أثناء الاتصال بالخادم.');
+        console.error('Fetch error:', err);
     });
 });
 
@@ -658,6 +662,10 @@ document.querySelectorAll('.delete-route').forEach(btn => {
             } else {
                 alert(data.message);
             }
+        })
+        .catch(err => {
+            alert('حدث خطأ أثناء الحذف.');
+            console.error('Fetch error:', err);
         });
     });
 });
@@ -686,6 +694,11 @@ document.querySelectorAll('.toggle-route').forEach(checkbox => {
                 alert(data.message);
                 this.checked = !isActive; // revert
             }
+        })
+        .catch(err => {
+            alert('حدث خطأ أثناء تغيير الحالة.');
+            this.checked = !isActive; // revert
+            console.error('Fetch error:', err);
         });
     });
 });

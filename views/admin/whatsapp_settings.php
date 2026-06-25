@@ -208,12 +208,12 @@ include '../../includes/header.php';
             <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">العملية المستهدفة *</label>
             <select name="event_type" id="route_event_type" class="form-control" required>
                 <option value="">-- اختر العملية --</option>
-                <option value="all">جميع عمليات النظام</option>
-                <option value="transfer_created">إضافة تحويل شحنة جديد</option>
-                <option value="transfer_updated">تحديث حالة التحويل (استلام/تسليم من السائق)</option>
-                <option value="driver_assigned_transfer">إسناد تحويل إلى سائق</option>
-                <option value="task_created">إضافة مهمة جديدة</option>
-                <option value="driver_assigned_task">إسناد مهمة إلى سائق</option>
+                <option value="all">جميع العمليات</option>
+                <option value="transfer_created">رفع تحويل</option>
+                <option value="transfer_updated">استلام وتسليم (تحديث الحالة)</option>
+                <option value="driver_assigned_transfer">تعيين السائق (لتحويل)</option>
+                <option value="task_created">رفع مهمة</option>
+                <option value="driver_assigned_task">تعيين السائق (لمهمة)</option>
             </select>
         </div>
         <div style="flex: 1; min-width: 150px;">
@@ -249,11 +249,11 @@ include '../../includes/header.php';
                     <?php 
                     $eventNames = [
                         'all' => 'جميع العمليات',
-                        'transfer_created' => 'إضافة تحويل',
-                        'transfer_updated' => 'تحديث حالة تحويل',
-                        'driver_assigned_transfer' => 'إسناد تحويل',
-                        'task_created' => 'إضافة مهمة',
-                        'driver_assigned_task' => 'إسناد مهمة'
+                        'transfer_created' => 'رفع تحويل',
+                        'transfer_updated' => 'استلام وتسليم (تحديث الحالة)',
+                        'driver_assigned_transfer' => 'تعيين السائق (لتحويل)',
+                        'task_created' => 'رفع مهمة',
+                        'driver_assigned_task' => 'تعيين السائق (لمهمة)'
                     ];
                     foreach ($custom_routes as $route): 
                     ?>

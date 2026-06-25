@@ -77,6 +77,154 @@ $custom_routes = $conn->query("SELECT * FROM whatsapp_custom_routes ORDER BY cre
 include '../../includes/header.php';
 ?>
 
+<style>
+.wa-page { max-width: 900px; margin: 0 auto; }
+.wa-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    overflow: hidden;
+}
+.wa-card-head {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+}
+.wa-card-head h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.wa-card-head h3 i {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #fff;
+}
+.wa-card-body { padding: 24px; }
+.wa-field { margin-bottom: 20px; }
+.wa-field:last-child { margin-bottom: 0; }
+.wa-field label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+}
+.wa-field .form-control {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-family: 'Cairo', sans-serif;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.wa-field .form-control:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
+    outline: none;
+}
+.wa-field small {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.78rem;
+    color: #94a3b8;
+}
+.wa-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+.wa-branch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+}
+.wa-branch-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+.wa-branch-card:hover {
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99,102,241,0.1);
+}
+.wa-branch-card .branch-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1e293b;
+}
+.wa-branch-card .branch-icon {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+.wa-branch-card select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-family: 'Cairo', sans-serif;
+    background: #f8fafc;
+}
+.wa-save-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    margin-bottom: 24px;
+}
+.wa-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #334155;
+}
+.wa-toggle input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: #25D366;
+}
+@media (max-width: 640px) {
+    .wa-row { grid-template-columns: 1fr; }
+    .wa-save-bar { flex-direction: column; text-align: center; }
+}
+</style>
+
 <div class="page-header">
     <h1><i class="fab fa-whatsapp" style="color: #25D366;"></i> إعدادات إشعارات الواتساب</h1>
 </div>
@@ -89,95 +237,46 @@ include '../../includes/header.php';
     <div class="alert alert-error"><?php echo $error; ?></div>
 <?php endif; ?>
 
-<div class="content-section" style="max-width: 800px; margin: 0 auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-    <form method="POST" action="">
-        <div class="form-section">
-            <div class="form-section-title">
-                <i class="fas fa-plug"></i>
-                إعدادات Evolution API
-            </div>
-            
-            <div class="form-group">
-                <label>رابط API (URL) *</label>
-                <input type="url" name="api_url" class="form-control" value="<?php echo htmlspecialchars($settings['api_url']); ?>" placeholder="مثال: https://api.yoursite.com" required>
-                <small class="text-muted">الرابط الأساسي لخادم Evolution API</small>
-            </div>
-            
-            <div class="form-group">
-                <label>مفتاح API (Global API Key) *</label>
-                <div style="position: relative;">
-                    <input type="password" name="api_key" id="api_key_input" class="form-control" value="<?php echo htmlspecialchars($settings['api_key']); ?>" required style="padding-left: 40px;">
-                    <button type="button" id="toggleApiKey" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #666; font-size: 16px;" title="إظهار/إخفاء">
-                        <i class="fas fa-eye"></i>
-                    </button>
+<div class="wa-page">
+<form method="POST" action="">
+
+    <!-- ========== 1. إعدادات الاتصال ========== -->
+    <div class="wa-card">
+        <div class="wa-card-head">
+            <h3><i style="background: linear-gradient(135deg, #0ea5e9, #3b82f6);"><span class="fas fa-plug"></span></i> إعدادات الاتصال (Evolution API)</h3>
+        </div>
+        <div class="wa-card-body">
+            <div class="wa-row">
+                <div class="wa-field">
+                    <label>رابط API (URL) *</label>
+                    <input type="url" name="api_url" class="form-control" value="<?php echo htmlspecialchars($settings['api_url']); ?>" placeholder="https://api.yoursite.com" required>
+                    <small>الرابط الأساسي لخادم Evolution API</small>
+                </div>
+                <div class="wa-field">
+                    <label>مفتاح API (Global API Key) *</label>
+                    <div style="position: relative;">
+                        <input type="password" name="api_key" id="api_key_input" class="form-control" value="<?php echo htmlspecialchars($settings['api_key']); ?>" required style="padding-left: 40px;">
+                        <button type="button" id="toggleApiKey" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 15px;" title="إظهار/إخفاء">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            
             <input type="hidden" name="instance_name" value="logistic_system">
         </div>
+    </div>
 
-        <div class="form-section" style="margin-top: 30px;">
-            <div class="form-section-title" style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <i class="fas fa-users"></i>
-                    إعدادات المجموعات (الجروبات)
-                </div>
-                <button type="button" id="fetchGroupsBtn" class="btn btn-sm btn-info">
-                    <i class="fas fa-sync"></i> جلب المجموعات من الواتساب
-                </button>
-            </div>
-            
-
-            <div class="form-group">
-                <label><i class="fab fa-whatsapp" style="color: #25D366;"></i> الجروب الرئيسي (العام) لجميع الفروع</label>
-                <select name="warehouse_manager_group_id" id="warehouse_group" class="form-control">
-                    <option value="">-- اضغط على زر الجلب لاختيار مجموعة --</option>
-                    <?php if(!empty($settings['warehouse_manager_group_id'])): ?>
-                        <option value="<?php echo htmlspecialchars($settings['warehouse_manager_group_id']); ?>" selected>المجموعة الحالية: <?php echo htmlspecialchars($settings['warehouse_manager_group_id']); ?></option>
-                    <?php endif; ?>
-                </select>
-                <small class="text-muted">هذا الجروب يستقبل نسخة من جميع إشعارات تأكيد الاستلام لكافة الفروع. إذا لم يكن لفرع معين جروب مخصص، سيتم الإرسال هنا فقط.</small>
-            </div>
-            
-            <div style="margin: 30px 0; border-top: 2px solid #e2e8f0; position: relative;">
-                <span style="position: absolute; top: -12px; right: 20px; background: #fff; padding: 0 12px; font-size: 0.85rem; color: #64748b; font-weight: 600;">
-                    <i class="fas fa-code-branch" style="color: #6366f1;"></i> الجروبات المخصصة للفروع
-                </span>
-            </div>
-            
-            <p style="font-size: 0.82rem; color: #94a3b8; margin-bottom: 20px;">إذا لم يتم تحديد جروب لفرع معين، سيتم إرسال إشعاراته تلقائياً إلى الجروب الرئيسي (العام).</p>
-            
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px;">
-                <?php foreach ($branches as $branch): ?>
-                <div style="background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; transition: all 0.25s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.04);" onmouseover="this.style.borderColor='#6366f1'; this.style.boxShadow='0 4px 12px rgba(99,102,241,0.12)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.boxShadow='0 1px 3px rgba(0,0,0,0.04)'">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-                        <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <strong style="font-size: 0.95rem; color: #1e293b;"><?php echo htmlspecialchars($branch['name']); ?></strong>
-                    </div>
-                    <select name="branch_groups[<?php echo $branch['id']; ?>]" class="form-control branch-group-select" data-current="<?php echo htmlspecialchars($branch['whatsapp_group_id'] ?? ''); ?>" style="border-radius: 8px; border: 1px solid #cbd5e1; font-size: 0.85rem; padding: 8px 12px; height: auto; background: #fff; width: 100%;">
-                        <option value="">-- الجروب العام --</option>
-                        <?php if(!empty($branch['whatsapp_group_id'])): ?>
-                            <option value="<?php echo htmlspecialchars($branch['whatsapp_group_id']); ?>" selected>المجموعة الحالية: <?php echo htmlspecialchars($branch['whatsapp_group_id']); ?></option>
-                        <?php endif; ?>
-                    </select>
-                </div>
-                <?php endforeach; ?>
-            </div>
+    <!-- ========== 2. ربط الواتساب (QR) ========== -->
+    <div class="wa-card">
+        <div class="wa-card-head">
+            <h3><i style="background: linear-gradient(135deg, #25D366, #128C7E);"><span class="fas fa-qrcode"></span></i> ربط الواتساب (QR Code)</h3>
         </div>
-
-        <div class="form-section" style="margin-top: 30px;">
-            <div class="form-section-title">
-                <i class="fas fa-qrcode"></i>
-                ربط الواتساب (QR Code)
-            </div>
-            
-            <div class="connection-status-box" style="text-align: center; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
-                <h3 id="wa_status_text">جاري فحص حالة الاتصال...</h3>
+        <div class="wa-card-body">
+            <div class="connection-status-box" style="text-align: center; padding: 24px; border: 1px solid #e2e8f0; border-radius: 10px; background: #f8fafc;">
+                <h3 id="wa_status_text" style="font-size: 1rem; color: #475569;">جاري فحص حالة الاتصال...</h3>
                 <div id="wa_qr_container" style="margin: 20px 0; display: none;">
-                    <img id="wa_qr_image" src="" alt="WhatsApp QR Code" style="max-width: 250px; border: 5px solid #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 8px;">
-                    <p style="margin-top: 10px; color: #666;">افتح تطبيق الواتساب في هاتفك وامسح الكود أعلاه</p>
+                    <img id="wa_qr_image" src="" alt="WhatsApp QR Code" style="max-width: 220px; border: 4px solid #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.1); border-radius: 10px;">
+                    <p style="margin-top: 10px; color: #94a3b8; font-size: 0.85rem;">افتح تطبيق الواتساب في هاتفك وامسح الكود أعلاه</p>
                 </div>
                 <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                     <button type="button" id="btnReconnect" class="btn btn-success" style="display: none;"><i class="fas fa-sync-alt"></i> إعادة الاتصال</button>
@@ -185,102 +284,154 @@ include '../../includes/header.php';
                 </div>
             </div>
         </div>
-        
-        <div class="form-group full-width" style="margin-top: 20px;">
-            <label class="toggle-label" style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
-                <input type="checkbox" name="is_active" <?php echo $settings['is_active'] ? 'checked' : ''; ?> style="width: 20px; height: 20px;">
-                <strong>تفعيل إرسال الإشعارات عبر الواتساب</strong>
-            </label>
-        </div>
-        
-        <div class="form-actions" style="margin-top: 30px;">
-            <button type="submit" name="save_settings" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> حفظ الإعدادات</button>
-        </div>
-    </form>
-</div>
-
-<div class="content-section" style="max-width: 800px; margin: 30px auto; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-    <div class="form-section-title" style="display: flex; justify-content: space-between; align-items: center;">
-        <div>
-            <i class="fas fa-route"></i>
-            توجيه الإشعارات المخصصة (لغير المستخدمين)
-        </div>
     </div>
-    <p class="text-muted" style="margin-bottom: 20px;">يمكنك هنا تخصيص إرسال عمليات معينة داخل النظام إلى أرقام هواتف محددة مباشرة، حتى وإن لم يكن لديهم حساب في النظام.</p>
 
-    <form id="addRouteForm" style="background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
-        <div style="flex: 1; min-width: 200px;">
-            <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">العملية المستهدفة *</label>
-            <select name="event_type" id="route_event_type" class="form-control" required>
-                <option value="">-- اختر العملية --</option>
-                <option value="all">جميع العمليات</option>
-                <option value="transfer_created">رفع تحويل</option>
-                <option value="transfer_updated">استلام المشيك</option>
-                <option value="driver_assigned">تعيين السائق</option>
-                <option value="task_created">رفع مهمة</option>
-            </select>
+    <!-- ========== 3. المجموعات (الجروبات) ========== -->
+    <div class="wa-card">
+        <div class="wa-card-head">
+            <h3><i style="background: linear-gradient(135deg, #f59e0b, #f97316);"><span class="fas fa-users"></span></i> إعدادات المجموعات (الجروبات)</h3>
+            <button type="button" id="fetchGroupsBtn" class="btn btn-sm btn-info" style="font-size: 0.8rem;">
+                <i class="fas fa-sync"></i> جلب المجموعات
+            </button>
         </div>
-        <div style="flex: 1; min-width: 150px;">
-            <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">رقم الهاتف (بدون أصفار) *</label>
-            <input type="text" id="route_phone" class="form-control" placeholder="مثال: 5xxxxxxx" required>
-        </div>
-        <div style="flex: 1; min-width: 150px;">
-            <label style="font-size: 0.9em; margin-bottom: 5px; display: block;">اسم الشخص / الوصف</label>
-            <input type="text" id="route_desc" class="form-control" placeholder="مثال: المدير العام">
-        </div>
-        <div>
-            <button type="button" id="btnAddRoute" class="btn btn-primary" style="height: 42px;"><i class="fas fa-plus"></i> إضافة التوجيه</button>
-        </div>
-    </form>
+        <div class="wa-card-body">
+            <!-- الجروب الرئيسي -->
+            <div class="wa-field">
+                <label><i class="fab fa-whatsapp" style="color: #25D366;"></i> الجروب الرئيسي (العام) لجميع الفروع</label>
+                <select name="warehouse_manager_group_id" id="warehouse_group" class="form-control">
+                    <option value="">-- اضغط على زر الجلب لاختيار مجموعة --</option>
+                    <?php if(!empty($settings['warehouse_manager_group_id'])): ?>
+                        <option value="<?php echo htmlspecialchars($settings['warehouse_manager_group_id']); ?>" selected>المجموعة الحالية: <?php echo htmlspecialchars($settings['warehouse_manager_group_id']); ?></option>
+                    <?php endif; ?>
+                </select>
+                <small>هذا الجروب يستقبل جميع إشعارات الاستلام. إذا لم يكن لفرع جروب مخصص سيتم الإرسال هنا.</small>
+            </div>
 
-    <div class="table-responsive">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>العملية</th>
-                    <th>الرقم</th>
-                    <th>الوصف</th>
-                    <th>الحالة</th>
-                    <th>إجراءات</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (empty($custom_routes)): ?>
-                <tr>
-                    <td colspan="5" class="text-center text-muted">لا توجد توجيهات مخصصة مضافة حالياً.</td>
-                </tr>
-                <?php else: ?>
-                    <?php 
-                    $eventNames = [
-                        'all' => 'جميع العمليات',
-                        'transfer_created' => 'رفع تحويل',
-                        'transfer_updated' => 'استلام المشيك',
-                        'driver_assigned' => 'تعيين السائق',
-                        'task_created' => 'رفع مهمة'
-                    ];
-                    foreach ($custom_routes as $route): 
-                    ?>
-                    <tr id="route-row-<?php echo $route['id']; ?>">
-                        <td><span class="status-badge" style="background: #e3f2fd; color: #0d47a1;"><?php echo $eventNames[$route['event_type']] ?? $route['event_type']; ?></span></td>
-                        <td dir="ltr" style="text-align: right; font-weight: bold;"><?php echo htmlspecialchars($route['phone_number']); ?></td>
-                        <td><?php echo htmlspecialchars($route['description']); ?></td>
-                        <td>
-                            <label class="switch" style="position: relative; display: inline-block; width: 40px; height: 20px;">
-                                <input type="checkbox" class="toggle-route" data-id="<?php echo $route['id']; ?>" <?php echo $route['is_active'] ? 'checked' : ''; ?> style="opacity: 0; width: 0; height: 0;">
-                                <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: <?php echo $route['is_active'] ? '#2196F3' : '#ccc'; ?>; transition: .4s; border-radius: 20px;"></span>
-                                <span class="knob" style="position: absolute; content: ''; height: 16px; width: 16px; left: <?php echo $route['is_active'] ? '22px' : '2px'; ?>; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%;"></span>
-                            </label>
-                        </td>
-                        <td class="actions">
-                            <button type="button" class="btn btn-sm btn-danger delete-route" data-id="<?php echo $route['id']; ?>"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
+            <!-- الجروبات المخصصة للفروع -->
+            <div style="margin-top: 24px;">
+                <label style="font-size: 0.88rem; font-weight: 600; color: #334155; margin-bottom: 14px; display: block;">
+                    <i class="fas fa-code-branch" style="color: #6366f1;"></i> الجروبات المخصصة للفروع
+                </label>
+                <div class="wa-branch-grid">
+                    <?php foreach ($branches as $branch): ?>
+                    <div class="wa-branch-card">
+                        <div class="branch-name">
+                            <span class="branch-icon"><i class="fas fa-store"></i></span>
+                            <?php echo htmlspecialchars($branch['name']); ?>
+                        </div>
+                        <select name="branch_groups[<?php echo $branch['id']; ?>]" class="form-control branch-group-select" data-current="<?php echo htmlspecialchars($branch['whatsapp_group_id'] ?? ''); ?>">
+                            <option value="">-- الجروب العام --</option>
+                            <?php if(!empty($branch['whatsapp_group_id'])): ?>
+                                <option value="<?php echo htmlspecialchars($branch['whatsapp_group_id']); ?>" selected>المجموعة الحالية: <?php echo htmlspecialchars($branch['whatsapp_group_id']); ?></option>
+                            <?php endif; ?>
+                        </select>
+                    </div>
                     <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+
+    <!-- ========== شريط الحفظ والتفعيل ========== -->
+    <div class="wa-save-bar">
+        <label class="wa-toggle">
+            <input type="checkbox" name="is_active" <?php echo $settings['is_active'] ? 'checked' : ''; ?>>
+            <span><i class="fab fa-whatsapp" style="color: #25D366;"></i> تفعيل إرسال الإشعارات عبر الواتساب</span>
+        </label>
+        <button type="submit" name="save_settings" class="btn btn-primary btn-lg" style="min-width: 180px;">
+            <i class="fas fa-save"></i> حفظ الإعدادات
+        </button>
+    </div>
+
+</form>
+
+
+    <!-- ========== 4. التوجيه المخصص ========== -->
+    <div class="wa-card">
+        <div class="wa-card-head">
+            <h3><i style="background: linear-gradient(135deg, #8b5cf6, #a855f7);"><span class="fas fa-route"></span></i> توجيه الإشعارات المخصصة</h3>
+        </div>
+        <div class="wa-card-body">
+            <p style="font-size: 0.82rem; color: #94a3b8; margin-bottom: 20px;">إرسال عمليات معينة إلى أرقام هواتف محددة مباشرة، حتى وإن لم يكن لديهم حساب في النظام.</p>
+
+            <form id="addRouteForm" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; align-items: flex-end; background: #f8fafc; padding: 18px; border-radius: 10px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                <div>
+                    <label style="font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 6px; display: block;">العملية المستهدفة *</label>
+                    <select name="event_type" id="route_event_type" class="form-control" required style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85rem; font-family: 'Cairo', sans-serif;">
+                        <option value="">-- اختر العملية --</option>
+                        <option value="all">جميع العمليات</option>
+                        <option value="transfer_created">رفع تحويل</option>
+                        <option value="transfer_updated">استلام المشيك</option>
+                        <option value="driver_assigned">تعيين السائق</option>
+                        <option value="task_created">رفع مهمة</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 6px; display: block;">رقم الهاتف *</label>
+                    <input type="text" id="route_phone" class="form-control" placeholder="5xxxxxxx" required style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85rem;">
+                </div>
+                <div>
+                    <label style="font-size: 0.82rem; font-weight: 600; color: #334155; margin-bottom: 6px; display: block;">الوصف</label>
+                    <input type="text" id="route_desc" class="form-control" placeholder="المدير العام" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.85rem;">
+                </div>
+                <div>
+                    <button type="button" id="btnAddRoute" class="btn btn-primary" style="width: 100%; height: 40px; border-radius: 8px; font-size: 0.85rem;">
+                        <i class="fas fa-plus"></i> إضافة
+                    </button>
+                </div>
+            </form>
+
+            <div class="table-responsive" style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                <table class="data-table" style="margin: 0;">
+                    <thead>
+                        <tr>
+                            <th>العملية</th>
+                            <th>الرقم</th>
+                            <th>الوصف</th>
+                            <th>الحالة</th>
+                            <th>إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($custom_routes)): ?>
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">لا توجد توجيهات مخصصة مضافة حالياً.</td>
+                        </tr>
+                        <?php else: ?>
+                            <?php 
+                            $eventNames = [
+                                'all' => 'جميع العمليات',
+                                'transfer_created' => 'رفع تحويل',
+                                'transfer_updated' => 'استلام المشيك',
+                                'driver_assigned' => 'تعيين السائق',
+                                'task_created' => 'رفع مهمة'
+                            ];
+                            foreach ($custom_routes as $route): 
+                            ?>
+                            <tr id="route-row-<?php echo $route['id']; ?>">
+                                <td><span class="status-badge" style="background: #e3f2fd; color: #0d47a1;"><?php echo $eventNames[$route['event_type']] ?? $route['event_type']; ?></span></td>
+                                <td dir="ltr" style="text-align: right; font-weight: bold;"><?php echo htmlspecialchars($route['phone_number']); ?></td>
+                                <td><?php echo htmlspecialchars($route['description']); ?></td>
+                                <td>
+                                    <label class="switch" style="position: relative; display: inline-block; width: 40px; height: 20px;">
+                                        <input type="checkbox" class="toggle-route" data-id="<?php echo $route['id']; ?>" <?php echo $route['is_active'] ? 'checked' : ''; ?> style="opacity: 0; width: 0; height: 0;">
+                                        <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: <?php echo $route['is_active'] ? '#2196F3' : '#ccc'; ?>; transition: .4s; border-radius: 20px;"></span>
+                                        <span class="knob" style="position: absolute; content: ''; height: 16px; width: 16px; left: <?php echo $route['is_active'] ? '22px' : '2px'; ?>; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%;"></span>
+                                    </label>
+                                </td>
+                                <td class="actions">
+                                    <button type="button" class="btn btn-sm btn-danger delete-route" data-id="<?php echo $route['id']; ?>"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- end .wa-page -->
 
 <script>
 document.getElementById('fetchGroupsBtn').addEventListener('click', function() {

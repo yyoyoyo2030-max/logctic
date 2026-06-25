@@ -4853,3 +4853,44 @@ select.form-control option {
 [data-theme="dark"] .driver-selector-list::-webkit-scrollbar-thumb {
     background: #475569;
 }
+
+/* ================================================
+   17. Responsive Tables for Mobile
+   ================================================ */
+/* Allow horizontal scrolling on small screens for all DataTables */
+.dataTable-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+/* Ensure table header and rows don't break awkwardly */
+.dataTable-table {
+    min-width: 800px; /* Minimum width before scrolling triggers */
+}
+
+/* Make DataTables controls stack neatly on mobile */
+@media (max-width: 768px) {
+    .dataTable-top, .dataTable-bottom {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .dataTable-search {
+        width: 100%;
+    }
+    
+    .dataTable-input {
+        width: 100%;
+    }
+    
+    .dataTable-info {
+        margin-bottom: 10px;
+    }
+    
+    /* Ensure content grids switch to 1 column on mobile */
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}

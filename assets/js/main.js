@@ -86,25 +86,27 @@ window.showLoading = showLoading;
 window.hideLoading = hideLoading;
 
 // ================================================
-// 4. Table Search & Filter
+// 4. DataTables Initialization (Search, Sort, Pagination)
 // ================================================
-function initTableSearch() {
-    const searchInputs = document.querySelectorAll('.table-search');
+function initDataTables() {
+    const tables = document.querySelectorAll('.data-table');
     
-    searchInputs.forEach(input => {
-        const tableId = input.dataset.table;
-        const table = document.getElementById(tableId);
-        if (!table) return;
-        
-        input.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const rows = table.querySelectorAll('tbody tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchTerm) ? '' : 'none';
+    tables.forEach(table => {
+        if (typeof simpleDatatables !== 'undefined' && !table.closest('.datatable-wrapper')) {
+            new simpleDatatables.DataTable(table, {
+                searchable: true,
+                fixedHeight: false,
+                perPage: 10,
+                perPageSelect: [10, 25, 50, 100],
+                labels: {
+                    placeholder: "ابحث هنا...",
+                    perPage: "مدخلات لكل صفحة",
+                    noRows: "لا توجد بيانات مطابقة",
+                    noResults: "لا توجد نتائج للبحث",
+                    info: "عرض {start} إلى {end} من أصل {rows} مُدخل",
+                }
             });
-        });
+        }
     });
 }
 
@@ -212,7 +214,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // 10. Initialize on DOM Load
 // ================================================
 document.addEventListener('DOMContentLoaded', () => {
-    initTableSearch();
+    initDataTables();
     initMobileSidebar();
     initFormValidation();
     initAutoHideAlerts();

@@ -4470,3 +4470,62 @@ select.form-control option {
     color: #86efac !important;
 }
 
+/* ================================================
+   15. DataTables Customization
+   ================================================ */
+.dataTable-wrapper.no-footer .dataTable-container {
+    border-bottom: 1px solid var(--border-color);
+}
+.dataTable-top, .dataTable-bottom {
+    padding: 15px 20px;
+}
+.dataTable-input {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: all 0.3s;
+}
+.dataTable-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+.dataTable-selector {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+}
+.dataTable-pagination a {
+    color: var(--text-secondary);
+    border-radius: 8px !important;
+    margin: 0 2px;
+    transition: all 0.2s;
+}
+.dataTable-pagination a:hover {
+    background-color: var(--bg-secondary) !important;
+    color: var(--primary-color);
+}
+.dataTable-pagination .active a, 
+.dataTable-pagination .active a:focus, 
+.dataTable-pagination .active a:hover {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    color: white !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
+.dataTable-info {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+[data-theme="dark"] .dataTable-sorter::before {
+    border-top-color: var(--text-primary);
+}
+[data-theme="dark"] .dataTable-sorter::after {
+    border-bottom-color: var(--text-primary);
+}

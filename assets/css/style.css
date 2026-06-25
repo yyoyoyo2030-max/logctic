@@ -4521,6 +4521,201 @@ select.form-control option {
 }
 .dataTable-info {
     color: var(--text-secondary);
+    color: #f8fafc;
+}
+
+/* زر إغلاق المودال */
+[data-theme="dark"] .modal-close {
+    background: rgba(255,255,255,0.15) !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .modal-close:hover {
+    background: rgba(255,255,255,0.25) !important;
+}
+
+/* Dropdown إشعارات */
+[data-theme="dark"] .notification-dropdown {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important;
+}
+
+[data-theme="dark"] .notification-header {
+    background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+    color: #ffffff !important;
+    border-bottom: none !important;
+}
+
+[data-theme="dark"] .notification-item {
+    border-bottom: 1px solid #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .notification-item:hover {
+    background: #263048 !important;
+}
+
+[data-theme="dark"] .notification-item.unread {
+    background: rgba(56,189,248,0.08) !important;
+}
+
+/* نص ملاحظات إضافية في الصفحات */
+[data-theme="dark"] .text-muted {
+    color: #64748b !important;
+}
+
+[data-theme="dark"] .text-secondary {
+    color: #94a3b8 !important;
+}
+
+/* حاوية الفلاتر */
+[data-theme="dark"] .filter-container,
+[data-theme="dark"] .filter-bar {
+    background: #1e293b !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+/* تنسيقات صفحة التقارير */
+[data-theme="dark"] .badge-vehicle {
+    background: #334155 !important;
+    color: #f1f5f9 !important;
+    border: 1px solid #475569 !important;
+}
+
+[data-theme="dark"] .top-driver-card {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .top-driver-card h3 {
+    color: #f8fafc !important;
+}
+
+[data-theme="dark"] .empty-state {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+[data-theme="dark"] .info-alert {
+    background: rgba(14, 165, 233, 0.1) !important;
+    border-color: #0ea5e9 !important;
+}
+
+[data-theme="dark"] .text-primary-dark {
+    color: #7dd3fc !important;
+}
+
+/* ================================================
+   النماذج وإضافة المهام - الوضع الداكن
+   ================================================ */
+[data-theme="dark"] .form-container {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .form-container label {
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .form-container .form-control {
+    background: #0f172a !important;
+    border-color: #475569 !important;
+    color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .form-container .form-control:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+}
+
+[data-theme="dark"] .form-help {
+    color: #94a3b8 !important;
+}
+
+/* خيارات الأولوية */
+[data-theme="dark"] .priority-option label {
+    border-color: #475569 !important;
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .priority-option.urgent input[type="radio"]:checked + label {
+    background: rgba(220, 53, 69, 0.2) !important;
+    border-color: #ef4444 !important;
+    color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .priority-option.high input[type="radio"]:checked + label {
+    background: rgba(253, 126, 20, 0.2) !important;
+    border-color: #f97316 !important;
+    color: #fdba74 !important;
+}
+
+[data-theme="dark"] .priority-option.medium input[type="radio"]:checked + label {
+    background: rgba(255, 193, 7, 0.2) !important;
+    border-color: #eab308 !important;
+    color: #fde047 !important;
+}
+
+[data-theme="dark"] .priority-option.low input[type="radio"]:checked + label {
+    background: rgba(40, 167, 69, 0.2) !important;
+    border-color: #22c55e !important;
+    color: #86efac !important;
+}
+
+/* ================================================
+   15. DataTables Customization
+   ================================================ */
+.dataTable-wrapper.no-footer .dataTable-container {
+    border-bottom: 1px solid var(--border-color);
+}
+.dataTable-top, .dataTable-bottom {
+    padding: 15px 20px;
+}
+.dataTable-input {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    transition: all 0.3s;
+}
+.dataTable-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+.dataTable-selector {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 6px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+}
+.dataTable-pagination a {
+    color: var(--text-secondary);
+    border-radius: 8px !important;
+    margin: 0 2px;
+    transition: all 0.2s;
+}
+.dataTable-pagination a:hover {
+    background-color: var(--bg-secondary) !important;
+    color: var(--primary-color);
+}
+.dataTable-pagination .active a, 
+.dataTable-pagination .active a:focus, 
+.dataTable-pagination .active a:hover {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    color: white !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 8px rgba(99,102,241,0.3);
+}
+.dataTable-info {
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 [data-theme="dark"] .dataTable-sorter::before {
@@ -4528,4 +4723,133 @@ select.form-control option {
 }
 [data-theme="dark"] .dataTable-sorter::after {
     border-bottom-color: var(--text-primary);
+}
+
+/* ================================================
+   16. Driver Selector Cards
+   ================================================ */
+.driver-selector-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.driver-card-radio {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+}
+
+.driver-card-radio input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.driver-card-content {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.driver-card-radio:hover .driver-card-content {
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.driver-card-radio input[type="radio"]:checked + .driver-card-content {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.05);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.driver-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.driver-name {
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+}
+
+.driver-name i {
+    color: var(--text-secondary);
+}
+
+.driver-card-radio input[type="radio"]:checked + .driver-card-content .driver-name i {
+    color: var(--primary-color);
+}
+
+.badge-recommended {
+    background: rgba(234, 179, 8, 0.1);
+    color: #ca8a04;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+[data-theme="dark"] .badge-recommended {
+    color: #fde047;
+}
+
+.driver-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.driver-details span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-secondary);
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+.driver-status.status-transit {
+    color: var(--danger-color);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.driver-status.status-available {
+    color: var(--success-color);
+    background: rgba(34, 197, 94, 0.1);
+}
+
+/* Custom Scrollbar for list */
+.driver-selector-list::-webkit-scrollbar {
+    width: 6px;
+}
+.driver-selector-list::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 10px;
+}
+.driver-selector-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+[data-theme="dark"] .driver-selector-list::-webkit-scrollbar-thumb {
+    background: #475569;
 }

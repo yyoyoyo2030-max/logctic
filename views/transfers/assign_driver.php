@@ -279,15 +279,14 @@ include '../../includes/header.php';
                         
                         <div class="form-group full-width">
                             <label><i class="fas fa-id-card"></i> اختر السائق الجديد *</label>
-                            <select name="driver_id" class="form-control" required>
-                                <option value="">-- اختر السائق --</option>
+                            <div class="driver-selector-list">
                                 <?php foreach ($drivers as $driver): ?>
                                     <?php 
                                         $isInTransit = in_array($driver['current_status'], ['assigned', 'in_transit']); 
                                         $lastTo = htmlspecialchars($driver['last_to_location'] ?? '');
                                         $isRecommended = false;
                                         
-                                        $lastToTrimmed = trim($driver['last_to_location']);
+                                        $lastToTrimmed = trim($driver['last_to_location'] ?? '');
                                         if (!empty($lastToTrimmed) && (
                                             $lastToTrimmed == trim($transfer['from_location']) || 
                                             $lastToTrimmed == trim($transfer['branch_name']) ||
@@ -296,27 +295,40 @@ include '../../includes/header.php';
                                             $isRecommended = true;
                                         }
                                         
-                                        $label = htmlspecialchars($driver['name']) . ' (' . htmlspecialchars($driver['vehicle_number']) . ')';
-                                        
-                                        if ($isInTransit) {
-                                            $label .= ' - 🚚 متجه إلى: ' . ($lastTo ?: 'غير محدد');
-                                        } else {
-                                            if ($lastTo) {
-                                                $label .= ' - ✅ متاح (في: ' . $lastTo . ')';
-                                            } else {
-                                                $label .= ' - ✅ متاح';
-                                            }
-                                        }
-                                        
-                                        if ($isRecommended) {
-                                            $label .= ' ⭐ [موصى به]';
-                                        }
+                                        $isSelected = ($assignment && $assignment['driver_id'] == $driver['id']);
                                     ?>
-                                    <option value="<?php echo $driver['id']; ?>" data-in-transit="<?php echo $isInTransit ? 'true' : 'false'; ?>" <?php echo ($assignment && $assignment['driver_id'] == $driver['id']) ? 'selected' : ''; ?>>
-                                        <?php echo $label; ?>
-                                    </option>
+                                    <label class="driver-card-radio <?php echo $isRecommended ? 'recommended' : ''; ?>">
+                                        <input type="radio" name="driver_id" value="<?php echo $driver['id']; ?>" required <?php echo $isSelected ? 'checked' : ''; ?>>
+                                        <div class="driver-card-content">
+                                            <div class="driver-header">
+                                                <div class="driver-name">
+                                                    <i class="fas fa-user-circle"></i>
+                                                    <?php echo htmlspecialchars($driver['name']); ?>
+                                                </div>
+                                                <?php if ($isRecommended): ?>
+                                                    <span class="badge-recommended"><i class="fas fa-star"></i> موصى به</span>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <div class="driver-details">
+                                                <span class="vehicle-info">
+                                                    <i class="fas fa-truck"></i> <?php echo htmlspecialchars($driver['vehicle_number']); ?>
+                                                </span>
+                                                
+                                                <?php if ($isInTransit): ?>
+                                                    <span class="driver-status status-transit">
+                                                        <i class="fas fa-route"></i> متجه إلى: <?php echo ($lastTo ?: 'غير محدد'); ?>
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span class="driver-status status-available">
+                                                        <i class="fas fa-check-circle"></i> متاح <?php echo $lastTo ? "(في: $lastTo)" : ""; ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </label>
                                 <?php endforeach; ?>
-                            </select>
+                            </div>
                         </div>
                     </div>
                     
@@ -373,15 +385,14 @@ include '../../includes/header.php';
                     
                     <div class="form-group full-width">
                         <label><i class="fas fa-id-card"></i> اختر السائق *</label>
-                        <select name="driver_id" class="form-control" required>
-                            <option value="">-- اختر السائق --</option>
+                        <div class="driver-selector-list">
                             <?php foreach ($drivers as $driver): ?>
                                 <?php 
                                     $isInTransit = in_array($driver['current_status'], ['assigned', 'in_transit']); 
                                     $lastTo = htmlspecialchars($driver['last_to_location'] ?? '');
                                     $isRecommended = false;
                                     
-                                    $lastToTrimmed = trim($driver['last_to_location']);
+                                    $lastToTrimmed = trim($driver['last_to_location'] ?? '');
                                     if (!empty($lastToTrimmed) && (
                                         $lastToTrimmed == trim($transfer['from_location']) || 
                                         $lastToTrimmed == trim($transfer['branch_name']) ||
@@ -390,27 +401,40 @@ include '../../includes/header.php';
                                         $isRecommended = true;
                                     }
                                     
-                                    $label = htmlspecialchars($driver['name']) . ' (' . htmlspecialchars($driver['vehicle_number']) . ')';
-                                    
-                                    if ($isInTransit) {
-                                        $label .= ' - 🚚 متجه إلى: ' . ($lastTo ?: 'غير محدد');
-                                    } else {
-                                        if ($lastTo) {
-                                            $label .= ' - ✅ متاح (في: ' . $lastTo . ')';
-                                        } else {
-                                            $label .= ' - ✅ متاح';
-                                        }
-                                    }
-                                    
-                                    if ($isRecommended) {
-                                        $label .= ' ⭐ [موصى به]';
-                                    }
+                                    $isSelected = false;
                                 ?>
-                                <option value="<?php echo $driver['id']; ?>" data-in-transit="<?php echo $isInTransit ? 'true' : 'false'; ?>">
-                                    <?php echo $label; ?>
-                                </option>
+                                <label class="driver-card-radio <?php echo $isRecommended ? 'recommended' : ''; ?>">
+                                    <input type="radio" name="driver_id" value="<?php echo $driver['id']; ?>" required <?php echo $isSelected ? 'checked' : ''; ?>>
+                                    <div class="driver-card-content">
+                                        <div class="driver-header">
+                                            <div class="driver-name">
+                                                <i class="fas fa-user-circle"></i>
+                                                <?php echo htmlspecialchars($driver['name']); ?>
+                                            </div>
+                                            <?php if ($isRecommended): ?>
+                                                <span class="badge-recommended"><i class="fas fa-star"></i> موصى به</span>
+                                            <?php endif; ?>
+                                        </div>
+                                        
+                                        <div class="driver-details">
+                                            <span class="vehicle-info">
+                                                <i class="fas fa-truck"></i> <?php echo htmlspecialchars($driver['vehicle_number']); ?>
+                                            </span>
+                                            
+                                            <?php if ($isInTransit): ?>
+                                                <span class="driver-status status-transit">
+                                                    <i class="fas fa-route"></i> متجه إلى: <?php echo ($lastTo ?: 'غير محدد'); ?>
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="driver-status status-available">
+                                                    <i class="fas fa-check-circle"></i> متاح <?php echo $lastTo ? "(في: $lastTo)" : ""; ?>
+                                                </span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </label>
                             <?php endforeach; ?>
-                        </select>
+                        </div>
                     </div>
                 </div>
                 

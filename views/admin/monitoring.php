@@ -8,7 +8,7 @@ if (!isLoggedIn() || !isAdmin()) {
 
 // Handle cleanup POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'cleanup') {
-    $deleted = $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+    $deleted = $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND log_type != 'error'");
     $_SESSION['flash_message'] = "تم حذف $deleted سجل قديم بنجاح";
     header('Location: monitoring.php');
     exit;
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
 // Auto-cleanup - ONLY 5% probability to avoid locking the DB on every request
 if (rand(1, 100) <= 5) {
-    $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+    $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND log_type != 'error'");
 }
 
 // Relative time helper
@@ -756,7 +756,7 @@ require_once '../../includes/header.php';
     <div class="mon-footer" style="margin-bottom:0;border-radius:12px 12px 0 0;">
         <div class="f-info">
             <i class="fas fa-info-circle"></i>
-            <span>يتم حذف السجلات الأقدم من 7 أيام تلقائياً. يمكنك الحذف يدوياً أيضاً.</span>
+            <span>يتم حذف الأنشطة الأقدم من 7 أيام تلقائياً. (سجلات الأخطاء يتم الاحتفاظ بها للأبد)</span>
         </div>
         <form method="POST" id="cleanup-form" style="margin:0;">
             <input type="hidden" name="action" value="cleanup">

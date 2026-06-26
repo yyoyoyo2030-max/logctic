@@ -83,7 +83,7 @@ try {
 
     // Auto-cleanup: ~1% chance (every ~100th request)
     if (mt_rand(1, 100) === 1) {
-        $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
+        $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY) AND log_type != 'error'");
     }
 
     echo json_encode(['success' => true]);

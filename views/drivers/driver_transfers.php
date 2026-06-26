@@ -114,6 +114,12 @@ $stmt = $conn->prepare($query);
 $stmt->execute($params);
 $transfers = $stmt->fetchAll();
 
+// عدّ التحويلات التي لا تزال جاري توصيلها فقط (بدون المستلمة)
+$in_transit_count = 0;
+foreach ($transfers as $t) {
+    if ($t['status'] === 'in_transit') $in_transit_count++;
+}
+
 include '../../includes/header.php';
 ?>
 
@@ -137,7 +143,7 @@ include '../../includes/header.php';
     <div class="stat-card info">
         <div class="stat-icon">🚚</div>
         <div class="stat-info">
-            <h3><?php echo count($transfers); ?></h3>
+            <h3><?php echo $in_transit_count; ?></h3>
             <p>تحويلات جاري توصيلها</p>
         </div>
     </div>

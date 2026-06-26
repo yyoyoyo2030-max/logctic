@@ -82,28 +82,7 @@
         </div>
     </div>
     
-    <!-- Notification Bell -->
-    <div class="notification-bell-container">
-        <button class="notification-bell" id="notification-bell" title="الإشعارات">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge" id="notification-badge" style="display: none;">0</span>
-        </button>
-        
-        <div class="notification-dropdown" id="notification-dropdown">
-            <div class="notification-header">
-                <h3>الإشعارات</h3>
-                <button class="mark-all-read" id="mark-all-read">
-                    <i class="fas fa-check-double"></i> تحديد الكل كمقروء
-                </button>
-            </div>
-            <div class="notification-list" id="notification-list">
-                <div class="notification-empty">
-                    <i class="fas fa-bell-slash"></i>
-                    <p>لا توجد إشعارات جديدة</p>
-                </div>
-            </div>
-        </div>
-    </div>
+
     
     <div class="wrapper">
         <!-- Sidebar Overlay for Mobile -->

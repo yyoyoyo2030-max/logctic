@@ -116,10 +116,14 @@ $stmt = $conn->query("SELECT sl.*, u.full_name FROM system_logs sl LEFT JOIN use
 $recent_errors = $stmt->fetchAll();
 
 // Login History
-$login_stmt = $conn->query("SELECT lh.*, u.full_name, u.username FROM login_history lh LEFT JOIN users u ON lh.user_id = u.id ORDER BY lh.created_at DESC LIMIT 100");
 $login_history = [];
-if ($login_stmt) {
-    $login_history = $login_stmt->fetchAll();
+try {
+    $login_stmt = $conn->query("SELECT lh.*, u.full_name, u.username FROM login_history lh LEFT JOIN users u ON lh.user_id = u.id ORDER BY lh.created_at DESC LIMIT 100");
+    if ($login_stmt) {
+        $login_history = $login_stmt->fetchAll();
+    }
+} catch(Exception $e) {
+    // الجدول قد لا يكون موجوداً بعد
 }
 
 require_once '../../includes/header.php';
@@ -896,20 +900,45 @@ require_once '../../includes/header.php';
 </div>
 
 <div id="tab-logins" class="mon-tab-content">
-    <div class="mon-table-wrap">
-        <table class="mon-table">
-            <thead><tr><th>المستخدم</th><th>التاريخ</th><th>IP</th><th>الجهاز</th></tr></thead>
-            <tbody>
-                <?php foreach ($login_history as $login): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($login['full_name']); ?></td>
-                    <td><?php echo $login['login_at']; ?></td>
-                    <td><?php echo $login['ip_address']; ?></td>
-                    <td><?php echo htmlspecialchars($login['user_agent']); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+    <div style="padding: 10px 0;">
+        <div class="mon-table-wrap">
+            <?php if (count($login_history) > 0): ?>
+            <table class="mon-table">
+                <thead>
+                    <tr>
+                        <th>الوقت</th>
+                        <th>المستخدم</th>
+                        <th>IP / الشبكة</th>
+                        <th>الموقع التقريبي</th>
+                        <th>الجهاز (User Agent)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($login_history as $history): ?>
+                    <tr>
+                        <td class="t-time">
+                            <span class="t-rel"><?php echo timeAgo($history['created_at']); ?></span>
+                            <span class="t-abs"><?php echo date('Y-m-d H:i', strtotime($history['created_at'])); ?></span>
+                        </td>
+                        <td class="t-user"><strong><?php echo htmlspecialchars($history['full_name'] ?: ($history['username'] ?: '—')); ?></strong></td>
+                        <td class="t-ip"><?php echo htmlspecialchars($history['ip_address'] ?? '—'); ?></td>
+                        <td>
+                            <span style="display: inline-block; padding: 3px 8px; background: rgba(16,185,129,0.1); color: #10b981; border-radius: 6px; font-size: 0.85rem;">
+                                <i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($history['location'] ?? 'غير معروف'); ?>
+                            </span>
+                        </td>
+                        <td><span style="font-size: 0.8rem; color: var(--text-secondary); max-width: 250px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?php echo htmlspecialchars($history['device_info'] ?? ''); ?>"><?php echo htmlspecialchars($history['device_info'] ?? '—'); ?></span></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php else: ?>
+            <div class="mon-empty">
+                <i class="fas fa-sign-in-alt"></i>
+                <p>لا يوجد أي سجلات دخول حتى الآن</p>
+            </div>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
 

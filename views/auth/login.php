@@ -74,7 +74,202 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    
+    <style>
+        /* Neumorphism Login Form Design - inspired by Ricardo Oliva Alonso (YzyaRPN) */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ecf0f3;
+            font-family: 'Cairo', sans-serif;
+            overflow: hidden;
+        }
+
+        .login-box {
+            position: relative;
+            width: 350px;
+            height: 550px;
+            padding: 40px 35px 35px 35px;
+            background: #ecf0f3;
+            border-radius: 40px;
+            box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            background: url('../../assets/images/logo.png') center center/contain no-repeat;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            box-shadow: 7px 7px 10px #cbced1, -7px -7px 10px #ffffff;
+            /* In case logo.png is transparent, adding a subtle background is good, but contain handles it */
+            background-color: #ecf0f3;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 24px;
+            padding-top: 10px;
+            letter-spacing: 0.5px;
+            color: #03A9F4; /* Brand Color */
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .sub-title {
+            text-align: center;
+            font-size: 13px;
+            color: #8c909e;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .inputs {
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .inputs label {
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #8c909e;
+            font-weight: 700;
+            padding-right: 15px;
+        }
+
+        .inputs input[type="text"], 
+        .inputs input[type="password"] {
+            display: block;
+            width: 100%;
+            padding: 15px 45px 15px 20px; /* Space for icon on the right */
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            background: #ecf0f3;
+            border-radius: 50px;
+            box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            color: #31344b;
+            margin-bottom: 20px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .inputs input::placeholder {
+            color: #a0a5b1;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #a0a5b1;
+            font-size: 14px;
+        }
+
+        .remember-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding-right: 15px;
+        }
+
+        .remember-group input[type="checkbox"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #ecf0f3;
+            border-radius: 5px;
+            box-shadow: inset 3px 3px 3px #cbced1, inset -3px -3px 3px #ffffff;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .remember-group input[type="checkbox"]:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #03A9F4;
+            font-size: 12px;
+            position: absolute;
+        }
+
+        .remember-group label {
+            font-size: 13px;
+            color: #8c909e;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0;
+            user-select: none;
+        }
+
+        button.login-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            background: #03A9F4; /* Matching the brand instead of red */
+            border-radius: 50px;
+            color: #fff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 6px 6px 6px #cbced1, -6px -6px 6px #ffffff;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button.login-btn:hover {
+            box-shadow: 4px 4px 6px #cbced1, -4px -4px 6px #ffffff;
+        }
+
+        button.login-btn:active {
+            box-shadow: inset 4px 4px 6px rgba(0,0,0,0.1), inset -4px -4px 6px rgba(255,255,255,0.2);
+            transform: scale(0.98);
+        }
+
+        .alert-error {
+            background: #ecf0f3;
+            color: #e74c3c;
+            box-shadow: inset 4px 4px 6px #cbced1, inset -4px -4px 6px #ffffff;
+            border-radius: 15px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            border: none;
+        }
+    </style>
     
     <!-- PostHog Tracking -->
     <script>
@@ -88,40 +283,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         });
     </script>
 </head>
-<body class="login-page">
-    <div class="login-container">
-        <div class="login-box">
-            <div class="login-header">
-                <img src="<?php echo SITE_URL; ?>/assets/images/logo.png" alt="أسواق الرشيد" class="login-logo" style="width: 120px; height: auto; margin-bottom: 20px;">
-                <h1>أسواق الرشيد</h1>
-                <p>نظام إدارة اللوجستيات</p>
+<body>
+    <div class="login-box">
+        <div class="logo"></div>
+        <div class="title">أسواق الرشيد</div>
+        <div class="sub-title">نظام إدارة اللوجستيات</div>
+        
+        <?php if ($error): ?>
+            <div class="alert-error"><?php echo $error; ?></div>
+        <?php endif; ?>
+        
+        <form method="POST" action="" class="inputs">
+            <div class="input-group">
+                <label>اسم المستخدم</label>
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" required autofocus placeholder="أدخل اسم المستخدم">
             </div>
             
-            <?php if ($error): ?>
-                <div class="alert alert-error"><?php echo $error; ?></div>
-            <?php endif; ?>
+            <div class="input-group">
+                <label>كلمة المرور</label>
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" required placeholder="أدخل كلمة المرور">
+            </div>
             
-            <form method="POST" action="">
-                <div class="form-group">
-                    <label><i class="fas fa-user"></i> اسم المستخدم</label>
-                    <input type="text" name="username" required autofocus placeholder="أدخل اسم المستخدم">
-                </div>
-                
-                <div class="form-group">
-                    <label><i class="fas fa-lock"></i> كلمة المرور</label>
-                    <input type="password" name="password" required placeholder="أدخل كلمة المرور">
-                </div>
-                
-                <div class="form-group" style="display:flex;align-items:center;gap:10px;margin-bottom:24px;">
-                    <input type="checkbox" name="remember_me" id="remember_me" style="width:18px;height:18px;cursor:pointer;">
-                    <label for="remember_me" style="margin:0;cursor:pointer;font-weight:500;">تذكرني لتسجيل الدخول التلقائي</label>
-                </div>
-                
-                <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-sign-in-alt"></i> دخول
-                </button>
-            </form>
-        </div>
+            <div class="remember-group">
+                <input type="checkbox" name="remember_me" id="remember_me">
+                <label for="remember_me">تذكرني لتسجيل الدخول التلقائي</label>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                <i class="fas fa-sign-in-alt"></i> دخول
+            </button>
+        </form>
     </div>
 </body>
 </html>

@@ -1417,9 +1417,26 @@ select.form-control option {
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
+.btn-warning {
+    background: linear-gradient(135deg, #fbbf24 0%, var(--warning, #d97706) 100%);
+    color: white;
+}
+.btn-warning::before {
+    background-image: linear-gradient(to bottom, rgba(251, 191, 36, 0.4), transparent);
+}
+.btn-warning::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
 .btn-danger {
     background: linear-gradient(135deg, #f87171 0%, var(--danger) 100%);
     color: white;
+}
+.btn-danger::before {
+    background-image: linear-gradient(to bottom, rgba(248, 113, 113, 0.4), transparent);
+}
+.btn-danger::after {
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
 
 /* أزرار الأيقونات الدائرية */

@@ -215,9 +215,11 @@ try {
 /**
  * دالة مساعدة للحصول على إعداد PostHog
  */
-function getPosthogSetting($key) {
-    $map = ['api_key' => 'api_key', 'host' => 'host', 'project_id' => 'project_id'];
-    return $GLOBALS['POSTHOG_SETTINGS'][$map[$key]] ?? '';
+if (!function_exists('getPosthogSetting')) {
+    function getPosthogSetting($key) {
+        $map = ['api_key' => 'api_key', 'host' => 'host', 'project_id' => 'project_id'];
+        return $GLOBALS['POSTHOG_SETTINGS'][$map[$key]] ?? '';
+    }
 }
 
 // ========================================

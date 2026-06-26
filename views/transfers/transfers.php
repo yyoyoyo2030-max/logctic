@@ -62,7 +62,7 @@ if (!file_exists(UPLOAD_DIR)) {
 }
 
 // معالجة إضافة تحويل جديد
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_transfer'])) {
     if ($_SESSION['role'] === 'drivers_manager') {
         $error = 'ليس لديك صلاحية رفع التحويلات';
     } else {

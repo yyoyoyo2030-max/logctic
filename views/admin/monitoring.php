@@ -900,6 +900,7 @@ require_once '../../includes/header.php';
                             <th>الوقت</th>
                             <th>المستخدم</th>
                             <th>النشاط</th>
+                            <th>تسجيل الشاشة</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -911,25 +912,38 @@ require_once '../../includes/header.php';
                             </td>
                             <td class="t-user"><strong><?php echo htmlspecialchars($log['full_name'] ?: ($log['username'] ?: '—')); ?></strong></td>
                             <td class="t-detail">
+                                <span style="font-weight: bold; color: var(--text-primary); display: block; margin-bottom: 5px;">
+                                    <?php echo htmlspecialchars($log['action']); ?>
+                                </span>
                                 <?php 
                                     if (!empty($log['details'])) {
                                         $parsed = json_decode($log['details'], true);
-                                        // Some activities might be logged directly as strings if json decoding fails
                                         if (is_array($parsed)) {
-                                            if (isset($parsed['action'])) {
-                                                echo htmlspecialchars($parsed['action']);
-                                                if (isset($parsed['item_id'])) echo " #" . htmlspecialchars($parsed['item_id']);
-                                            } else {
-                                                echo "<span style='color:var(--text-secondary);'>تم تسجيل نشاط</span>";
+                                            echo "<div style='background: rgba(14,165,233,0.05); padding: 8px; border-radius: 6px; font-size: 0.85rem; color: var(--text-secondary);'>";
+                                            foreach ($parsed as $k => $v) {
+                                                if ($k === 'ph_session_id') continue;
+                                                $key_ar = str_replace(
+                                                    ['transfer_id', 'transfer_number', 'from_location', 'to_location'],
+                                                    ['رقم التحويل (معرف)', 'رقم التحويل', 'من', 'إلى'],
+                                                    htmlspecialchars($k)
+                                                );
+                                                echo "<strong>{$key_ar}:</strong> " . htmlspecialchars(is_array($v) ? json_encode($v) : $v) . "<br>";
                                             }
+                                            echo "</div>";
                                         } else {
-                                            // Handle case where detail is just a string message
-                                            echo htmlspecialchars($log['details']);
+                                            echo "<span style='color:var(--text-secondary); font-size: 0.85rem;'>" . htmlspecialchars($log['details']) . "</span>";
                                         }
-                                    } else {
-                                        echo "<span style='color:var(--text-secondary);'>لا توجد تفاصيل</span>";
                                     }
                                 ?>
+                            </td>
+                            <td>
+                                <?php if ($log['user_id']): ?>
+                                    <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
+                                        <i class="fas fa-video"></i> مستخدم
+                                    </a>
+                                <?php else: ?>
+                                    <span style="color:var(--text-secondary);font-size:0.7rem;">—</span>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>

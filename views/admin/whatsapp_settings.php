@@ -393,11 +393,7 @@ include '../../includes/header.php';
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (empty($custom_routes)): ?>
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">لا توجد توجيهات مخصصة مضافة حالياً.</td>
-                        </tr>
-                        <?php else: ?>
+                        <?php if (!empty($custom_routes)): ?>
                             <?php 
                             $eventNames = [
                                 'all' => 'جميع العمليات',

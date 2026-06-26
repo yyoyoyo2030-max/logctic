@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
                 }
                 
                 // إرسال إشعار واتساب
-                $stmt_t = $conn->prepare("SELECT transfer_number, to_location FROM transfers WHERE id = ?");
+                $stmt_t = $conn->prepare("SELECT transfer_number, from_location, to_location FROM transfers WHERE id = ?");
                 $stmt_t->execute([$transfer_id]);
                 $transfer_info = $stmt_t->fetch();
                 
@@ -42,6 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
                     require_once '../../api/whatsapp.php';
                     $msg = "✅ *إشعار استلام*\n\n";
                     $msg .= "تم استلام التحويل رقم: {$transfer_info['transfer_number']}\n";
+                    $msg .= "من فرع: {$transfer_info['from_location']}\n";
+                    $msg .= "إلى فرع: {$transfer_info['to_location']}\n";
                     $msg .= "تأكيد بواسطة المشيك: {$_SESSION['full_name']}\n";
                     
                     $branch_group_id = null;

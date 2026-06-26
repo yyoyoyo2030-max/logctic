@@ -99,10 +99,19 @@ if ($filter_date) {
 }
 $whereStr = implode(' AND ', $where);
 
-// إعطاء الأولوية للأخطاء للظهور في أعلى الجدول، ثم ترتيب الباقي حسب الأحدث
-$stmt = $conn->prepare("SELECT sl.*, u.full_name, u.username FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE $whereStr ORDER BY CASE WHEN sl.log_type = 'error' THEN 1 ELSE 2 END ASC, sl.created_at DESC LIMIT 200");
-$stmt->execute($params);
-$logs = $stmt->fetchAll();
+// جلب سجلات الأخطاء
+$err_where = $where;
+$err_where[] = "sl.log_type = 'error'";
+$stmt_err = $conn->prepare("SELECT sl.*, u.full_name, u.username FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE " . implode(' AND ', $err_where) . " ORDER BY sl.created_at DESC LIMIT 200");
+$stmt_err->execute($params);
+$error_logs = $stmt_err->fetchAll();
+
+// جلب سجلات الأنشطة المهمة فقط
+$act_where = $where;
+$act_where[] = "sl.log_type = 'activity'";
+$stmt_act = $conn->prepare("SELECT sl.*, u.full_name, u.username FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE " . implode(' AND ', $act_where) . " ORDER BY sl.created_at DESC LIMIT 200");
+$stmt_act->execute($params);
+$activity_logs = $stmt_act->fetchAll();
 
 // Get all users for filter dropdown
 $users = $conn->query("SELECT id, full_name, username FROM users ORDER BY full_name")->fetchAll();
@@ -614,11 +623,40 @@ require_once '../../includes/header.php';
     .mon-stats { grid-template-columns: repeat(2, 1fr); }
     .mon-panels { grid-template-columns: 1fr; }
 }
-@media (max-width: 600px) {
-    .mon-stats { grid-template-columns: 1fr; }
-    .mon-filter { flex-direction: column; align-items: stretch; }
-    .mon-filter select, .mon-filter input[type="date"] { min-width: 100%; }
-    .mon-footer { flex-direction: column; text-align: center; }
+}
+
+/* Custom Tabs */
+.mon-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.mon-tab {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.mon-tab.active {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+.mon-tab[onclick="switchTab('activities')"].active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+.mon-tab-content {
+    display: none;
+}
+.mon-tab-content.active {
+    display: block;
 }
 
 </style>
@@ -761,103 +799,164 @@ require_once '../../includes/header.php';
         </div>
     </form>
 
-    <!-- Logs Table -->
-    <div style="padding: 10px 0;">
-        <div class="mon-table-wrap">
-            <?php if (count($logs) > 0): ?>
-            <table class="mon-table" id="mon-table">
-                <thead>
-                    <tr>
-                        <th>الوقت</th>
-                        <th>المستخدم</th>
-                        <th>النوع</th>
-                        <th>التفاصيل (محمي)</th>
-                        <th>التسجيل</th>
-                    </tr>
-                </thead>
-                <tbody id="mon-tbody">
-                    <?php foreach ($logs as $log):
-                        $typeLabels = ['activity'=>'نشاط','error'=>'خطأ','page_view'=>'مشاهدة'];
-                        $typeIcons  = ['activity'=>'fa-bolt','error'=>'fa-bug','page_view'=>'fa-eye'];
-                    ?>
-                    <tr>
-                        <td class="t-time">
-                            <span class="t-rel"><?php echo timeAgo($log['created_at']); ?></span>
-                            <span class="t-abs"><?php echo date('H:i:s', strtotime($log['created_at'])); ?></span>
-                        </td>
-                        <td class="t-user"><?php echo htmlspecialchars($log['full_name'] ?: ($log['username'] ?: '—')); ?></td>
-                        <td>
-                            <span class="t-badge b-<?php echo $log['log_type']; ?>">
-                                <i class="fas <?php echo $typeIcons[$log['log_type']] ?? 'fa-circle'; ?>"></i>
-                                <?php echo $typeLabels[$log['log_type']] ?? $log['log_type']; ?>
-                            </span>
-                        </td>
+    <div class="mon-tabs">
+        <button class="mon-tab active" onclick="switchTab('errors')"><i class="fas fa-bug"></i> سجل الأخطاء</button>
+        <button class="mon-tab" onclick="switchTab('activities')"><i class="fas fa-bolt"></i> حركة المستخدمين</button>
+    </div>
 
-                        <td class="t-detail" style="max-width: 250px;">
-                            <?php 
-                            if (!empty($log['details'])): 
-                                $parsed_error = false;
-                                if ($log['log_type'] == 'error') {
+    <!-- Errors Tab -->
+    <div id="tab-errors" class="mon-tab-content active">
+        <div style="padding: 10px 0;">
+            <div class="mon-table-wrap">
+                <?php if (count($error_logs) > 0): ?>
+                <table class="mon-table">
+                    <thead>
+                        <tr>
+                            <th>الوقت</th>
+                            <th>المستخدم</th>
+                            <th>النوع</th>
+                            <th>التفاصيل (محمي)</th>
+                            <th>التسجيل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($error_logs as $log): ?>
+                        <tr>
+                            <td class="t-time">
+                                <span class="t-rel"><?php echo timeAgo($log['created_at']); ?></span>
+                                <span class="t-abs"><?php echo date('H:i:s', strtotime($log['created_at'])); ?></span>
+                            </td>
+                            <td class="t-user"><?php echo htmlspecialchars($log['full_name'] ?: ($log['username'] ?: '—')); ?></td>
+                            <td>
+                                <span class="t-badge b-error">
+                                    <i class="fas fa-bug"></i> خطأ
+                                </span>
+                            </td>
+                            <td class="t-detail" style="max-width: 250px;">
+                                <?php 
+                                if (!empty($log['details'])): 
                                     $parsed = json_decode($log['details'], true);
                                     if (is_array($parsed) && isset($parsed['file'])) {
-                                        $parsed_error = true;
                                         $fileName = basename($parsed['file']);
                                         echo "<span style='color: #ef4444; font-weight: bold; display: block;'><i class='fas fa-bug'></i> مكان الخطأ: ملف {$fileName} (سطر {$parsed['line']})</span>";
                                         echo "<span style='color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 4px;'>" . htmlspecialchars(mb_substr($parsed['message'], 0, 40)) . (mb_strlen($parsed['message']) > 40 ? '...' : '') . "</span>";
+                                    } else {
+                                        echo "<span style='color: #94a3b8; font-size: 0.85rem;'><i class='fas fa-lock'></i> بيانات مخفية للحماية</span>";
+                                    }
+                                ?>
+                                    <button type="button" class="btn-view-details" style="display: inline-block; margin-top: 5px; padding: 4px 10px; background: rgba(14,165,233,0.1); color: #0ea5e9; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;" 
+                                        data-details="<?php echo htmlspecialchars($log['details'], ENT_QUOTES, 'UTF-8'); ?>"
+                                        data-url="<?php echo htmlspecialchars($log['page_url'] ?? 'غير متوفر', ENT_QUOTES, 'UTF-8'); ?>">
+                                        <i class="fas fa-eye"></i> عرض التفاصيل والأكواد
+                                    </button>
+                                <?php else: ?>
+                                    —
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php 
+                                $ph_session_id = null;
+                                if (!empty($log['details'])) {
+                                    $parsed = json_decode($log['details'], true);
+                                    if (is_array($parsed) && !empty($parsed['ph_session_id'])) {
+                                        $ph_session_id = $parsed['ph_session_id'];
                                     }
                                 }
                                 
-                                if (!$parsed_error) {
-                                    echo "<span style='color: #94a3b8; font-size: 0.85rem;'><i class='fas fa-lock'></i> بيانات مخفية للحماية</span>";
-                                }
-                            ?>
-                                <button type="button" class="btn-view-details" style="display: inline-block; margin-top: 5px; padding: 4px 10px; background: rgba(14,165,233,0.1); color: #0ea5e9; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;" 
-                                    data-details="<?php echo htmlspecialchars($log['details'], ENT_QUOTES, 'UTF-8'); ?>"
-                                    data-url="<?php echo htmlspecialchars($log['page_url'] ?? 'غير متوفر', ENT_QUOTES, 'UTF-8'); ?>">
-                                    <i class="fas fa-eye"></i> عرض التفاصيل والأكواد
-                                </button>
-                            <?php else: ?>
-                                —
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <?php 
-                            $ph_session_id = null;
-                            if (!empty($log['details'])) {
-                                $parsed = json_decode($log['details'], true);
-                                if (is_array($parsed) && !empty($parsed['ph_session_id'])) {
-                                    $ph_session_id = $parsed['ph_session_id'];
-                                }
-                            }
-                            
-                            if ($ph_session_id): ?>
-                                <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
-                                    <i class="fas fa-play"></i> تشغيل
-                                </a>
-                            <?php elseif ($log['user_id']): ?>
-                                <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
-                                    <i class="fas fa-video"></i> مستخدم
-                                </a>
-                            <?php else: ?>
-                                <span style="color:var(--text-secondary);font-size:0.7rem;">—</span>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php else: ?>
-            <div class="mon-empty">
-                <i class="fas fa-inbox"></i>
-                <p>لا توجد سجلات مطابقة للتصفية المحددة</p>
+                                if ($ph_session_id): ?>
+                                    <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
+                                        <i class="fas fa-play"></i> تشغيل
+                                    </a>
+                                <?php elseif ($log['user_id']): ?>
+                                    <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
+                                        <i class="fas fa-video"></i> مستخدم
+                                    </a>
+                                <?php else: ?>
+                                    <span style="color:var(--text-secondary);font-size:0.7rem;">—</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <div class="mon-empty">
+                    <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                    <p>النظام مستقر ولا توجد أي أخطاء حالياً</p>
+                </div>
+                <?php endif; ?>
             </div>
-            <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- Activities Tab -->
+    <div id="tab-activities" class="mon-tab-content">
+        <div style="padding: 10px 0;">
+            <div class="mon-table-wrap">
+                <?php if (count($activity_logs) > 0): ?>
+                <table class="mon-table">
+                    <thead>
+                        <tr>
+                            <th>الوقت</th>
+                            <th>المستخدم</th>
+                            <th>النشاط</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($activity_logs as $log): ?>
+                        <tr>
+                            <td class="t-time">
+                                <span class="t-rel"><?php echo timeAgo($log['created_at']); ?></span>
+                                <span class="t-abs"><?php echo date('H:i:s', strtotime($log['created_at'])); ?></span>
+                            </td>
+                            <td class="t-user"><strong><?php echo htmlspecialchars($log['full_name'] ?: ($log['username'] ?: '—')); ?></strong></td>
+                            <td class="t-detail">
+                                <?php 
+                                    if (!empty($log['details'])) {
+                                        $parsed = json_decode($log['details'], true);
+                                        // Some activities might be logged directly as strings if json decoding fails
+                                        if (is_array($parsed)) {
+                                            if (isset($parsed['action'])) {
+                                                echo htmlspecialchars($parsed['action']);
+                                                if (isset($parsed['item_id'])) echo " #" . htmlspecialchars($parsed['item_id']);
+                                            } else {
+                                                echo "<span style='color:var(--text-secondary);'>تم تسجيل نشاط</span>";
+                                            }
+                                        } else {
+                                            // Handle case where detail is just a string message
+                                            echo htmlspecialchars($log['details']);
+                                        }
+                                    } else {
+                                        echo "<span style='color:var(--text-secondary);'>لا توجد تفاصيل</span>";
+                                    }
+                                ?>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                <div class="mon-empty">
+                    <i class="fas fa-inbox"></i>
+                    <p>لا توجد أنشطة مطابقة للتصفية المحددة</p>
+                </div>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Switch tabs
+    window.switchTab = function(tabName) {
+        document.querySelectorAll('.mon-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.mon-tab-content').forEach(c => c.classList.remove('active'));
+        
+        event.currentTarget.classList.add('active');
+        document.getElementById('tab-' + tabName).classList.add('active');
+    };
+
     // ---- Instant filter on select change ----
     ['f-type', 'f-user'].forEach(function(id) {
         var el = document.getElementById(id);

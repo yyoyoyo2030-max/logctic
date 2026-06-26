@@ -57,10 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'medium' => '🟡 متوسطة',
                     'low' => '🟢 منخفضة'
                 ];
-                $msg = "📋 *مهمة جديدة متاحة للتعيين!*\n\n";
-                $msg .= "العنوان: {$title}\n";
-                $msg .= "الأولوية: {$priority_labels[$priority]}\n\n";
-                $msg .= "الرجاء الدخول للنظام لتعيين سائق.";
+                $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
+                $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+                $msg .= "📋 *مهمة جديدة بانتظار التعيين*\n\n";
+                $msg .= "📌 *عنوان المهمة:* {$title}\n";
+                $msg .= "⚠️ *درجة الأولوية:* {$priority_labels[$priority]}\n\n";
+                $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+                $msg .= "👨‍💻 الرجاء الدخول للنظام لتعيين سائق في أسرع وقت.";
                 foreach ($managers as $manager) {
                     sendWhatsAppMessage($manager['phone'], $msg);
                 }

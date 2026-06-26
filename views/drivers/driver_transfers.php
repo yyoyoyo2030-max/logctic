@@ -40,11 +40,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
                 
                 if ($transfer_info) {
                     require_once '../../api/whatsapp.php';
-                    $msg = "✅ *إشعار استلام*\n\n";
-                    $msg .= "تم استلام التحويل رقم: {$transfer_info['transfer_number']}\n";
-                    $msg .= "من فرع: {$transfer_info['from_location']}\n";
-                    $msg .= "إلى فرع: {$transfer_info['to_location']}\n";
-                    $msg .= "تأكيد بواسطة المشيك: {$_SESSION['full_name']}\n";
+                    $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
+                    $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+                    $msg .= "✅ *تم استلام التحويل بنجاح*\n\n";
+                    $msg .= "🔖 *رقم التحويل:* `{$transfer_info['transfer_number']}`\n";
+                    $msg .= "🏢 *الفرع المرسل:* {$transfer_info['from_location']}\n";
+                    $msg .= "📍 *الفرع المستلم:* {$transfer_info['to_location']}\n";
+                    $msg .= "👤 *تأكيد بواسطة:* {$_SESSION['full_name']}\n\n";
+                    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+                    $msg .= "شكراً لجهودكم! 🙏\n";
                     
                     $branch_group_id = null;
                     if (!empty($transfer_info['to_location'])) {

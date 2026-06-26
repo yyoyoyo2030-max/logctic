@@ -80,12 +80,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_driver'])) {
             
             if ($d_info && !empty($d_info['phone'])) {
                 require_once '../../api/whatsapp.php';
-                $msg = "📋 *إشعار مهمة جديدة*\n\n";
-                $msg .= "تم تكليفك بمهمة جديدة: {$task['title']}\n";
+                $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
+                $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+                $msg .= "📋 *تم تكليفك بمهمة جديدة*\n\n";
+                $msg .= "📌 *عنوان المهمة:* {$task['title']}\n";
                 if (!empty($notes)) {
-                    $msg .= "ملاحظات: {$notes}\n";
+                    $msg .= "📝 *ملاحظات هامة:* {$notes}\n";
                 }
-                $msg .= "\nالرجاء التوجه لتنفيذ المهمة.";
+                $msg .= "\n━━━━━━━━━━━━━━━━━━━━\n";
+                $msg .= "🚀 نتمنى لك التوفيق، الرجاء البدء بتنفيذ المهمة.";
                 
                 // تجاهل النتيجة لأن الغرض إعلامي
                 sendWhatsAppMessage($d_info['phone'], $msg);

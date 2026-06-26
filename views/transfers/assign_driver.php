@@ -103,14 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // إرسال إشعار للسائق عبر الواتساب
         if ($assignment && !empty($assignment['driver_phone'])) {
             require_once '../../api/whatsapp.php';
-            $msg = "🚚 *إشعار تعيين جديد*\n\n";
-            $msg .= "تم تعيينك لتحويل جديد رقم: {$transfer['transfer_number']}\n";
-            $msg .= "من: {$transfer['from_location']}\n";
-            $msg .= "إلى: {$transfer['to_location']}\n";
+            $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
+            $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+            $msg .= "🚚 *تم تكليفك بمهمة توصيل جديدة*\n\n";
+            $msg .= "🔖 *رقم التحويل:* `{$transfer['transfer_number']}`\n";
+            $msg .= "🏢 *موقع الاستلام:* {$transfer['from_location']}\n";
+            $msg .= "📍 *موقع التسليم:* {$transfer['to_location']}\n";
             if (!empty($notes)) {
-                $msg .= "ملاحظات: {$notes}\n";
+                $msg .= "📝 *ملاحظات هامة:* {$notes}\n";
             }
-            $msg .= "\nالرجاء التوجه للاستلام وتوصيل التحويل.";
+            $msg .= "\n━━━━━━━━━━━━━━━━━━━━\n";
+            $msg .= "🚀 نتمنى لك رحلة موفقة، الرجاء التوجه لاستلام التحويل.";
             
             // تجاهل النتيجة لأن الغرض إعلامي
             sendWhatsAppMessage($assignment['driver_phone'], $msg);

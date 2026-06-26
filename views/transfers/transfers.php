@@ -114,11 +114,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_transfer'])) {
             $stmt_managers = $conn->query("SELECT phone FROM users WHERE role = 'drivers_manager' AND phone IS NOT NULL AND phone != ''");
             $managers = $stmt_managers->fetchAll();
             if (count($managers) > 0) {
-                $msg = "📦 *تحويل جديد متاح للتعيين!*\n\n";
-                $msg .= "رقم التحويل: {$transfer_number}\n";
-                $msg .= "من: {$from_location}\n";
-                $msg .= "إلى: {$to_location}\n\n";
-                $msg .= "الرجاء الدخول للنظام لتعيين سائق.";
+                $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
+                $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+                $msg .= "📦 *تحويل جديد بانتظار التعيين*\n\n";
+                $msg .= "🔖 *رقم التحويل:* `{$transfer_number}`\n";
+                $msg .= "🏢 *من فرع:* {$from_location}\n";
+                $msg .= "📍 *إلى فرع:* {$to_location}\n\n";
+                $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+                $msg .= "👨‍💻 الرجاء الدخول للنظام لتعيين سائق في أسرع وقت.";
                 foreach ($managers as $manager) {
                     sendWhatsAppMessage($manager['phone'], $msg);
                 }

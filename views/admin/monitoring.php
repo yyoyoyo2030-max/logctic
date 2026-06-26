@@ -790,11 +790,11 @@ require_once '../../includes/header.php';
                             }
                             
                             if ($ph_session_id): ?>
-                                <a href="https://us.posthog.com/project/484728/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
+                                <a href="https://us.posthog.com/project/<?php echo defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728'; ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
                                     <i class="fas fa-play"></i> تشغيل
                                 </a>
                             <?php elseif ($log['user_id']): ?>
-                                <a href="https://us.posthog.com/project/484728/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
+                                <a href="https://us.posthog.com/project/<?php echo defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728'; ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
                                     <i class="fas fa-video"></i> مستخدم
                                 </a>
                             <?php else: ?>

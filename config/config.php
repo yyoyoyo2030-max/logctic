@@ -28,6 +28,13 @@ define('PRODUCTION_DB_NAME', 'u824688047_logistic');
 define('PRODUCTION_SITE_URL', 'https://shop.alrsheed.net/logistic_pro');
 
 // ========================================
+// إعدادات PostHog للتحليلات والتتبع
+// ========================================
+define('POSTHOG_PROJECT_API_KEY', 'phc_zkY3cbF8xDssbupMiPjQmtVAw5DoLRb7iB9CPV6nNp4q');
+define('POSTHOG_HOST', 'https://us.i.posthog.com');
+define('POSTHOG_PROJECT_ID', '484728'); // يستخدم فقط في روابط المراقبة (monitoring)
+
+// ========================================
 // تطبيق الإعدادات (الأولوية لمتغيرات البيئة ENV ثم الثوابت)
 // ========================================
 if (getenv('DB_HOST')) {

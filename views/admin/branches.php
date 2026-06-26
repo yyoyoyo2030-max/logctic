@@ -12,6 +12,9 @@ $edit_branch = null;
 
 // تعديل فرع
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_branch'])) {
+    if ($_SESSION['role'] === 'warehouse_manager') {
+        $error = 'ليس لديك صلاحية لتعديل الفروع';
+    } else {
     $id = clean_input($_POST['id']);
     $name = clean_input($_POST['name']);
     $location = clean_input($_POST['location']);
@@ -24,10 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_branch'])) {
     } else {
         $error = 'حدث خطأ أثناء التحديث';
     }
+    }
 }
 
 // إضافة فرع جديد
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_branch'])) {
+    if ($_SESSION['role'] === 'warehouse_manager') {
+        $error = 'ليس لديك صلاحية لإضافة فروع';
+    } else {
     $name = clean_input($_POST['name']);
     $location = clean_input($_POST['location']);
     $phone = clean_input($_POST['phone']);
@@ -39,10 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_branch'])) {
     } else {
         $error = 'حدث خطأ أثناء الإضافة';
     }
+    }
 }
 
 // حذف فرع
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
+    if ($_SESSION['role'] === 'warehouse_manager') {
+        $error = 'ليس لديك صلاحية لحذف الفروع';
+    } else {
     $branch_id = $_GET['delete'];
     
     // التحقق من عدم وجود مستخدمين أو تحويلات مرتبطة بالفرع
@@ -64,6 +75,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
             $error = 'حدث خطأ أثناء الحذف';
         }
     }
+}
 }
 
 // جلب بيانات الفرع للتعديل
@@ -91,7 +103,9 @@ include '../../includes/header.php';
 
 <div class="page-header">
     <h1>إدارة الفروع</h1>
+    <?php if ($_SESSION['role'] !== 'warehouse_manager'): ?>
     <button class="btn btn-primary" onclick="openModal('addBranchModal')">+ إضافة فرع</button>
+    <?php endif; ?>
 </div>
 
 <?php if ($success): ?>
@@ -111,9 +125,11 @@ include '../../includes/header.php';
         </div>
         <h3 style="margin: 0 0 8px; color: #1e293b; font-size: 1.15rem;">لا توجد فروع بعد</h3>
         <p style="color: #94a3b8; font-size: 0.9rem; margin: 0 0 20px;">ابدأ بإضافة أول فرع لنظامك لتتمكن من إدارة التحويلات والمهام.</p>
+        <?php if ($_SESSION['role'] !== 'warehouse_manager'): ?>
         <button class="btn btn-primary" onclick="openModal('addBranchModal')" style="border-radius: 10px; padding: 10px 28px;">
             <i class="fas fa-plus"></i> إضافة أول فرع
         </button>
+        <?php endif; ?>
     </div>
     <?php else: ?>
     <table class="data-table">
@@ -126,7 +142,9 @@ include '../../includes/header.php';
                 <th>عدد المستخدمين</th>
                 <th>عدد التحويلات</th>
                 <th>تاريخ الإنشاء</th>
+                <?php if ($_SESSION['role'] !== 'warehouse_manager'): ?>
                 <th>إجراءات</th>
+                <?php endif; ?>
             </tr>
         </thead>
         <tbody>
@@ -170,12 +188,14 @@ include '../../includes/header.php';
                 </td>
                 <td><?php echo date('Y-m-d', strtotime($branch['created_at'])); ?></td>
                 <td class="actions">
+                    <?php if ($_SESSION['role'] !== 'warehouse_manager'): ?>
                     <a href="branches.php?edit=<?php echo $branch['id']; ?>" class="btn btn-sm btn-warning">
                         <i class="fas fa-edit"></i> تعديل
                     </a>
                     <a href="branches.php?delete=<?php echo $branch['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا الفرع؟')">
                         <i class="fas fa-trash"></i> حذف
                     </a>
+                    <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>

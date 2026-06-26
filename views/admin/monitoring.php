@@ -812,11 +812,11 @@ require_once '../../includes/header.php';
                             }
                             
                             if ($ph_session_id): ?>
-                                <a href="https://us.posthog.com/project/<?php echo defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728'; ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
+                                <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
                                     <i class="fas fa-play"></i> تشغيل
                                 </a>
                             <?php elseif ($log['user_id']): ?>
-                                <a href="https://us.posthog.com/project/<?php echo defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728'; ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
+                                <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
                                     <i class="fas fa-video"></i> مستخدم
                                 </a>
                             <?php else: ?>
@@ -943,17 +943,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: #374151;">مفتاح المشروع (API Key)</label>
-                    <input type="text" name="posthog_api_key" value="<?php echo defined('POSTHOG_PROJECT_API_KEY') ? htmlspecialchars(POSTHOG_PROJECT_API_KEY) : ''; ?>" placeholder="phc_..." style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; font-size: 0.85rem;" required>
+                    <input type="text" name="posthog_api_key" value="<?php echo htmlspecialchars(getPosthogSetting('api_key') ?: ''); ?>" placeholder="phc_..." style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; font-size: 0.85rem;" required>
                 </div>
 
                 <div style="margin-bottom: 15px;">
                     <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: #374151;">رابط السيرفر (Host URL)</label>
-                    <input type="url" name="posthog_host" value="<?php echo defined('POSTHOG_HOST') ? htmlspecialchars(POSTHOG_HOST) : 'https://us.i.posthog.com'; ?>" placeholder="https://us.i.posthog.com" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; direction: ltr; font-family: monospace; font-size: 0.85rem;" required>
+                    <input type="url" name="posthog_host" value="<?php echo htmlspecialchars(getPosthogSetting('host') ?: 'https://us.i.posthog.com'); ?>" placeholder="https://us.i.posthog.com" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; direction: ltr; font-family: monospace; font-size: 0.85rem;" required>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: #374151;">معرف المشروع (Project ID)</label>
-                    <input type="text" name="posthog_project_id" value="<?php echo defined('POSTHOG_PROJECT_ID') ? htmlspecialchars(POSTHOG_PROJECT_ID) : ''; ?>" placeholder="مثال: 484728" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; font-size: 0.85rem;" required>
+                    <input type="text" name="posthog_project_id" value="<?php echo htmlspecialchars(getPosthogSetting('project_id') ?: ''); ?>" placeholder="مثال: 484728" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; font-size: 0.85rem;" required>
                     <small style="display: block; color: #6b7280; font-size: 0.75rem; margin-top: 5px;">يُستخدم لعرض روابط التسجيلات في الجدول أعلاه.</small>
                 </div>
 

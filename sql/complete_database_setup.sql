@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- ================================================
 CREATE TABLE IF NOT EXISTS transfers (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    transfer_number VARCHAR(50) UNIQUE NOT NULL,
+    transfer_number VARCHAR(50) NOT NULL,
     branch_id INT NOT NULL,
     uploaded_by INT NOT NULL,
     file_path VARCHAR(255),

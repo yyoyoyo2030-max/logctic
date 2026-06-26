@@ -94,6 +94,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_transfer'])) {
                 $error = 'نوع الملف غير مسموح';
             }
         }
+        if (!$error) {
+            // التحقق مما إذا كان رقم التحويل موجوداً مسبقاً في نفس الفرع
+            $stmt_check = $conn->prepare("SELECT id FROM transfers WHERE transfer_number = ? AND branch_id = ?");
+            $stmt_check->execute([$transfer_number, $_SESSION['branch_id']]);
+            if ($stmt_check->rowCount() > 0) {
+                $error = 'رقم التحويل هذا تم رفعه مسبقاً في فرعك الحالي. يُسمح بتكرار الرقم فقط إذا كان من فرع آخر.';
+            }
+        }
         
         if (!$error) {
             try {

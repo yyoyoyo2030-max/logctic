@@ -169,6 +169,55 @@ try {
 }
 
 // ========================================
+// جدول إعدادات النظام (يُنشأ تلقائياً)
+// ========================================
+try {
+    $conn->exec("CREATE TABLE IF NOT EXISTS system_settings (
+        setting_key VARCHAR(100) PRIMARY KEY,
+        setting_value TEXT,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+} catch(Exception $e) { /* الجدول موجود بالفعل */ }
+
+// ========================================
+// تحميل إعدادات PostHog من قاعدة البيانات (تتجاوز القيم الافتراضية)
+// ========================================
+try {
+    $ph_stmt = $conn->query("SELECT setting_key, setting_value FROM system_settings WHERE setting_key IN ('posthog_api_key', 'posthog_host', 'posthog_project_id')");
+    $ph_settings = $ph_stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+    
+    // إعادة تعريف الثوابت إذا وُجدت قيم في قاعدة البيانات
+    if (!empty($ph_settings['posthog_api_key'])) {
+        // لا يمكن إعادة تعريف الثوابت، لذا نستخدم متغيرات عامة
+        $GLOBALS['POSTHOG_SETTINGS'] = [
+            'api_key'    => $ph_settings['posthog_api_key'] ?? POSTHOG_PROJECT_API_KEY,
+            'host'       => $ph_settings['posthog_host'] ?? POSTHOG_HOST,
+            'project_id' => $ph_settings['posthog_project_id'] ?? POSTHOG_PROJECT_ID
+        ];
+    } else {
+        $GLOBALS['POSTHOG_SETTINGS'] = [
+            'api_key'    => POSTHOG_PROJECT_API_KEY,
+            'host'       => POSTHOG_HOST,
+            'project_id' => POSTHOG_PROJECT_ID
+        ];
+    }
+} catch(Exception $e) {
+    $GLOBALS['POSTHOG_SETTINGS'] = [
+        'api_key'    => POSTHOG_PROJECT_API_KEY,
+        'host'       => POSTHOG_HOST,
+        'project_id' => POSTHOG_PROJECT_ID
+    ];
+}
+
+/**
+ * دالة مساعدة للحصول على إعداد PostHog
+ */
+function getPosthogSetting($key) {
+    $map = ['api_key' => 'api_key', 'host' => 'host', 'project_id' => 'project_id'];
+    return $GLOBALS['POSTHOG_SETTINGS'][$map[$key]] ?? '';
+}
+
+// ========================================
 // الدوال المساعدة
 // ========================================
 

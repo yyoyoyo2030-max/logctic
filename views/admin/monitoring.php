@@ -14,6 +14,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     exit;
 }
 
+// Handle Update Settings POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_settings') {
+    $api_key = $_POST['posthog_api_key'] ?? '';
+    $host = $_POST['posthog_host'] ?? '';
+    $project_id = $_POST['posthog_project_id'] ?? '';
+    
+    try {
+        $stmt = $conn->prepare("INSERT INTO system_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+        $stmt->execute(['posthog_api_key', $api_key]);
+        $stmt->execute(['posthog_host', $host]);
+        $stmt->execute(['posthog_project_id', $project_id]);
+        $_SESSION['flash_message'] = "تم تحديث إعدادات التتبع والتحليلات بنجاح";
+    } catch(Exception $e) {
+        $_SESSION['flash_message'] = "حدث خطأ أثناء حفظ الإعدادات: " . $e->getMessage();
+    }
+    header('Location: monitoring.php');
+    exit;
+}
+
 // Auto-cleanup - ONLY 5% probability to avoid locking the DB on every request
 if (rand(1, 100) <= 5) {
     $conn->exec("DELETE FROM system_logs WHERE created_at < DATE_SUB(NOW(), INTERVAL 7 DAY)");
@@ -621,6 +640,9 @@ require_once '../../includes/header.php';
         </div>
     </div>
     <div class="mon-header-left">
+        <button type="button" onclick="document.getElementById('posthogSettingsModal').style.display='flex';" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; font-family: 'Cairo', sans-serif; font-size: 0.8rem; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(139,92,246,0.3)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+            <i class="fas fa-cog"></i> إعدادات التتبع (PostHog)
+        </button>
         <span style="font-size:0.78rem; color:var(--text-secondary);"><i class="fas fa-database"></i> إجمالي السجلات: <strong style="color:var(--primary)"><?php echo number_format($stats['total_logs']); ?></strong></span>
     </div>
 </div>
@@ -790,11 +812,11 @@ require_once '../../includes/header.php';
                             }
                             
                             if ($ph_session_id): ?>
-                                <a href="https://us.posthog.com/project/<?php echo defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728'; ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
+                                <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/replay/<?php echo urlencode($ph_session_id); ?>" target="_blank" class="btn-video" title="مشاهدة تسجيل الجلسة مباشرة">
                                     <i class="fas fa-play"></i> تشغيل
                                 </a>
                             <?php elseif ($log['user_id']): ?>
-                                <a href="https://us.posthog.com/project/<?php echo defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728'; ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
+                                <a href="https://us.posthog.com/project/<?php echo getPosthogSetting('project_id'); ?>/person/<?php echo urlencode($log['user_id']); ?>#recordings" target="_blank" class="btn-video" title="بحث عن تسجيلات المستخدم">
                                     <i class="fas fa-video"></i> مستخدم
                                 </a>
                             <?php else: ?>
@@ -907,5 +929,51 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
+
+<!-- PostHog Settings Modal -->
+<div id="posthogSettingsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div style="background: #fff; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column;">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
+            <h3 style="margin: 0; font-size: 1.1rem; color: #111827;"><i class="fas fa-cog" style="color: #6366f1; margin-left: 8px;"></i> إعدادات التتبع والتحليلات (PostHog)</h3>
+            <button type="button" onclick="document.getElementById('posthogSettingsModal').style.display='none';" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>
+        </div>
+        <div style="padding: 20px;">
+            <form method="POST" action="monitoring.php">
+                <input type="hidden" name="action" value="update_settings">
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: #374151;">مفتاح المشروع (API Key)</label>
+                    <input type="text" name="posthog_api_key" value="<?php echo htmlspecialchars(getPosthogSetting('api_key') ?: ''); ?>" placeholder="phc_..." style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; font-size: 0.85rem;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: #374151;">رابط السيرفر (Host URL)</label>
+                    <input type="url" name="posthog_host" value="<?php echo htmlspecialchars(getPosthogSetting('host') ?: 'https://us.i.posthog.com'); ?>" placeholder="https://us.i.posthog.com" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; direction: ltr; font-family: monospace; font-size: 0.85rem;" required>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: #374151;">معرف المشروع (Project ID)</label>
+                    <input type="text" name="posthog_project_id" value="<?php echo htmlspecialchars(getPosthogSetting('project_id') ?: ''); ?>" placeholder="مثال: 484728" style="width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; font-size: 0.85rem;" required>
+                    <small style="display: block; color: #6b7280; font-size: 0.75rem; margin-top: 5px;">يُستخدم لعرض روابط التسجيلات في الجدول أعلاه.</small>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button type="button" onclick="document.getElementById('posthogSettingsModal').style.display='none';" style="padding: 8px 16px; background: #e5e7eb; color: #374151; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: 'Cairo', sans-serif;">إلغاء</button>
+                    <button type="submit" style="padding: 8px 16px; background: #0ea5e9; color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-family: 'Cairo', sans-serif;">حفظ الإعدادات</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Close modal when clicking outside
+window.addEventListener('click', function(e) {
+    var phModal = document.getElementById('posthogSettingsModal');
+    if (e.target == phModal) {
+        phModal.style.display = 'none';
+    }
+});
+</script>
 
 <?php require_once '../../includes/footer.php'; ?>

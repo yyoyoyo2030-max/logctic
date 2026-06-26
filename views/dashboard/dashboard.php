@@ -65,7 +65,7 @@ $stats['no_driver_transfers'] = (int)($row['no_driver'] ?? 0);
 
 // استعلام منفصل للحالات الفعلية الحالية (لا يتأثر بفلتر التاريخ)
 $live_sql = "SELECT 
-    SUM(CASE WHEN t.status = 'in_transit' THEN 1 ELSE 0 END) as in_transit,
+    SUM(CASE WHEN t.status = 'pending' THEN 1 ELSE 0 END) as pending,
     SUM(CASE WHEN t.status IN ('assigned', 'in_transit') THEN 1 ELSE 0 END) as active
     FROM transfers t WHERE 1=1 $branch_cond";
 
@@ -73,7 +73,7 @@ $live_stmt = $conn->prepare($live_sql);
 $live_stmt->execute($branch_params);
 $live_row = $live_stmt->fetch(PDO::FETCH_ASSOC);
 
-$stats['in_transit_transfers'] = (int)($live_row['in_transit'] ?? 0);
+$stats['pending_transfers'] = (int)($live_row['pending'] ?? 0);
 $stats['active_transfers'] = (int)($live_row['active'] ?? 0);
 
 // عدد السائقين المتاحين (لا يتأثر بالفلتر الزمني)
@@ -235,11 +235,11 @@ include '../../includes/header.php';
         </div>
     </a>
     
-    <a href="../transfers/transfers.php?status=in_transit" class="stat-card-link">
+    <a href="../transfers/transfers.php?status=active" class="stat-card-link">
         <div class="stat-card info">
             <div class="stat-icon"><i class="fas fa-truck-fast"></i></div>
             <div class="stat-info">
-                <h3 class="stat-value" data-stat="inprogress-transfers"><?php echo $stats['in_transit_transfers']; ?></h3>
+                <h3 class="stat-value" data-stat="inprogress-transfers"><?php echo $stats['active_transfers']; ?></h3>
                 <p>جاري التوصيل</p>
             </div>
         </div>
@@ -255,12 +255,12 @@ include '../../includes/header.php';
         </div>
     </a>
     
-    <a href="../transfers/transfers.php?status=active" class="stat-card-link">
-        <div class="stat-card info">
+    <a href="../transfers/transfers.php?status=pending" class="stat-card-link">
+        <div class="stat-card warning">
             <div class="stat-icon"><i class="fas fa-spinner"></i></div>
             <div class="stat-info">
-                <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['active_transfers']; ?></h3>
-                <p>قيد التنفيذ</p>
+                <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['pending_transfers']; ?></h3>
+                <p>قيد الانتظار</p>
             </div>
         </div>
     </a>

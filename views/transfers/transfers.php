@@ -171,13 +171,17 @@ $no_driver_filter = isset($_GET['no_driver']) ? true : false;
 $active_filter_label = '';
 
 if ($status_filter) {
-    $valid_statuses = ['pending', 'assigned', 'in_transit', 'delivered', 'cancelled'];
+    $valid_statuses = ['pending', 'assigned', 'in_transit', 'delivered', 'cancelled', 'active'];
     if (in_array($status_filter, $valid_statuses)) {
-        $conditions[] = 't.status = ?';
-        $params[] = $status_filter;
-        $status_labels = [
-            'pending' => 'قيد الانتظار',
-            'assigned' => 'تم التعيين',
+        if ($status_filter === 'active') {
+            $conditions[] = "t.status IN ('assigned', 'in_transit')";
+            $active_filter_label = 'جاري التوصيل / في الطريق';
+        } else {
+            $conditions[] = 't.status = ?';
+            $params[] = $status_filter;
+            $status_labels = [
+                'pending' => 'قيد الانتظار',
+                'assigned' => 'تم التعيين / جاري التوصيل',
             'in_transit' => 'جاري التوصيل',
             'delivered' => 'تم التوصيل',
             'cancelled' => 'ملغي'

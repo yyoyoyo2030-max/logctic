@@ -10,6 +10,12 @@ if (!isLoggedIn()) {
     exit;
 }
 
+// مسئول السائقين لا يملك صلاحية الوصول لهذه الصفحة
+if ($_SESSION['role'] === 'drivers_manager') {
+    header('Location: ' . SITE_URL . '/views/dashboard/dashboard.php');
+    exit;
+}
+
 // المراقب لا يستطيع إضافة مهام
 
 

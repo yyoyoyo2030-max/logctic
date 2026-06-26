@@ -4,7 +4,6 @@
  */
 require_once '../../config/config.php';
 
-// التحقق من تسجيل الدخول
 if (!isLoggedIn()) {
     header('Location: ' . SITE_URL . '/views/auth/login.php');
     exit;
@@ -12,12 +11,16 @@ if (!isLoggedIn()) {
 
 // معالجة حذف مهمة
 if (isset($_POST['delete_task'])) {
-    $task_id = $_POST['task_id'];
-    
-    $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
-    $stmt->execute([$task_id]);
-    
-    $success_msg = "تم حذف المهمة بنجاح";
+    if ($_SESSION['role'] === 'drivers_manager') {
+        $error_msg = "ليس لديك صلاحية حذف المهام";
+    } else {
+        $task_id = $_POST['task_id'];
+        
+        $stmt = $conn->prepare("DELETE FROM tasks WHERE id = ?");
+        $stmt->execute([$task_id]);
+        
+        $success_msg = "تم حذف المهمة بنجاح";
+    }
 }
 
 // معالجة تحديث حالة المهمة
@@ -115,21 +118,15 @@ include '../../includes/header.php';
 ?>
 
 <div class="page-header">
-    <h1>📋 إدارة المهام</h1>
-    <a href="add_task.php" class="btn btn-primary">+ إضافة مهمة جديدة</a>
+    <h1>إدارة المهام</h1>
+    <?php if ($_SESSION['role'] !== 'drivers_manager'): ?>
+    <a href="add_task.php" class="btn btn-primary">+ إضافة مهمة</a>
+    <?php endif; ?>
 </div>
 
 <?php if (isset($success_msg)): ?>
     <div class="alert alert-success"><?php echo $success_msg; ?></div>
 <?php endif; ?>
-
-<!-- ملاحظة توضيحية -->
-<div class="content-section info-alert" style="border-right: 4px solid #3b82f6; margin-bottom: 20px;">
-    <p class="text-primary-dark" style="margin: 0; font-weight: 500;">
-        <span style="font-size: 1.2em;">ℹ️</span> 
-        <strong>ملاحظة:</strong> المهام يتم تعيينها للسائقين فقط (مثل نظام التحويلات). بعد إنشاء المهمة، استخدم زر "🚗 سائق" لتعيين السائقين المطلوبين لتنفيذ المهمة.
-    </p>
-</div>
 
 <!-- الإحصائيات -->
 <div class="stats-grid">
@@ -276,7 +273,7 @@ include '../../includes/header.php';
                                 </form>
                             <?php endif; ?>
                             
-                            <?php if (isLogisticsManager() || $task['assigned_by'] == $_SESSION['user_id']): ?>
+                            <?php if (($_SESSION['role'] !== 'drivers_manager') && (isLogisticsManager() || $task['assigned_by'] == $_SESSION['user_id'])): ?>
                                 <form method="POST" style="display: inline;" onsubmit="return confirm('هل أنت متأكد من حذف هذه المهمة؟');">
                                     <input type="hidden" name="task_id" value="<?php echo $task['id']; ?>">
                                     <button type="submit" name="delete_task" class="btn btn-sm btn-danger">حذف</button>
@@ -293,7 +290,9 @@ include '../../includes/header.php';
             <img src="../../assets/images/empty-tasks.svg" alt="لا توجد مهام" style="width: 120px; opacity: 0.5; margin-bottom: 20px;">
             <h3 class="text-secondary">لا توجد مهام</h3>
             <p class="text-muted">لم يتم العثور على أي مهام حسب الفلاتر المحددة</p>
-            <a href="add_task.php" class="btn btn-primary" style="margin-top: 15px;">+ إضافة مهمة جديدة</a>
+            <?php if ($_SESSION['role'] !== 'drivers_manager'): ?>
+            <a href="add_task.php" class="btn btn-primary" style="margin-top: 15px;">+ إضافة مهمة</a>
+            <?php endif; ?>
         </div>
     <?php endif; ?>
 </div>

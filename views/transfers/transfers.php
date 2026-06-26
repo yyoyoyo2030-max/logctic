@@ -13,7 +13,6 @@ if (!isLoggedIn()) {
 }
 
 
-
 $success = '';
 $error = '';
 
@@ -63,75 +62,79 @@ if (!file_exists(UPLOAD_DIR)) {
 }
 
 // معالجة إضافة تحويل جديد
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_transfer'])) {
-    $transfer_number = clean_input($_POST['transfer_number']);
-    $from_location = clean_input($_POST['from_location']);
-    $to_location = clean_input($_POST['to_location']);
-    $description = clean_input($_POST['description']);
-    
-    // معالجة رفع الملف
-    $file_path = null;
-    if (isset($_FILES['transfer_file']) && $_FILES['transfer_file']['error'] == 0) {
-        $allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png'];
-        $filename = $_FILES['transfer_file']['name'];
-        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['upload'])) {
+    if ($_SESSION['role'] === 'drivers_manager') {
+        $error = 'ليس لديك صلاحية رفع التحويلات';
+    } else {
+        $transfer_number = clean_input($_POST['transfer_number']);
+        $from_location = clean_input($_POST['from_location']);
+        $to_location = clean_input($_POST['to_location']);
+        $description = clean_input($_POST['description']);
         
-        if (in_array($ext, $allowed)) {
-            $new_filename = uniqid() . '_' . $filename;
-            $upload_path = UPLOAD_DIR . $new_filename;
+        // معالجة رفع الملف
+        $file_path = null;
+        if (isset($_FILES['transfer_file']) && $_FILES['transfer_file']['error'] == 0) {
+            $allowed = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png'];
+            $filename = $_FILES['transfer_file']['name'];
+            $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
             
-            if (move_uploaded_file($_FILES['transfer_file']['tmp_name'], $upload_path)) {
-                $file_path = $new_filename;
-            } else {
-                $error = 'فشل رفع الملف';
-            }
-        } else {
-            $error = 'نوع الملف غير مسموح';
-        }
-    }
-    
-    if (!$error) {
-        try {
-            $stmt = $conn->prepare("
-                INSERT INTO transfers (transfer_number, branch_id, uploaded_by, file_path, from_location, to_location, description) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ");
-            
-            $stmt->execute([
-                $transfer_number,
-                $_SESSION['branch_id'],
-                $_SESSION['user_id'],
-                $file_path,
-                $from_location,
-                $to_location,
-                $description
-            ]);
-            
-            $success = 'تم رفع التحويل بنجاح';
-            
-            // إرسال إشعار عبر الواتساب لمسؤولي السائقين
-            require_once '../../api/whatsapp.php';
-            $stmt_managers = $conn->query("SELECT phone FROM users WHERE role = 'drivers_manager' AND phone IS NOT NULL AND phone != ''");
-            $managers = $stmt_managers->fetchAll();
-            if (count($managers) > 0) {
-                $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
-                $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
-                $msg .= "📦 *تحويل جديد بانتظار التعيين*\n\n";
-                $msg .= "🔖 *رقم التحويل:* `{$transfer_number}`\n";
-                $msg .= "🏢 *من فرع:* {$from_location}\n";
-                $msg .= "📍 *إلى فرع:* {$to_location}\n\n";
-                $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
-                $msg .= "👨‍💻 الرجاء الدخول للنظام لتعيين سائق في أسرع وقت.";
-                foreach ($managers as $manager) {
-                    sendWhatsAppMessage($manager['phone'], $msg);
+            if (in_array($ext, $allowed)) {
+                $new_filename = uniqid() . '_' . $filename;
+                $upload_path = UPLOAD_DIR . $new_filename;
+                
+                if (move_uploaded_file($_FILES['transfer_file']['tmp_name'], $upload_path)) {
+                    $file_path = $new_filename;
+                } else {
+                    $error = 'فشل رفع الملف';
                 }
-                notifyCustomRoutes('transfer_created', $msg);
-            }
-        } catch(PDOException $e) {
-            if ($e->getCode() == 23000) {
-                $error = 'رقم التحويل موجود مسبقاً';
             } else {
-                $error = 'حدث خطأ أثناء الحفظ';
+                $error = 'نوع الملف غير مسموح';
+            }
+        }
+        
+        if (!$error) {
+            try {
+                $stmt = $conn->prepare("
+                    INSERT INTO transfers (transfer_number, branch_id, uploaded_by, file_path, from_location, to_location, description) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                ");
+                
+                $stmt->execute([
+                    $transfer_number,
+                    $_SESSION['branch_id'],
+                    $_SESSION['user_id'],
+                    $file_path,
+                    $from_location,
+                    $to_location,
+                    $description
+                ]);
+                
+                $success = 'تم رفع التحويل بنجاح';
+                
+                // إرسال إشعار عبر الواتساب لمسؤولي السائقين
+                require_once '../../api/whatsapp.php';
+                $stmt_managers = $conn->query("SELECT phone FROM users WHERE role = 'drivers_manager' AND phone IS NOT NULL AND phone != ''");
+                $managers = $stmt_managers->fetchAll();
+                if (count($managers) > 0) {
+                    $msg = "🌟 *إشعار نظام اللوجستيات* 🌟\n";
+                    $msg .= "━━━━━━━━━━━━━━━━━━━━\n\n";
+                    $msg .= "📦 *تحويل جديد بانتظار التعيين*\n\n";
+                    $msg .= "🔖 *رقم التحويل:* `{$transfer_number}`\n";
+                    $msg .= "🏢 *من فرع:* {$from_location}\n";
+                    $msg .= "📍 *إلى فرع:* {$to_location}\n\n";
+                    $msg .= "━━━━━━━━━━━━━━━━━━━━\n";
+                    $msg .= "👨‍💻 الرجاء الدخول للنظام لتعيين سائق في أسرع وقت.";
+                    foreach ($managers as $manager) {
+                        sendWhatsAppMessage($manager['phone'], $msg);
+                    }
+                    notifyCustomRoutes('transfer_created', $msg);
+                }
+            } catch(PDOException $e) {
+                if ($e->getCode() == 23000) {
+                    $error = 'رقم التحويل موجود مسبقاً';
+                } else {
+                    $error = 'حدث خطأ أثناء الحفظ';
+                }
             }
         }
     }
@@ -211,7 +214,9 @@ include '../../includes/header.php';
 
 <div class="page-header">
     <h1>إدارة التحويلات</h1>
+    <?php if ($_SESSION['role'] !== 'drivers_manager'): ?>
     <button onclick="openModal('addTransferModal')" class="btn btn-primary">+ رفع تحويل جديد</button>
+    <?php endif; ?>
 </div>
 
 <?php if ($active_filter_label): ?>

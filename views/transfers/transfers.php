@@ -44,6 +44,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
             $stmt = $conn->prepare("DELETE FROM transfers WHERE id = ?");
             if ($stmt->execute([$transfer_id])) {
                 $success = 'تم حذف التحويل بنجاح';
+                logActivity('حذف تحويل', ['transfer_id' => $transfer_id]);
             } else {
                 $error = 'حدث خطأ أثناء الحذف';
             }
@@ -110,6 +111,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_transfer'])) {
                 ]);
                 
                 $success = 'تم رفع التحويل بنجاح';
+                
+                logActivity('رفع تحويل جديد', [
+                    'transfer_number' => $transfer_number,
+                    'from_location' => $from_location,
+                    'to_location' => $to_location
+                ]);
                 
                 // إرسال إشعار عبر الواتساب لمسؤولي السائقين
                 require_once '../../api/whatsapp.php';

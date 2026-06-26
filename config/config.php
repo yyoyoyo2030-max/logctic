@@ -416,6 +416,40 @@ function clean_input($data) {
     return $data;
 }
 
+/**
+ * تسجيل نشاط في سجل النظام
+ */
+function logActivity($action, $details = null) {
+    global $conn;
+    try {
+        $user_id = $_SESSION['user_id'] ?? null;
+        $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? null;
+        if ($ip_address && strpos($ip_address, ',') !== false) {
+            $ip_address = trim(explode(',', $ip_address)[0]);
+        }
+        $page_url = $_SERVER['REQUEST_URI'] ?? null;
+        
+        $details_json = null;
+        if ($details !== null) {
+            $details_json = is_string($details) ? $details : json_encode($details, JSON_UNESCAPED_UNICODE);
+        }
+        
+        $stmt = $conn->prepare(
+            "INSERT INTO system_logs (user_id, log_type, action, details, page_url, ip_address, created_at)
+             VALUES (:user_id, 'activity', :action, :details, :page_url, :ip_address, NOW())"
+        );
+        $stmt->execute([
+            ':user_id'    => $user_id,
+            ':action'     => $action,
+            ':details'    => $details_json,
+            ':page_url'   => $page_url,
+            ':ip_address' => $ip_address,
+        ]);
+    } catch (Exception $e) {
+        // تجاهل أخطاء التسجيل حتى لا تتوقف العملية الأساسية
+    }
+}
+
 // إنشاء متغير $pdo للاستخدام العام (اسم بديل لـ $conn)
 $pdo = $conn;
 ?>

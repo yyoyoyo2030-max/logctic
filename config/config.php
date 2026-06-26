@@ -5,27 +5,41 @@
  */
 
 // ========================================
+// دالة بسيطة لقراءة ملف .env
+// ========================================
+function loadEnv($path) {
+    if (!file_exists($path)) return false;
+    $lines = file($path, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), '#') === 0) continue;
+        list($name, $value) = explode('=', $line, 2);
+        $name = trim($name);
+        $value = trim($value);
+        if (!array_key_exists($name, $_SERVER) && !array_key_exists($name, $_ENV)) {
+            putenv(sprintf('%s=%s', $name, $value));
+            $_ENV[$name] = $value;
+            $_SERVER[$name] = $value;
+        }
+    }
+    return true;
+}
+
+// محاولة قراءة ملف .env من المجلد الرئيسي
+loadEnv(dirname(__DIR__) . '/.env');
+
+// ========================================
 // تحديد بيئة العمل
 // ========================================
-define('ENVIRONMENT', 'local'); // 'local' أو 'production'
+define('ENVIRONMENT', getenv('ENVIRONMENT') ?: 'production'); // 'local' أو 'production'
 
 // ========================================
-// إعدادات البيئة المحلية (Local)
+// إعدادات قاعدة البيانات والدومين الديناميكية
 // ========================================
-define('LOCAL_DB_HOST', 'localhost');
-define('LOCAL_DB_USER', 'root');
-define('LOCAL_DB_PASS', '');
-define('LOCAL_DB_NAME', 'logistic_system');
-define('LOCAL_SITE_URL', 'http://localhost/logctic');
-
-// ========================================
-// إعدادات الإنتاج (Production)
-// ========================================
-define('PRODUCTION_DB_HOST', 'localhost');
-define('PRODUCTION_DB_USER', 'u824688047_logis');
-define('PRODUCTION_DB_PASS', 'Haro@12345678');
-define('PRODUCTION_DB_NAME', 'u824688047_logistic');
-define('PRODUCTION_SITE_URL', 'https://shop.alrsheed.net/logistic_pro');
+define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_NAME', getenv('DB_NAME') ?: 'logistic_system');
+define('SITE_URL', getenv('SITE_URL') ?: 'http://localhost/logctic');
 
 // ========================================
 // إعدادات PostHog للتحليلات والتتبع
@@ -167,26 +181,24 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // ========================================
-// الاتصال بقاعدة البيانات
+// إعداد الاتصال بقاعدة البيانات (PDO)
 // ========================================
 try {
-    $db_port = defined('DB_PORT') ? DB_PORT : '3306';
-    $dsn = "mysql:host=" . DB_HOST . ";port=" . $db_port . ";dbname=" . DB_NAME . ";charset=utf8mb4";
-    $pdo_options = [
-        PDO::ATTR_PERSISTENT => true,
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+    $options = [
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES => false,
-        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4, time_zone = '+03:00'"
+        PDO::ATTR_EMULATE_PREPARES   => false,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
     ];
-    // دعم SSL للاتصالات السحابية (مثل Aiven)
-    if (defined('DB_SSL') && DB_SSL) {
-        $pdo_options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
-        $pdo_options[PDO::MYSQL_ATTR_SSL_CA] = true;
+
+    $conn = new PDO($dsn, DB_USER, DB_PASS, $options);
+} catch (\PDOException $e) {
+    if (ENVIRONMENT === 'local') {
+        die("خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());
+    } else {
+        die("عذراً، حدث خطأ في الاتصال بقاعدة البيانات. يرجى المحاولة لاحقاً.");
     }
-    $conn = new PDO($dsn, DB_USER, DB_PASS, $pdo_options);
-} catch(PDOException $e) {
-    die("عذراً، حدث خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());
 }
 
 // ========================================

@@ -115,16 +115,6 @@ $active_users_list = $stmt->fetchAll();
 $stmt = $conn->query("SELECT sl.*, u.full_name FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE sl.log_type = 'error' ORDER BY sl.created_at DESC LIMIT 5");
 $recent_errors = $stmt->fetchAll();
 
-// Login History
-$login_history = [];
-try {
-    $login_stmt = $conn->query("SELECT lh.*, u.full_name, u.username FROM login_history lh LEFT JOIN users u ON lh.user_id = u.id ORDER BY lh.created_at DESC LIMIT 100");
-    if ($login_stmt) {
-        $login_history = $login_stmt->fetchAll();
-    }
-} catch(Exception $e) {
-    // الجدول قد لا يكون موجوداً بعد
-}
 
 require_once '../../includes/header.php';
 ?>
@@ -630,35 +620,7 @@ require_once '../../includes/header.php';
     .mon-filter select, .mon-filter input[type="date"] { min-width: 100%; }
     .mon-footer { flex-direction: column; text-align: center; }
 }
-/* Custom Tabs */
-.mon-tabs {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-.mon-tab {
-    padding: 10px 20px;
-    background: transparent;
-    border: none;
-    font-size: 1.05rem;
-    font-weight: bold;
-    color: var(--text-secondary);
-    cursor: pointer;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-.mon-tab.active {
-    background: rgba(14, 165, 233, 0.1);
-    color: #0ea5e9;
-}
-.mon-tab-content {
-    display: none;
-}
-.mon-tab-content.active {
-    display: block;
-}
+
 </style>
 
 <?php if (!empty($_SESSION['flash_message'])): ?>
@@ -765,12 +727,7 @@ require_once '../../includes/header.php';
             </button>
         </form>
     </div>
-<div class="mon-tabs">
-    <button class="mon-tab active" onclick="switchTab('logs')"><i class="fas fa-list-alt"></i> سجل النظام والأخطاء</button>
-    <button class="mon-tab" onclick="switchTab('logins')"><i class="fas fa-sign-in-alt"></i> سجل دخول المستخدمين</button>
-</div>
 
-<div id="tab-logs" class="mon-tab-content active">
     <!-- Filter -->
     <form class="mon-filter" method="GET" action="monitoring.php" id="filter-form">
         <div class="f-group">
@@ -897,50 +854,7 @@ require_once '../../includes/header.php';
             <?php endif; ?>
         </div>
     </div>
-</div>
 
-<div id="tab-logins" class="mon-tab-content">
-    <div style="padding: 10px 0;">
-        <div class="mon-table-wrap">
-            <?php if (count($login_history) > 0): ?>
-            <table class="mon-table">
-                <thead>
-                    <tr>
-                        <th>الوقت</th>
-                        <th>المستخدم</th>
-                        <th>IP / الشبكة</th>
-                        <th>الموقع التقريبي</th>
-                        <th>الجهاز (User Agent)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($login_history as $history): ?>
-                    <tr>
-                        <td class="t-time">
-                            <span class="t-rel"><?php echo timeAgo($history['created_at']); ?></span>
-                            <span class="t-abs"><?php echo date('Y-m-d H:i', strtotime($history['created_at'])); ?></span>
-                        </td>
-                        <td class="t-user"><strong><?php echo htmlspecialchars($history['full_name'] ?: ($history['username'] ?: '—')); ?></strong></td>
-                        <td class="t-ip"><?php echo htmlspecialchars($history['ip_address'] ?? '—'); ?></td>
-                        <td>
-                            <span style="display: inline-block; padding: 3px 8px; background: rgba(16,185,129,0.1); color: #10b981; border-radius: 6px; font-size: 0.85rem;">
-                                <i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($history['location'] ?? 'غير معروف'); ?>
-                            </span>
-                        </td>
-                        <td><span style="font-size: 0.8rem; color: var(--text-secondary); max-width: 250px; display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="<?php echo htmlspecialchars($history['device_info'] ?? ''); ?>"><?php echo htmlspecialchars($history['device_info'] ?? '—'); ?></span></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php else: ?>
-            <div class="mon-empty">
-                <i class="fas fa-sign-in-alt"></i>
-                <p>لا يوجد أي سجلات دخول حتى الآن</p>
-            </div>
-            <?php endif; ?>
-        </div>
-    </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -1010,15 +924,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Switch tabs
-    window.switchTab = function(tabName) {
-        document.querySelectorAll('.mon-tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.mon-tab-content').forEach(c => c.classList.remove('active'));
-        
-        event.currentTarget.classList.add('active');
-        document.getElementById('tab-' + tabName).classList.add('active');
-    };
-
     if (closeBtn) {
         closeBtn.addEventListener('click', function() {
             modal.style.display = 'none';

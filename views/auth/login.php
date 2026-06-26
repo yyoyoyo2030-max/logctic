@@ -43,36 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 error_log("Remember Token Error: " . $e->getMessage());
             }
             
-            // تسجيل الدخول في السجل (الأمان)
-            try {
-                $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'Unknown';
-                if (strpos($ip_address, ',') !== false) {
-                    $ip_address = trim(explode(',', $ip_address)[0]);
-                }
-                $device_info = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown Device';
-                
-                // محاولة جلب الموقع التقريبي عبر خدمة ip-api.com
-                $location = 'غير معروف';
-                if ($ip_address !== '127.0.0.1' && $ip_address !== '::1' && $ip_address !== 'Unknown') {
-                    $ctx = stream_context_create(['http' => ['timeout' => 2]]);
-                    $geo = @file_get_contents("http://ip-api.com/json/{$ip_address}?fields=country,city,status", false, $ctx);
-                    if ($geo) {
-                        $geo_data = json_decode($geo, true);
-                        if (isset($geo_data['status']) && $geo_data['status'] === 'success') {
-                            $location = $geo_data['country'] . ', ' . $geo_data['city'];
-                        }
-                    }
-                } else {
-                    $location = 'شبكة محلية (Localhost)';
-                }
-
-                $log_stmt = $conn->prepare("INSERT INTO login_history (user_id, ip_address, device_info, location) VALUES (?, ?, ?, ?)");
-                $log_stmt->execute([$user['id'], $ip_address, $device_info, $location]);
-            } catch(Exception $e) {
-                // تجاهل أخطاء التسجيل لكي لا تمنع الدخول
-                error_log("Login Tracking Error: " . $e->getMessage());
-            }
-            
             // إعادة توجيه حسب الدور
             if ($user['role'] == 'driver') {
                 redirect('views/drivers/driver_transfers.php');

@@ -162,6 +162,46 @@ include '../../includes/header.php';
 .dashboard-stats .stat-card.info .stat-icon { background: rgba(14,165,233,0.12); color: #0ea5e9; }
 .dashboard-stats .stat-card.success .stat-icon { background: rgba(16,185,129,0.12); color: #10b981; }
 .dashboard-stats .stat-card.warning .stat-icon { background: rgba(245,158,11,0.12); color: #f59e0b; }
+
+/* بطاقات قابلة للنقر */
+.stat-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.stat-card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.stat-card-link:hover .stat-card {
+    border-color: rgba(99,102,241,0.3);
+}
+.stat-card-link:active {
+    transform: translateY(-1px);
+}
+.stat-card-link .stat-card {
+    cursor: pointer;
+    position: relative;
+}
+.stat-card-link .stat-card::after {
+    content: '\f061';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 11px;
+    color: var(--text-muted, #94a3b8);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transform: translateX(4px) rotate(180deg);
+}
+.stat-card-link:hover .stat-card::after {
+    opacity: 1;
+    transform: translateX(0) rotate(180deg);
+}
 </style>
 
 <!-- فلتر الفترة الزمنية -->
@@ -176,53 +216,65 @@ include '../../includes/header.php';
 </div>
 
 <div class="dashboard-stats" data-page="dashboard">
-    <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
-        <div class="stat-info">
-            <h3 class="stat-value" data-stat="transfers"><?php echo $stats['total_transfers']; ?></h3>
-            <p>إجمالي التحويلات</p>
+    <a href="../transfers/transfers.php" class="stat-card-link">
+        <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
+            <div class="stat-info">
+                <h3 class="stat-value" data-stat="transfers"><?php echo $stats['total_transfers']; ?></h3>
+                <p>إجمالي التحويلات</p>
+            </div>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card info">
-        <div class="stat-icon"><i class="fas fa-truck-fast"></i></div>
-        <div class="stat-info">
-            <h3 class="stat-value" data-stat="inprogress-transfers"><?php echo $stats['in_transit_transfers']; ?></h3>
-            <p>جاري التوصيل</p>
+    <a href="../transfers/transfers.php?status=in_transit" class="stat-card-link">
+        <div class="stat-card info">
+            <div class="stat-icon"><i class="fas fa-truck-fast"></i></div>
+            <div class="stat-info">
+                <h3 class="stat-value" data-stat="inprogress-transfers"><?php echo $stats['in_transit_transfers']; ?></h3>
+                <p>جاري التوصيل</p>
+            </div>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card success">
-        <div class="stat-icon"><i class="fas fa-id-badge"></i></div>
-        <div class="stat-info">
-            <h3 class="stat-value" data-stat="drivers"><?php echo $stats['available_drivers']; ?></h3>
-            <p>سائقين متاحين</p>
+    <a href="../drivers/drivers.php" class="stat-card-link">
+        <div class="stat-card success">
+            <div class="stat-icon"><i class="fas fa-id-badge"></i></div>
+            <div class="stat-info">
+                <h3 class="stat-value" data-stat="drivers"><?php echo $stats['available_drivers']; ?></h3>
+                <p>سائقين متاحين</p>
+            </div>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card info">
-        <div class="stat-icon"><i class="fas fa-spinner"></i></div>
-        <div class="stat-info">
-            <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['active_transfers']; ?></h3>
-            <p>قيد التنفيذ</p>
+    <a href="../transfers/transfers.php?status=active" class="stat-card-link">
+        <div class="stat-card info">
+            <div class="stat-icon"><i class="fas fa-spinner"></i></div>
+            <div class="stat-info">
+                <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['active_transfers']; ?></h3>
+                <p>قيد التنفيذ</p>
+            </div>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card success">
-        <div class="stat-icon"><i class="fas fa-circle-check"></i></div>
-        <div class="stat-info">
-            <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['delivered_transfers']; ?></h3>
-            <p>تم التوصيل</p>
+    <a href="../transfers/transfers.php?status=delivered" class="stat-card-link">
+        <div class="stat-card success">
+            <div class="stat-icon"><i class="fas fa-circle-check"></i></div>
+            <div class="stat-info">
+                <h3 class="stat-value" data-stat="completed-transfers"><?php echo $stats['delivered_transfers']; ?></h3>
+                <p>تم التوصيل</p>
+            </div>
         </div>
-    </div>
+    </a>
     
-    <div class="stat-card warning">
-        <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
-        <div class="stat-info">
-            <h3 class="stat-value" data-stat="pending-transfers"><?php echo $stats['no_driver_transfers']; ?></h3>
-            <p>بدون سائق</p>
+    <a href="../transfers/transfers.php?no_driver=1" class="stat-card-link">
+        <div class="stat-card warning">
+            <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
+            <div class="stat-info">
+                <h3 class="stat-value" data-stat="pending-transfers"><?php echo $stats['no_driver_transfers']; ?></h3>
+                <p>بدون سائق</p>
+            </div>
         </div>
-    </div>
+    </a>
 </div>
 
 <div class="content-section">

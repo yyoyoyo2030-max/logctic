@@ -139,15 +139,55 @@ $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] :
 $per_page = 10; // عدد السجلات في كل صفحة
 $offset = ($page - 1) * $per_page;
 
-$where = canManageAllBranches() ? '' : 'WHERE t.branch_id = ' . $_SESSION['branch_id'];
+// بناء شروط الفلترة
+$conditions = [];
+$params = [];
+
+if (!canManageAllBranches()) {
+    $conditions[] = 't.branch_id = ?';
+    $params[] = $_SESSION['branch_id'];
+}
+
+// فلتر الحالة من URL (للنقر من لوحة القيادة)
+$status_filter = $_GET['status'] ?? '';
+$no_driver_filter = isset($_GET['no_driver']) ? true : false;
+$active_filter_label = '';
+
+if ($status_filter) {
+    $valid_statuses = ['pending', 'assigned', 'in_transit', 'delivered', 'cancelled'];
+    if (in_array($status_filter, $valid_statuses)) {
+        $conditions[] = 't.status = ?';
+        $params[] = $status_filter;
+        $status_labels = [
+            'pending' => 'قيد الانتظار',
+            'assigned' => 'تم التعيين',
+            'in_transit' => 'جاري التوصيل',
+            'delivered' => 'تم التوصيل',
+            'cancelled' => 'ملغي'
+        ];
+        $active_filter_label = $status_labels[$status_filter];
+    } elseif ($status_filter === 'active') {
+        $conditions[] = "t.status IN ('assigned', 'in_transit')";
+        $active_filter_label = 'قيد التنفيذ';
+    }
+}
+
+if ($no_driver_filter) {
+    $conditions[] = 'NOT EXISTS (SELECT 1 FROM driver_assignments da2 WHERE da2.transfer_id = t.id)';
+    $active_filter_label = 'بدون سائق';
+}
+
+$where = count($conditions) > 0 ? 'WHERE ' . implode(' AND ', $conditions) : '';
 
 // حساب إجمالي السجلات
-$count_stmt = $conn->query("SELECT COUNT(*) as total FROM transfers t $where");
+$count_sql = "SELECT COUNT(*) as total FROM transfers t $where";
+$count_stmt = $conn->prepare($count_sql);
+$count_stmt->execute($params);
 $total_records = $count_stmt->fetch()['total'];
 $total_pages = ceil($total_records / $per_page);
 
 // جلب البيانات للصفحة الحالية
-$stmt = $conn->query("
+$data_sql = "
     SELECT t.*, b.name as branch_name, u.full_name as uploader_name,
            d.name as driver_name
     FROM transfers t 
@@ -158,7 +198,9 @@ $stmt = $conn->query("
     $where
     ORDER BY t.created_at DESC
     LIMIT $per_page OFFSET $offset
-");
+";
+$stmt = $conn->prepare($data_sql);
+$stmt->execute($params);
 $transfers = $stmt->fetchAll();
 
 include '../../includes/header.php';
@@ -168,6 +210,17 @@ include '../../includes/header.php';
     <h1>إدارة التحويلات</h1>
     <button onclick="openModal('addTransferModal')" class="btn btn-primary">+ رفع تحويل جديد</button>
 </div>
+
+<?php if ($active_filter_label): ?>
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 10px 16px; background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(139,92,246,0.08)); border: 1px solid rgba(99,102,241,0.2); border-radius: 10px;">
+        <i class="fas fa-filter" style="color: #6366f1;"></i>
+        <span style="font-weight: 600; color: var(--text-primary);">فلتر نشط: <span style="color: #6366f1;"><?php echo $active_filter_label; ?></span></span>
+        <span style="color: var(--text-secondary); font-size: 0.85rem;">(<?php echo $total_records; ?> نتيجة)</span>
+        <a href="transfers.php" style="margin-right: auto; padding: 4px 14px; background: #ef4444; color: white; border-radius: 8px; text-decoration: none; font-size: 0.82rem; font-weight: 600;">
+            <i class="fas fa-times"></i> إزالة الفلتر
+        </a>
+    </div>
+<?php endif; ?>
 
 <?php if ($success): ?>
     <div class="alert alert-success"><?php echo $success; ?></div>

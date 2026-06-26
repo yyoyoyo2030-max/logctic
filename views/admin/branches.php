@@ -89,10 +89,12 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
 $stmt = $conn->query("
     SELECT b.*, 
            COUNT(DISTINCT u.id) as users_count,
-           COUNT(DISTINCT t.id) as transfers_count
+           (SELECT COUNT(*) FROM transfers t2 
+            WHERE t2.branch_id = b.id 
+               OR (t2.branch_id IS NULL AND LOWER(TRIM(t2.from_location)) = LOWER(TRIM(b.name)))
+           ) as transfers_count
     FROM branches b 
     LEFT JOIN users u ON b.id = u.branch_id
-    LEFT JOIN transfers t ON b.id = t.branch_id
     GROUP BY b.id
     ORDER BY b.created_at DESC
 ");

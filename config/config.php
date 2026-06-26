@@ -218,7 +218,17 @@ try {
 if (!function_exists('getPosthogSetting')) {
     function getPosthogSetting($key) {
         $map = ['api_key' => 'api_key', 'host' => 'host', 'project_id' => 'project_id'];
-        return $GLOBALS['POSTHOG_SETTINGS'][$map[$key]] ?? '';
+        
+        if (!isset($GLOBALS['POSTHOG_SETTINGS']) || !is_array($GLOBALS['POSTHOG_SETTINGS'])) {
+            // Fallback to constants if globals are somehow destroyed
+            if ($key === 'api_key') return defined('POSTHOG_PROJECT_API_KEY') ? POSTHOG_PROJECT_API_KEY : '';
+            if ($key === 'host') return defined('POSTHOG_HOST') ? POSTHOG_HOST : 'https://us.i.posthog.com';
+            if ($key === 'project_id') return defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728';
+            return '';
+        }
+        
+        $mappedKey = $map[$key] ?? $key;
+        return isset($GLOBALS['POSTHOG_SETTINGS'][$mappedKey]) ? $GLOBALS['POSTHOG_SETTINGS'][$mappedKey] : '';
     }
 }
 

@@ -221,7 +221,23 @@ include '../../includes/header.php';
 }
 @media (max-width: 640px) {
     .wa-row { grid-template-columns: 1fr; }
-    .wa-save-bar { flex-direction: column; text-align: center; }
+    .wa-save-bar { flex-direction: column; text-align: center; gap: 15px; }
+}
+.wa-locked-mode {
+    position: relative;
+}
+.wa-locked-mode input:not([type="hidden"]), 
+.wa-locked-mode select, 
+.wa-locked-mode button:not(#btnEditSettings), 
+.wa-locked-mode .switch,
+.wa-locked-mode .delete-route {
+    pointer-events: none;
+    opacity: 0.7;
+    background-color: #f1f5f9;
+}
+.wa-locked-mode .form-control {
+    border-color: #cbd5e1;
+    color: #64748b;
 }
 </style>
 
@@ -237,7 +253,7 @@ include '../../includes/header.php';
     <div class="alert alert-error"><?php echo $error; ?></div>
 <?php endif; ?>
 
-<div class="wa-page">
+<div class="wa-page wa-locked-mode" id="waSettingsWrapper">
 <form method="POST" action="">
 
     <!-- ========== 1. إعدادات الاتصال ========== -->
@@ -255,10 +271,7 @@ include '../../includes/header.php';
                 <div class="wa-field">
                     <label>مفتاح API (Global API Key) *</label>
                     <div style="position: relative;">
-                        <input type="password" name="api_key" id="api_key_input" class="form-control" value="<?php echo htmlspecialchars($settings['api_key']); ?>" required style="padding-left: 40px;">
-                        <button type="button" id="toggleApiKey" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 15px;" title="إظهار/إخفاء">
-                            <i class="fas fa-eye"></i>
-                        </button>
+                        <input type="text" name="api_key" id="api_key_input" class="form-control" value="<?php echo htmlspecialchars($settings['api_key']); ?>" required style="padding-left: 10px;">
                     </div>
                 </div>
             </div>
@@ -333,14 +346,19 @@ include '../../includes/header.php';
     </div>
 
     <!-- ========== شريط الحفظ والتفعيل ========== -->
-    <div class="wa-save-bar">
+    <div class="wa-save-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
         <label class="wa-toggle">
             <input type="checkbox" name="is_active" <?php echo $settings['is_active'] ? 'checked' : ''; ?>>
             <span><i class="fab fa-whatsapp" style="color: #25D366;"></i> تفعيل إرسال الإشعارات عبر الواتساب</span>
         </label>
-        <button type="submit" name="save_settings" class="btn btn-primary btn-lg" style="min-width: 180px;">
-            <i class="fas fa-save"></i> حفظ الإعدادات
-        </button>
+        <div style="display: flex; gap: 10px;">
+            <button type="button" id="btnEditSettings" class="btn btn-warning btn-lg" style="min-width: 150px; background: #f59e0b; color: white; border: none; pointer-events: auto !important; opacity: 1 !important;">
+                <i class="fas fa-lock"></i> تعديل البيانات
+            </button>
+            <button type="submit" id="btnSaveSettings" name="save_settings" class="btn btn-primary btn-lg" style="min-width: 150px; display: none;">
+                <i class="fas fa-save"></i> حفظ وإغلاق
+            </button>
+        </div>
     </div>
 
 </form>
@@ -430,6 +448,12 @@ include '../../includes/header.php';
 </div> <!-- end .wa-page -->
 
 <script>
+document.getElementById('btnEditSettings')?.addEventListener('click', function() {
+    document.getElementById('waSettingsWrapper').classList.remove('wa-locked-mode');
+    this.style.display = 'none';
+    document.getElementById('btnSaveSettings').style.display = 'inline-block';
+});
+
 document.getElementById('fetchGroupsBtn').addEventListener('click', function() {
     const btn = this;
     const originalHtml = btn.innerHTML;

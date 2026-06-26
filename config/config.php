@@ -193,6 +193,27 @@ try {
     ];
 
     $conn = new PDO($dsn, DB_USER, DB_PASS, $options);
+    
+    // ========================================
+    // إنشاء جدول سجل تسجيل الدخول (إذا لم يكن موجوداً)
+    // ========================================
+    try {
+        $conn->exec("CREATE TABLE IF NOT EXISTS login_history (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            ip_address VARCHAR(45),
+            device_info VARCHAR(255),
+            location VARCHAR(100),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;");
+    } catch(PDOException $e) {
+        // تجاهل الأخطاء
+    }
+
+    // تضمين متتبع الأخطاء الشامل
+    require_once dirname(__DIR__) . '/includes/error_handler.php';
+    
 } catch (\PDOException $e) {
     if (ENVIRONMENT === 'local') {
         die("خطأ في الاتصال بقاعدة البيانات: " . $e->getMessage());

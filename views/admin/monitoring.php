@@ -115,6 +115,13 @@ $active_users_list = $stmt->fetchAll();
 $stmt = $conn->query("SELECT sl.*, u.full_name FROM system_logs sl LEFT JOIN users u ON sl.user_id = u.id WHERE sl.log_type = 'error' ORDER BY sl.created_at DESC LIMIT 5");
 $recent_errors = $stmt->fetchAll();
 
+// Login History
+$login_stmt = $conn->query("SELECT lh.*, u.full_name, u.username FROM login_history lh LEFT JOIN users u ON lh.user_id = u.id ORDER BY lh.created_at DESC LIMIT 100");
+$login_history = [];
+if ($login_stmt) {
+    $login_history = $login_stmt->fetchAll();
+}
+
 require_once '../../includes/header.php';
 ?>
 
@@ -619,6 +626,35 @@ require_once '../../includes/header.php';
     .mon-filter select, .mon-filter input[type="date"] { min-width: 100%; }
     .mon-footer { flex-direction: column; text-align: center; }
 }
+/* Custom Tabs */
+.mon-tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.mon-tab {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.mon-tab.active {
+    background: rgba(14, 165, 233, 0.1);
+    color: #0ea5e9;
+}
+.mon-tab-content {
+    display: none;
+}
+.mon-tab-content.active {
+    display: block;
+}
 </style>
 
 <?php if (!empty($_SESSION['flash_message'])): ?>
@@ -725,6 +761,12 @@ require_once '../../includes/header.php';
             </button>
         </form>
     </div>
+<div class="mon-tabs">
+    <button class="mon-tab active" onclick="switchTab('logs')"><i class="fas fa-list-alt"></i> سجل النظام والأخطاء</button>
+    <button class="mon-tab" onclick="switchTab('logins')"><i class="fas fa-sign-in-alt"></i> سجل دخول المستخدمين</button>
+</div>
+
+<div id="tab-logs" class="mon-tab-content active">
     <!-- Filter -->
     <form class="mon-filter" method="GET" action="monitoring.php" id="filter-form">
         <div class="f-group">
@@ -768,8 +810,7 @@ require_once '../../includes/header.php';
                         <th>الوقت</th>
                         <th>المستخدم</th>
                         <th>النوع</th>
-                        <th>التفاصيل</th>
-                        <th>الصفحة</th>
+                        <th>التفاصيل (محمي)</th>
                         <th>التسجيل</th>
                     </tr>
                 </thead>
@@ -791,16 +832,33 @@ require_once '../../includes/header.php';
                             </span>
                         </td>
 
-                        <td class="t-detail">
-                            <?php if (!empty($log['details'])): ?>
-                                <button type="button" class="btn-view-details" style="background: none; border: none; color: #0ea5e9; text-decoration: underline; cursor: pointer; padding: 0; font-family: inherit; font-size: 0.85rem;" data-details="<?php echo htmlspecialchars($log['details'], ENT_QUOTES, 'UTF-8'); ?>">
-                                    <?php echo htmlspecialchars(mb_substr($log['details'], 0, 40)) . (mb_strlen($log['details']) > 40 ? '...' : ''); ?>
+                        <td class="t-detail" style="max-width: 250px;">
+                            <?php 
+                            if (!empty($log['details'])): 
+                                $parsed_error = false;
+                                if ($log['log_type'] == 'error') {
+                                    $parsed = json_decode($log['details'], true);
+                                    if (is_array($parsed) && isset($parsed['file'])) {
+                                        $parsed_error = true;
+                                        $fileName = basename($parsed['file']);
+                                        echo "<span style='color: #ef4444; font-weight: bold; display: block;'><i class='fas fa-bug'></i> مكان الخطأ: ملف {$fileName} (سطر {$parsed['line']})</span>";
+                                        echo "<span style='color: #94a3b8; font-size: 0.8rem; display: block; margin-top: 4px;'>" . htmlspecialchars(mb_substr($parsed['message'], 0, 40)) . (mb_strlen($parsed['message']) > 40 ? '...' : '') . "</span>";
+                                    }
+                                }
+                                
+                                if (!$parsed_error) {
+                                    echo "<span style='color: #94a3b8; font-size: 0.85rem;'><i class='fas fa-lock'></i> بيانات مخفية للحماية</span>";
+                                }
+                            ?>
+                                <button type="button" class="btn-view-details" style="display: inline-block; margin-top: 5px; padding: 4px 10px; background: rgba(14,165,233,0.1); color: #0ea5e9; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold;" 
+                                    data-details="<?php echo htmlspecialchars($log['details'], ENT_QUOTES, 'UTF-8'); ?>"
+                                    data-url="<?php echo htmlspecialchars($log['page_url'] ?? 'غير متوفر', ENT_QUOTES, 'UTF-8'); ?>">
+                                    <i class="fas fa-eye"></i> عرض التفاصيل والأكواد
                                 </button>
                             <?php else: ?>
                                 —
                             <?php endif; ?>
                         </td>
-                        <td class="t-page" title="<?php echo htmlspecialchars($log['page_url'] ?? ''); ?>"><?php echo htmlspecialchars($log['page_url'] ?? '—'); ?></td>
                         <td>
                             <?php 
                             $ph_session_id = null;
@@ -837,7 +895,23 @@ require_once '../../includes/header.php';
     </div>
 </div>
 
-
+<div id="tab-logins" class="mon-tab-content">
+    <div class="mon-table-wrap">
+        <table class="mon-table">
+            <thead><tr><th>المستخدم</th><th>التاريخ</th><th>IP</th><th>الجهاز</th></tr></thead>
+            <tbody>
+                <?php foreach ($login_history as $login): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($login['full_name']); ?></td>
+                    <td><?php echo $login['login_at']; ?></td>
+                    <td><?php echo $login['ip_address']; ?></td>
+                    <td><?php echo htmlspecialchars($login['user_agent']); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -891,6 +965,10 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             var details = this.getAttribute('data-details');
+            var url = this.getAttribute('data-url');
+            
+            document.getElementById('detailsModalUrl').textContent = url;
+            
             try {
                 // Try to parse as JSON and pretty print
                 var parsed = JSON.parse(details);
@@ -902,6 +980,15 @@ document.addEventListener('DOMContentLoaded', function() {
             modal.style.display = 'flex';
         });
     });
+    
+    // Switch tabs
+    window.switchTab = function(tabName) {
+        document.querySelectorAll('.mon-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.mon-tab-content').forEach(c => c.classList.remove('active'));
+        
+        event.currentTarget.classList.add('active');
+        document.getElementById('tab-' + tabName).classList.add('active');
+    };
 
     if (closeBtn) {
         closeBtn.addEventListener('click', function() {
@@ -919,13 +1006,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Details Modal -->
 <div id="detailsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="background: #fff; border-radius: 12px; width: 90%; max-width: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; max-height: 80vh;">
-        <div style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
-            <h3 style="margin: 0; font-size: 1.1rem; color: #111827;"><i class="fas fa-file-code" style="color: #6366f1; margin-left: 8px;"></i> التفاصيل الكاملة</h3>
-            <button type="button" class="close-modal-btn" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>
+    <div class="modal-content" style="max-width: 700px; background: #fff; border-radius: 12px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; max-height: 80vh;">
+        <div class="modal-header" style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
+            <h2 style="margin: 0; font-size: 1.1rem; color: #111827;">تفاصيل السجل (سرية)</h2>
+            <button class="close-modal-btn" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>
         </div>
-        <div style="padding: 20px; overflow-y: auto;">
-            <pre id="detailsModalContent" style="background: #1f2937; color: #e5e7eb; padding: 15px; border-radius: 8px; font-size: 0.85rem; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; direction: ltr; text-align: left; margin: 0;"></pre>
+        <div class="modal-body" style="padding: 20px; overflow-y: auto;">
+            <div style="margin-bottom: 15px; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <h4 style="margin: 0 0 5px; color: #334155; font-size: 0.95rem;">مسار الصفحة (URL):</h4>
+                <code id="detailsModalUrl" style="display: block; font-family: 'Courier New', monospace; font-size: 0.9rem; color: #0284c7; word-wrap: break-word;"></code>
+            </div>
+            <h4 style="margin: 0 0 10px; color: #334155; font-size: 0.95rem;">الأكواد والبيانات:</h4>
+            <pre id="detailsModalContent" style="background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 12px; font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word; line-height: 1.5; border: 1px solid #0f172a; direction: ltr; text-align: left;"></pre>
         </div>
     </div>
 </div>

@@ -184,7 +184,10 @@ try {
 // ========================================
 try {
     $ph_stmt = $conn->query("SELECT setting_key, setting_value FROM system_settings WHERE setting_key IN ('posthog_api_key', 'posthog_host', 'posthog_project_id')");
-    $ph_settings = $ph_stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+    $ph_settings = [];
+    if ($ph_stmt) {
+        $ph_settings = $ph_stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+    }
     
     // إعادة تعريف الثوابت إذا وُجدت قيم في قاعدة البيانات
     if (!empty($ph_settings['posthog_api_key'])) {

@@ -36,6 +36,26 @@
         });
     </script>
     
+    <?php
+    // التحقق من الصلاحيات والوصول
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    try {
+        global $conn;
+        if (isset($conn) && !isset($_SESSION['db_fixed_unique'])) {
+            $conn->exec("ALTER TABLE transfers DROP INDEX transfer_number");
+            $conn->exec("ALTER TABLE transfers DROP INDEX idx_transfer_number");
+            $conn->exec("ALTER TABLE transfers ADD INDEX idx_transfer_number (transfer_number)");
+            $_SESSION['db_fixed_unique'] = true;
+        }
+    } catch (Exception $e) {
+        // Ignore if index doesn't exist
+        $_SESSION['db_fixed_unique'] = true;
+    }
+    ?>
+
     <?php if (isset($_SESSION['user_id'])): ?>
     <script>
         // Identify the logged-in user in PostHog

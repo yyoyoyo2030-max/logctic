@@ -187,16 +187,16 @@ include '../../includes/header.php';
                     <?php endif; ?>
                 </td>
                 <td><?php echo date('Y-m-d', strtotime($branch['created_at'])); ?></td>
+                <?php if ($_SESSION['role'] !== 'warehouse_manager'): ?>
                 <td class="actions">
-                    <?php if ($_SESSION['role'] !== 'warehouse_manager'): ?>
                     <a href="branches.php?edit=<?php echo $branch['id']; ?>" class="btn btn-sm btn-warning">
                         <i class="fas fa-edit"></i> تعديل
                     </a>
                     <a href="branches.php?delete=<?php echo $branch['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا الفرع؟')">
                         <i class="fas fa-trash"></i> حذف
                     </a>
-                    <?php endif; ?>
                 </td>
+                <?php endif; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>

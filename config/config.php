@@ -34,6 +34,27 @@ define('POSTHOG_PROJECT_API_KEY', 'phc_zkY3cbF8xDssbupMiPjQmtVAw5DoLRb7iB9CPV6nN
 define('POSTHOG_HOST', 'https://us.i.posthog.com');
 define('POSTHOG_PROJECT_ID', '484728'); // يستخدم فقط في روابط المراقبة (monitoring)
 
+// دالة مساعدة للحصول على إعداد PostHog (تُعرّف مبكراً لضمان توفرها دائماً)
+$GLOBALS['POSTHOG_SETTINGS'] = [
+    'api_key'    => POSTHOG_PROJECT_API_KEY,
+    'host'       => POSTHOG_HOST,
+    'project_id' => POSTHOG_PROJECT_ID
+];
+
+if (!function_exists('getPosthogSetting')) {
+    function getPosthogSetting($key) {
+        $map = ['api_key' => 'api_key', 'host' => 'host', 'project_id' => 'project_id'];
+        if (!isset($GLOBALS['POSTHOG_SETTINGS']) || !is_array($GLOBALS['POSTHOG_SETTINGS'])) {
+            if ($key === 'api_key') return defined('POSTHOG_PROJECT_API_KEY') ? POSTHOG_PROJECT_API_KEY : '';
+            if ($key === 'host') return defined('POSTHOG_HOST') ? POSTHOG_HOST : 'https://us.i.posthog.com';
+            if ($key === 'project_id') return defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728';
+            return '';
+        }
+        $mappedKey = $map[$key] ?? $key;
+        return isset($GLOBALS['POSTHOG_SETTINGS'][$mappedKey]) ? $GLOBALS['POSTHOG_SETTINGS'][$mappedKey] : '';
+    }
+}
+
 // ========================================
 // تطبيق الإعدادات (الأولوية لمتغيرات البيئة ENV ثم الثوابت)
 // ========================================
@@ -177,7 +198,7 @@ try {
         setting_value TEXT,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
-} catch(Exception $e) { /* الجدول موجود بالفعل */ }
+} catch(Throwable $e) { /* الجدول موجود بالفعل */ }
 
 // ========================================
 // تحميل إعدادات PostHog من قاعدة البيانات (تتجاوز القيم الافتراضية)
@@ -204,32 +225,8 @@ try {
             'project_id' => POSTHOG_PROJECT_ID
         ];
     }
-} catch(Exception $e) {
-    $GLOBALS['POSTHOG_SETTINGS'] = [
-        'api_key'    => POSTHOG_PROJECT_API_KEY,
-        'host'       => POSTHOG_HOST,
-        'project_id' => POSTHOG_PROJECT_ID
-    ];
-}
-
-/**
- * دالة مساعدة للحصول على إعداد PostHog
- */
-if (!function_exists('getPosthogSetting')) {
-    function getPosthogSetting($key) {
-        $map = ['api_key' => 'api_key', 'host' => 'host', 'project_id' => 'project_id'];
-        
-        if (!isset($GLOBALS['POSTHOG_SETTINGS']) || !is_array($GLOBALS['POSTHOG_SETTINGS'])) {
-            // Fallback to constants if globals are somehow destroyed
-            if ($key === 'api_key') return defined('POSTHOG_PROJECT_API_KEY') ? POSTHOG_PROJECT_API_KEY : '';
-            if ($key === 'host') return defined('POSTHOG_HOST') ? POSTHOG_HOST : 'https://us.i.posthog.com';
-            if ($key === 'project_id') return defined('POSTHOG_PROJECT_ID') ? POSTHOG_PROJECT_ID : '484728';
-            return '';
-        }
-        
-        $mappedKey = $map[$key] ?? $key;
-        return isset($GLOBALS['POSTHOG_SETTINGS'][$mappedKey]) ? $GLOBALS['POSTHOG_SETTINGS'][$mappedKey] : '';
-    }
+} catch(Throwable $e) {
+    // الإعدادات الافتراضية محفوظة مسبقاً في GLOBALS
 }
 
 // ========================================

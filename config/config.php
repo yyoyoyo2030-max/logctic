@@ -445,8 +445,8 @@ function logActivity($action, $details = null) {
             ':page_url'   => $page_url,
             ':ip_address' => $ip_address,
         ]);
-    } catch (Exception $e) {
-        // تجاهل أخطاء التسجيل حتى لا تتوقف العملية الأساسية
+    } catch (Throwable $e) {
+        error_log('logActivity Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
     }
 }
 

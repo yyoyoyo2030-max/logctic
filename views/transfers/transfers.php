@@ -51,8 +51,8 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
         } else {
             $error = 'ليس لديك صلاحية الحذف';
         }
-    } catch (Exception $e) {
-        error_log('Delete Transfer Error: ' . $e->getMessage());
+    } catch (Throwable $e) {
+        error_log('Delete Transfer Error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
         $error = 'حدث خطأ: ' . $e->getMessage();
     }
 }

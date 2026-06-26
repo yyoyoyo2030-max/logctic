@@ -28,6 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // إضافة خاصية تذكرني (معزولة حتى لا تؤثر على الدخول)
             if (isset($_POST['remember_me'])) {
                 try {
+                    // تأكد من وجود العمود أولاً (لمرة واحدة)
+                    try {
+                        $conn->exec("ALTER TABLE users ADD COLUMN remember_token VARCHAR(100) NULL DEFAULT NULL");
+                    } catch(Exception $e) { /* العمود موجود بالفعل */ }
+                    
                     $token = bin2hex(random_bytes(32));
                     $upd_stmt = $conn->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
                     $upd_stmt->execute([$token, $user['id']]);

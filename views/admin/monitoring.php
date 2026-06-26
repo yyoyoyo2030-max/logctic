@@ -391,13 +391,16 @@ require_once '../../includes/header.php';
     color: var(--primary);
 }
 
-<!-- Filter + Content Wrapper -->
-<div class="mon-controls">
-
 /* ---- Logs Table ---- */
-.mon-table-wrap { overflow-x: auto; }
+.mon-table-wrap { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+    width: 100%;
+    display: block;
+}
 .mon-table {
     width: 100%;
+    min-width: 800px;
     border-collapse: collapse;
     font-size: 0.82rem;
 }

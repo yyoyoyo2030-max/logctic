@@ -121,7 +121,7 @@ include '../../includes/header.php';
 <div class="table-responsive">
     <?php if (empty($branches)): ?>
     <!-- حالة فارغة: لا توجد فروع -->
-    <div style="text-align: center; padding: 60px 20px; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0;">
+    <div style="text-align: center; padding: 60px 20px; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color);">
         <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #e0e7ff, #c7d2fe); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
             <i class="fas fa-building" style="font-size: 32px; color: #6366f1;"></i>
         </div>

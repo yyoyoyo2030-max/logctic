@@ -1053,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Details Modal -->
 <div id="detailsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
-    <div class="modal-content" style="max-width: 700px; background: #fff; border-radius: 12px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; max-height: 80vh;">
+    <div class="modal-content" style="max-width: 700px; background: var(--bg-primary); border-radius: 12px; width: 90%; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; max-height: 80vh;">
         <div class="modal-header" style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
             <h2 style="margin: 0; font-size: 1.1rem; color: #111827;">تفاصيل السجل (سرية)</h2>
             <button class="close-modal-btn" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>
@@ -1071,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- PostHog Settings Modal -->
 <div id="posthogSettingsModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="background: #fff; border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column;">
+    <div style="background: var(--bg-primary); border-radius: 12px; width: 90%; max-width: 500px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column;">
         <div style="padding: 16px 20px; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; background: #f9fafb;">
             <h3 style="margin: 0; font-size: 1.1rem; color: #111827;"><i class="fas fa-cog" style="color: #6366f1; margin-left: 8px;"></i> إعدادات التتبع والتحليلات (PostHog)</h3>
             <button type="button" onclick="document.getElementById('posthogSettingsModal').style.display='none';" style="background: none; border: none; font-size: 1.5rem; color: #6b7280; cursor: pointer;">&times;</button>

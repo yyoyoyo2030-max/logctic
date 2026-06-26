@@ -239,6 +239,45 @@ include '../../includes/header.php';
     border-color: #cbd5e1;
     color: #64748b;
 }
+
+/* دعم الوضع الليلي */
+body.dark-mode .wa-card,
+body.dark-mode .wa-branch-card {
+    background: #1e1e2d;
+    border-color: #2b2b40;
+}
+body.dark-mode .wa-card-head,
+body.dark-mode .wa-save-bar {
+    background: #151521;
+    border-color: #2b2b40;
+}
+body.dark-mode .wa-card-head h3,
+body.dark-mode .wa-field label,
+body.dark-mode .wa-branch-card .branch-name,
+body.dark-mode .wa-toggle {
+    color: #e2e8f0;
+}
+body.dark-mode .wa-field .form-control,
+body.dark-mode .wa-branch-card select {
+    background: #151521;
+    border-color: #2b2b40;
+    color: #e2e8f0;
+}
+body.dark-mode .wa-field .form-control:focus {
+    border-color: #6366f1;
+}
+body.dark-mode .wa-locked-mode input:not([type="hidden"]), 
+body.dark-mode .wa-locked-mode select, 
+body.dark-mode .wa-locked-mode button:not(#btnEditSettings), 
+body.dark-mode .wa-locked-mode .switch,
+body.dark-mode .wa-locked-mode .delete-route {
+    background-color: #1e1e2d;
+    opacity: 0.6;
+    color: #94a3b8;
+}
+body.dark-mode .wa-locked-mode .form-control {
+    border-color: #3f3f5a;
+}
 </style>
 
 <div class="page-header">

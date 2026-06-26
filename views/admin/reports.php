@@ -147,10 +147,10 @@ include '../../includes/header.php';
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #fff;
+    background: var(--bg-primary);
     padding: 16px 20px;
     border-radius: 12px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border-color);
     box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     transition: transform 0.2s, box-shadow 0.2s;
 }

@@ -208,6 +208,24 @@ textarea.form-control {
     margin-top: 5px;
 }
 
+/* دعم الوضع الليلي لخيارات الأولوية */
+body.dark-mode .priority-option.urgent input[type="radio"]:checked + label {
+    background: rgba(220, 53, 69, 0.15);
+}
+body.dark-mode .priority-option.high input[type="radio"]:checked + label {
+    background: rgba(253, 126, 20, 0.15);
+}
+body.dark-mode .priority-option.medium input[type="radio"]:checked + label {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+}
+body.dark-mode .priority-option.low input[type="radio"]:checked + label {
+    background: rgba(40, 167, 69, 0.15);
+}
+body.dark-mode .form-help {
+    color: #94a3b8;
+}
+
 .alert {
     padding: 15px;
     margin-bottom: 20px;

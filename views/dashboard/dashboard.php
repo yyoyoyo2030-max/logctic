@@ -48,11 +48,9 @@ if (!canManageAllBranches()) {
     $branch_params = [$_SESSION['branch_id']];
 }
 
-// استعلام واحد مُحسَّن لكل الإحصائيات
+// استعلام واحد مُحسَّن لإحصائيات الفترة الزمنية
 $sql = "SELECT 
     COUNT(*) as total_transfers,
-    SUM(CASE WHEN t.status = 'in_transit' THEN 1 ELSE 0 END) as in_transit,
-    SUM(CASE WHEN t.status IN ('assigned', 'in_transit') THEN 1 ELSE 0 END) as active,
     SUM(CASE WHEN t.status = 'delivered' THEN 1 ELSE 0 END) as delivered,
     SUM(CASE WHEN NOT EXISTS (SELECT 1 FROM driver_assignments da WHERE da.transfer_id = t.id) THEN 1 ELSE 0 END) as no_driver
     FROM transfers t WHERE 1=1 $date_condition $branch_cond";
@@ -62,10 +60,21 @@ $stmt->execute($branch_params);
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $stats['total_transfers'] = (int)($row['total_transfers'] ?? 0);
-$stats['in_transit_transfers'] = (int)($row['in_transit'] ?? 0);
-$stats['active_transfers'] = (int)($row['active'] ?? 0);
 $stats['delivered_transfers'] = (int)($row['delivered'] ?? 0);
 $stats['no_driver_transfers'] = (int)($row['no_driver'] ?? 0);
+
+// استعلام منفصل للحالات الفعلية الحالية (لا يتأثر بفلتر التاريخ)
+$live_sql = "SELECT 
+    SUM(CASE WHEN t.status = 'in_transit' THEN 1 ELSE 0 END) as in_transit,
+    SUM(CASE WHEN t.status IN ('assigned', 'in_transit') THEN 1 ELSE 0 END) as active
+    FROM transfers t WHERE 1=1 $branch_cond";
+
+$live_stmt = $conn->prepare($live_sql);
+$live_stmt->execute($branch_params);
+$live_row = $live_stmt->fetch(PDO::FETCH_ASSOC);
+
+$stats['in_transit_transfers'] = (int)($live_row['in_transit'] ?? 0);
+$stats['active_transfers'] = (int)($live_row['active'] ?? 0);
 
 // عدد السائقين المتاحين (لا يتأثر بالفلتر الزمني)
 $stmt = $conn->query("

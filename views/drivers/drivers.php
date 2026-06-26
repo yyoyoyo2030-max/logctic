@@ -81,18 +81,14 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
     $edit_driver = $stmt->fetch();
 }
 
-// الحصول على السائقين مع حساب الحالة بناءً على التعيينات النشطة
+// الحصول على السائقين مع حساب عدد المهام النشطة
 $stmt = $conn->query("
     SELECT d.*, u.username,
-    CASE 
-        WHEN EXISTS (
-            SELECT 1 FROM driver_assignments da 
-            JOIN transfers t ON da.transfer_id = t.id 
-            WHERE da.driver_id = d.id 
-            AND t.status IN ('assigned', 'in_transit')
-        ) THEN 0
-        ELSE 1
-    END as is_available
+    (SELECT COUNT(*) FROM driver_assignments da 
+     JOIN transfers t ON da.transfer_id = t.id 
+     WHERE da.driver_id = d.id 
+     AND t.status IN ('assigned', 'in_transit')
+    ) as active_tasks_count
     FROM drivers d 
     LEFT JOIN users u ON d.user_id = u.id 
     ORDER BY d.created_at DESC
@@ -139,10 +135,10 @@ include '../../includes/header.php';
                 <td><?php echo htmlspecialchars($driver['vehicle_number']); ?></td>
 
                 <td>
-                    <?php if ($driver['is_available']): ?>
-                        <span class="status-badge status-delivered">✓ متاح</span>
+                    <?php if ($driver['active_tasks_count'] > 0): ?>
+                        <span class="status-badge status-assigned">🚚 <?php echo $driver['active_tasks_count']; ?> مهمة نشطة</span>
                     <?php else: ?>
-                        <span class="status-badge status-pending">✗ غير متاح</span>
+                        <span class="status-badge status-delivered">✓ متاح</span>
                     <?php endif; ?>
                 </td>
                 <td class="actions">

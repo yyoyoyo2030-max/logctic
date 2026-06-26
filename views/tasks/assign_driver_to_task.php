@@ -66,12 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['assign_driver'])) {
             ");
             $stmt->execute([$task_id, $driver_id, $_SESSION['user_id'], $notes]);
             
-            // تحديث حالة المهمة والسائق
+            // تحديث حالة المهمة
             $stmt_update = $conn->prepare("UPDATE tasks SET status = 'in_progress' WHERE id = ?");
             $stmt_update->execute([$task_id]);
-            
-            $stmt_avail = $conn->prepare("UPDATE drivers SET is_available = 0 WHERE id = ?");
-            $stmt_avail->execute([$driver_id]);
             
             // إرسال رسالة واتساب للسائق
             $stmt_d = $conn->prepare("SELECT phone FROM drivers WHERE id = ?");
@@ -126,6 +123,10 @@ if (isset($_GET['remove']) && isset($_GET['assignment_id'])) {
 // الحصول على جميع السائقين المتاحين
 $stmt = $conn->query("
     SELECT d.*, 
+           (SELECT COUNT(*) FROM driver_assignments da2 
+            JOIN transfers t2 ON da2.transfer_id = t2.id 
+            WHERE da2.driver_id = d.id AND t2.status IN ('assigned', 'in_transit')
+           ) as active_tasks_count,
            t.status as current_status, 
            t.to_location as last_to_location,
            da.delivery_date as last_delivery_date
@@ -384,7 +385,7 @@ include '../../includes/header.php';
                                 
                                 <?php if ($isInTransit): ?>
                                     <span class="driver-status status-transit">
-                                        <i class="fas fa-route"></i> متجه إلى: <?php echo ($lastTo ?: 'غير محدد'); ?>
+                                        <i class="fas fa-tasks"></i> <?php echo $driver['active_tasks_count']; ?> مهمة نشطة
                                     </span>
                                 <?php else: ?>
                                     <span class="driver-status status-available">

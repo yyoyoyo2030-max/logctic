@@ -31,19 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
             $stmt = $conn->prepare("UPDATE tasks SET completed_at = NOW() WHERE id = ?");
             $stmt->execute([$task_id]);
             
-            // إعادة السائق ليكون متاحاً
-            try {
-                $stmt_tda = $conn->prepare("SELECT driver_id FROM task_driver_assignments WHERE task_id = ?");
-                $stmt_tda->execute([$task_id]);
-                $assignment = $stmt_tda->fetch();
-                
-                if ($assignment) {
-                    $stmt_avail = $conn->prepare("UPDATE drivers SET is_available = 1 WHERE id = ?");
-                    $stmt_avail->execute([$assignment['driver_id']]);
-                }
-            } catch(PDOException $e) {
-                // تجاهل
-            }
+            // إعادة السائق ليكون متاحاً (يتم تلقائياً عند عدم وجود مهام نشطة)
         }
     } else {
         $error_msg = 'حدث خطأ أثناء التحديث';

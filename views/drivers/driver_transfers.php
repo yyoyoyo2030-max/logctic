@@ -23,15 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_status'])) {
         // إعادة السائق ليكون متاحاً
         if ($new_status == 'delivered') {
             try {
-                // جلب معرف السائق المعيّن لهذا التحويل
-                $stmt_da = $conn->prepare("SELECT driver_id FROM driver_assignments WHERE transfer_id = ?");
-                $stmt_da->execute([$transfer_id]);
-                $assignment = $stmt_da->fetch();
-                
-                if ($assignment) {
-                    $stmt_avail = $conn->prepare("UPDATE drivers SET is_available = 1 WHERE id = ?");
-                    $stmt_avail->execute([$assignment['driver_id']]);
-                }
                 
                 // إرسال إشعار واتساب
                 $stmt_t = $conn->prepare("SELECT transfer_number, from_location, to_location FROM transfers WHERE id = ?");

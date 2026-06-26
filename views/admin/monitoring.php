@@ -795,7 +795,7 @@ require_once '../../includes/header.php';
         <div class="f-actions" style="display: flex; gap: 10px; align-items: flex-end; justify-content: flex-end; width: 100%; height: 100%;">
             <button type="submit" class="f-btn" style="height: 38px;"><i class="fas fa-search"></i> بحث</button>
             <a href="monitoring.php" class="f-reset" style="height: 38px;"><i class="fas fa-undo"></i> تفريغ</a>
-            <div class="f-count" style="margin-right: auto; padding: 7px 15px; background: rgba(14,165,233,0.1); color: #0ea5e9; border-radius: 8px; font-weight: bold; align-self: flex-end; height: 38px; display: flex; align-items: center;"><i class="fas fa-list"></i> النتائج: <strong><?php echo count($logs); ?></strong></div>
+            <div class="f-count" style="margin-right: auto; padding: 7px 15px; background: rgba(14,165,233,0.1); color: #0ea5e9; border-radius: 8px; font-weight: bold; align-self: flex-end; height: 38px; display: flex; align-items: center;"><i class="fas fa-list"></i> النتائج: <strong><?php echo (count($error_logs) + count($activity_logs)); ?></strong></div>
         </div>
     </form>
 

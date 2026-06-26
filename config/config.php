@@ -181,6 +181,11 @@ function isLoggedIn() {
                 $token = $cookieParts[1];
                 
                 try {
+                    // تأكد من وجود العمود (لمرة واحدة فقط)
+                    try {
+                        $conn->exec("ALTER TABLE users ADD COLUMN remember_token VARCHAR(100) NULL DEFAULT NULL");
+                    } catch(Exception $e) { /* العمود موجود بالفعل */ }
+                    
                     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ? AND remember_token = ? AND is_active = 1");
                     $stmt->execute([$user_id, $token]);
                     $user = $stmt->fetch();
@@ -192,7 +197,6 @@ function isLoggedIn() {
                         $_SESSION['full_name'] = $user['full_name'];
                         $_SESSION['role'] = $user['role'];
                         $_SESSION['branch_id'] = $user['branch_id'];
-                        $_SESSION['HTTP_USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
                         $_SESSION['LAST_ACTIVITY'] = time();
                     } else {
                         // الكعكة غير صالحة
@@ -200,6 +204,7 @@ function isLoggedIn() {
                         return false;
                     }
                 } catch(Exception $e) {
+                    error_log("isLoggedIn remember_token error: " . $e->getMessage());
                     return false;
                 }
             } else {
@@ -209,8 +214,6 @@ function isLoggedIn() {
             return false;
         }
     }
-    
-    // تم إزالة التحقق من HTTP_USER_AGENT لمنع تسجيل الخروج العشوائي على شبكات الجوال
     
     // تحديث الدور والفرع من قاعدة البيانات عند كل طلب لضمان تطبيق أي تغييرات فورياً
     try {

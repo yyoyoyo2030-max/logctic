@@ -25,24 +25,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = $user['role'];
             $_SESSION['branch_id'] = $user['branch_id'];
             
-            // إضافة خاصية تذكرني (معزولة حتى لا تؤثر على الدخول)
-            if (isset($_POST['remember_me'])) {
+            // حفظ تذكرني تلقائياً لجميع المستخدمين (لضمان استمرار الجلسة)
+            try {
+                // تأكد من وجود العمود أولاً (لمرة واحدة)
                 try {
-                    // تأكد من وجود العمود أولاً (لمرة واحدة)
-                    try {
-                        $conn->exec("ALTER TABLE users ADD COLUMN remember_token VARCHAR(100) NULL DEFAULT NULL");
-                    } catch(Exception $e) { /* العمود موجود بالفعل */ }
-                    
-                    $token = bin2hex(random_bytes(32));
-                    $upd_stmt = $conn->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
-                    $upd_stmt->execute([$token, $user['id']]);
-                    
-                    $cookieValue = $user['id'] . ':' . $token;
-                    $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
-                    setcookie('remember_token', $cookieValue, time() + (86400 * 30), "/", "", $secure, true);
-                } catch(Exception $e) {
-                    error_log("Remember Me Error: " . $e->getMessage());
-                }
+                    $conn->exec("ALTER TABLE users ADD COLUMN remember_token VARCHAR(100) NULL DEFAULT NULL");
+                } catch(Exception $e) { /* العمود موجود بالفعل */ }
+                
+                $token = bin2hex(random_bytes(32));
+                $upd_stmt = $conn->prepare("UPDATE users SET remember_token = ? WHERE id = ?");
+                $upd_stmt->execute([$token, $user['id']]);
+                
+                $cookieValue = $user['id'] . ':' . $token;
+                $secure = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+                setcookie('remember_token', $cookieValue, time() + 31536000, "/", "", $secure, true); // سنة كاملة
+            } catch(Exception $e) {
+                error_log("Remember Token Error: " . $e->getMessage());
             }
             
             // إعادة توجيه حسب الدور

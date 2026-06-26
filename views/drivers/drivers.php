@@ -230,8 +230,6 @@ include '../../includes/header.php';
                         <input type="text" name="vehicle_number" class="form-control" placeholder="رقم اللوحة">
                     </div>
                 </div>
-                
-                </div>
             </div>
             
             <div class="modal-footer">

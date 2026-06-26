@@ -182,14 +182,12 @@ if ($status_filter) {
             $status_labels = [
                 'pending' => 'قيد الانتظار',
                 'assigned' => 'تم التعيين / جاري التوصيل',
-            'in_transit' => 'جاري التوصيل',
-            'delivered' => 'تم التوصيل',
-            'cancelled' => 'ملغي'
-        ];
-        $active_filter_label = $status_labels[$status_filter];
-    } elseif ($status_filter === 'active') {
-        $conditions[] = "t.status IN ('assigned', 'in_transit')";
-        $active_filter_label = 'قيد التنفيذ';
+                'in_transit' => 'جاري التوصيل',
+                'delivered' => 'تم التوصيل',
+                'cancelled' => 'ملغي'
+            ];
+            $active_filter_label = $status_labels[$status_filter] ?? '';
+        }
     }
 }
 

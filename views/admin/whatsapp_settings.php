@@ -241,41 +241,41 @@ include '../../includes/header.php';
 }
 
 /* دعم الوضع الليلي */
-body.dark-mode .wa-card,
-body.dark-mode .wa-branch-card {
+[data-theme="dark"] .wa-card,
+[data-theme="dark"] .wa-branch-card {
     background: #1e1e2d;
     border-color: #2b2b40;
 }
-body.dark-mode .wa-card-head,
-body.dark-mode .wa-save-bar {
+[data-theme="dark"] .wa-card-head,
+[data-theme="dark"] .wa-save-bar {
     background: #151521;
     border-color: #2b2b40;
 }
-body.dark-mode .wa-card-head h3,
-body.dark-mode .wa-field label,
-body.dark-mode .wa-branch-card .branch-name,
-body.dark-mode .wa-toggle {
+[data-theme="dark"] .wa-card-head h3,
+[data-theme="dark"] .wa-field label,
+[data-theme="dark"] .wa-branch-card .branch-name,
+[data-theme="dark"] .wa-toggle {
     color: #e2e8f0;
 }
-body.dark-mode .wa-field .form-control,
-body.dark-mode .wa-branch-card select {
+[data-theme="dark"] .wa-field .form-control,
+[data-theme="dark"] .wa-branch-card select {
     background: #151521;
     border-color: #2b2b40;
     color: #e2e8f0;
 }
-body.dark-mode .wa-field .form-control:focus {
+[data-theme="dark"] .wa-field .form-control:focus {
     border-color: #6366f1;
 }
-body.dark-mode .wa-locked-mode input:not([type="hidden"]), 
-body.dark-mode .wa-locked-mode select, 
-body.dark-mode .wa-locked-mode button:not(#btnEditSettings), 
-body.dark-mode .wa-locked-mode .switch,
-body.dark-mode .wa-locked-mode .delete-route {
+[data-theme="dark"] .wa-locked-mode input:not([type="hidden"]), 
+[data-theme="dark"] .wa-locked-mode select, 
+[data-theme="dark"] .wa-locked-mode button:not(#btnEditSettings), 
+[data-theme="dark"] .wa-locked-mode .switch,
+[data-theme="dark"] .wa-locked-mode .delete-route {
     background-color: #1e1e2d;
     opacity: 0.6;
     color: #94a3b8;
 }
-body.dark-mode .wa-locked-mode .form-control {
+[data-theme="dark"] .wa-locked-mode .form-control {
     border-color: #3f3f5a;
 }
 </style>

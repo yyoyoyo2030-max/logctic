@@ -10,6 +10,11 @@ $success = '';
 $error = '';
 $edit_user = null;
 
+// رسالة نجاح عند العودة بعد التحديث
+if (isset($_GET['updated']) && $_GET['updated'] == '1') {
+    $success = 'تم تحديث بيانات المستخدم بنجاح';
+}
+
 // تعديل مستخدم
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_user'])) {
     try {
@@ -32,7 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_user'])) {
         }
         
         if ($result) {
-            $success = 'تم تحديث بيانات المستخدم بنجاح';
+            // إعادة التوجيه بعد النجاح لإغلاق النافذة وعرض رسالة النجاح
+            header('Location: users.php?updated=1');
+            exit;
         } else {
             $error = 'حدث خطأ أثناء التحديث';
         }

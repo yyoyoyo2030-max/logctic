@@ -23,8 +23,8 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
         
         // التحقق من الصلاحيات
         if (isLogisticsManager()) {
-            // جلب معلومات الملف قبل الحذف
-            $stmt = $conn->prepare("SELECT file_path FROM transfers WHERE id = ?");
+            // جلب معلومات التحويل قبل الحذف
+            $stmt = $conn->prepare("SELECT file_path, transfer_number FROM transfers WHERE id = ?");
             $stmt->execute([$transfer_id]);
             $transfer = $stmt->fetch();
             
@@ -41,11 +41,12 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
             $stmt->execute([$transfer_id]);
             
             // حذف التحويل
+            $deleted_number = $transfer ? $transfer['transfer_number'] : $transfer_id;
             $stmt = $conn->prepare("DELETE FROM transfers WHERE id = ?");
             if ($stmt->execute([$transfer_id])) {
                 $success = 'تم حذف التحويل بنجاح';
                 if (function_exists('logActivity')) {
-                    logActivity('حذف تحويل', ['transfer_id' => $transfer_id]);
+                    logActivity('حذف تحويل', ['رقم التحويل' => $deleted_number]);
                 }
             } else {
                 $error = 'حدث خطأ أثناء الحذف';

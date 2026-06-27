@@ -121,13 +121,7 @@ include '../../includes/header.php';
             </div>
             <?php endif; ?>
             
-            <?php if ($transfer['status'] == 'pending' && isAdmin()): ?>
-            <div class="info-row" style="margin-top: 20px;">
-                <a href="assign_driver.php?id=<?php echo $transfer['id']; ?>" class="btn btn-primary">
-                    <i class="fas fa-user-plus"></i> تعيين سائق
-                </a>
-            </div>
-            <?php endif; ?>
+
         </div>
     </div>
     

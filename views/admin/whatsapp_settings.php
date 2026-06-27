@@ -384,12 +384,9 @@ include '../../includes/header.php';
         </div>
     </div>
 
-    <!-- ========== شريط الحفظ والتفعيل ========== -->
-    <div class="wa-save-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-        <label class="wa-toggle">
-            <input type="checkbox" name="is_active" <?php echo $settings['is_active'] ? 'checked' : ''; ?>>
-            <span><i class="fab fa-whatsapp" style="color: #25D366;"></i> تفعيل إرسال الإشعارات عبر الواتساب</span>
-        </label>
+    <!-- ========== شريط الحفظ ========== -->
+    <input type="hidden" name="is_active" value="1">
+    <div class="wa-save-bar" style="display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap;">
         <div style="display: flex; gap: 10px;">
             <button type="button" id="btnEditSettings" class="btn btn-warning btn-lg" style="min-width: 150px; background: #f59e0b; color: white; border: none; pointer-events: auto !important; opacity: 1 !important;">
                 <i class="fas fa-lock"></i> تعديل البيانات

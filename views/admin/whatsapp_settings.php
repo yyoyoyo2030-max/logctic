@@ -560,7 +560,7 @@ document.getElementById('fetchGroupsBtn').addEventListener('click', function() {
 });
 
 // إظهار/إخفاء مفتاح API
-document.getElementById('toggleApiKey').addEventListener('click', function() {
+document.getElementById('toggleApiKey')?.addEventListener('click', function() {
     const input = document.getElementById('api_key_input');
     const icon = this.querySelector('i');
     if (input.type === 'password') {
@@ -601,7 +601,7 @@ function checkConnectionStatus() {
 }
 
 // زر إعادة الاتصال (بدون QR - يستخدم الجلسة المحفوظة)
-btnReconnect.addEventListener('click', function() {
+btnReconnect?.addEventListener('click', function() {
     waStatusText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري إعادة الاتصال...';
     btnReconnect.disabled = true;
     btnGenerateQR.disabled = true;
@@ -634,7 +634,7 @@ btnReconnect.addEventListener('click', function() {
 });
 
 // زر ربط برقم جديد (QR)
-btnGenerateQR.addEventListener('click', function() {
+btnGenerateQR?.addEventListener('click', function() {
     waStatusText.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري توليد كود الـ QR...';
     btnGenerateQR.disabled = true;
     
@@ -669,7 +669,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Custom Routes Logic
-document.getElementById('btnAddRoute').addEventListener('click', function() {
+document.getElementById('btnAddRoute')?.addEventListener('click', function() {
     const eventType = document.getElementById('route_event_type').value;
     const phone = document.getElementById('route_phone').value;
     const desc = document.getElementById('route_desc').value;

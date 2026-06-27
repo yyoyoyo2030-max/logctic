@@ -120,7 +120,6 @@ include '../../includes/header.php';
                 <th>رقم الرخصة</th>
                 <th>نوع المركبة</th>
                 <th>رقم المركبة</th>
-
                 <th>الحالة</th>
                 <th>إجراءات</th>
             </tr>
@@ -133,7 +132,6 @@ include '../../includes/header.php';
                 <td><?php echo htmlspecialchars($driver['license_number']); ?></td>
                 <td><?php echo htmlspecialchars($driver['vehicle_type']); ?></td>
                 <td><?php echo htmlspecialchars($driver['vehicle_number']); ?></td>
-
                 <td>
                     <?php if ($driver['active_tasks_count'] > 0): ?>
                         <span class="status-badge status-assigned">🚚 <?php echo $driver['active_tasks_count']; ?> مهمة نشطة</span>
